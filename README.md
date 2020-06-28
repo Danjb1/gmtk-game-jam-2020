@@ -4,7 +4,7 @@
 
 - [x] Aonghas
 - [x] Dan Q
-- [ ] Dan S
+- [x] Dan S
 - [ ] Eddie
 - [ ] Joao
 - [ ] Mark
