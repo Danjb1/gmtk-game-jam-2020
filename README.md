@@ -2,13 +2,13 @@
 
 ## Check-in
 
- - [ ] Aonghas
- - [x] Dan Q
- - [ ] Dan S
- - [ ] Eddie
- - [ ] Joao
- - [ ] Mark
- - [ ] Matt
+- [x] Aonghas
+- [x] Dan Q
+- [ ] Dan S
+- [ ] Eddie
+- [ ] Joao
+- [ ] Mark
+- [ ] Matt
 
 ## Discord
 
