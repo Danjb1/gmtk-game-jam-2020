@@ -9,7 +9,7 @@ This is a 48 hour game making marathon, focused on design, mechanics, and clever
 - [x] Aonghas
 - [x] Dan Q
 - [x] Dan S
-- [ ] Eddie
+- [x] Eddie
 - [ ] Joao
 - [ ] Mark
 - [x] Matt
