@@ -4,7 +4,9 @@ import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
@@ -19,18 +21,19 @@ import game.shaders.TextureShader;
 public class GameGraphics implements GraphicsContext {
 
     /**
-     * The maximum number of Sprites we can draw in one frame.
+     * The maximum number of Sprites we can draw in one frame, per Texture.
      */
     private static final int MAX_SPRITES = 1000;
 
     private Camera camera;
     private Rectangle viewport;
+
     private List<Sprite> sprites = new ArrayList<>();
+    private Map<Texture, List<Sprite>> spritesByTexture = new HashMap<>();
+    private Map<Texture, SpriteArrayDrawable> spriteDrawables = new HashMap<>();
 
     private static FloatBuffer fb16 = BufferUtils.createFloatBuffer(16);
     private static Matrix4f viewProjMatrix = new Matrix4f();
-    private SpriteArrayDrawable spritesDrawable =
-            new SpriteArrayDrawable(MAX_SPRITES);
 
     public GameGraphics(Rectangle viewport, Camera camera) {
         this.viewport = viewport;
@@ -39,9 +42,11 @@ public class GameGraphics implements GraphicsContext {
 
     @Override
     public void destroy() {
-        if (spritesDrawable != null && spritesDrawable.isInitialised()) {
-            spritesDrawable.destroy();
+        for (SpriteArrayDrawable drawable : spriteDrawables.values()) {
+            drawable.destroy();
         }
+        spritesByTexture.clear();
+        spriteDrawables.clear();
     }
 
     @Override
@@ -57,25 +62,29 @@ public class GameGraphics implements GraphicsContext {
     @Override
     public void render() {
 
-        if (!spritesDrawable.isInitialised()) {
-            spritesDrawable.initialise();
-        }
-
         // Use our camera and viewport
         projectToWorld();
 
-        // Send our Sprite data to the GPU
-        spritesDrawable.update(sprites);
+        // Render each Texture in turn
+        for (Texture tex : spritesByTexture.keySet()) {
 
-        // Render our Sprites.
-        // For now, we just use the Texture of the first Sprite.
-        // TODO: We should sort Sprites by Texture.
-        if (!sprites.isEmpty()) {
-            Texture spriteTexture = sprites.get(0).texture;
+            // Find the Drawable for this Texture
+            SpriteArrayDrawable drawable = spriteDrawables.get(tex);
+            if (drawable == null) {
+                drawable = new SpriteArrayDrawable(MAX_SPRITES);
+                drawable.initialise();
+                spriteDrawables.put(tex, drawable);
+            }
+
+            // Send Sprite data to GPU
+            List<Sprite> spritesForTex = spritesByTexture.get(tex);
+            drawable.update(spritesForTex);
+
+            // Render
             TextureRenderer.render(
-                    spriteTexture,
-                    spritesDrawable.getVao(),
-                    spritesDrawable.getNumVertices());
+                    tex,
+                    drawable.getVao(),
+                    drawable.getNumVertices());
         }
     }
 
@@ -115,12 +124,26 @@ public class GameGraphics implements GraphicsContext {
                 viewProjMatrix.get(fb16));
     }
 
+    private void groupSpritesByTexture() {
+        spritesByTexture.clear();
+        for (Sprite sprite : sprites) {
+            List<Sprite> spritesForTex = spritesByTexture.get(sprite.texture);
+            if (spritesForTex == null) {
+                spritesForTex = new ArrayList<>();
+                spritesByTexture.put(sprite.texture, spritesForTex);
+            }
+            spritesForTex.add(sprite);
+        }
+    }
+
     public void addSprite(Sprite sprite) {
         sprites.add(sprite);
+        groupSpritesByTexture();
     }
 
     public void removeSprite(Sprite sprite) {
         sprites.remove(sprite);
+        groupSpritesByTexture();
     }
 
 }

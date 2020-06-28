@@ -43,7 +43,6 @@ public class TextureRenderer {
         // Enable vertex attributes
         shader.enableVertexAttributeArray(TextureShader.ATTR_VERTEX);
         shader.enableVertexAttributeArray(TextureShader.ATTR_TEX_COORD);
-        shader.enableVertexAttributeArray(TextureShader.ATTR_COLOUR);
 
         // Draw the vertices
         glDrawArrays(GL_TRIANGLES, 0, numVertices);
@@ -51,7 +50,6 @@ public class TextureRenderer {
         // Disable vertex attributes
         shader.disableVertexAttributeArray(TextureShader.ATTR_VERTEX);
         shader.disableVertexAttributeArray(TextureShader.ATTR_TEX_COORD);
-        shader.disableVertexAttributeArray(TextureShader.ATTR_COLOUR);
 
         // Unbind vertex array
         glBindVertexArray(0);

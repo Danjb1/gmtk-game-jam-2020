@@ -3,27 +3,24 @@ package game.entities;
 import engine.entities.EntityComponent;
 import game.GameGraphics;
 import game.Sprite;
-import game.gl.Texture;
 
 public abstract class SpriteComponent extends EntityComponent {
 
     private GameGraphics gfx;
     private Sprite sprite;
 
-    public SpriteComponent(
-            GameGraphics gfx,
-            Texture tex,
-            int width,
-            int height) {
-
+    public SpriteComponent(GameGraphics gfx) {
         this.gfx = gfx;
-
-        sprite = new Sprite(tex, width, height);
     }
+
+    protected abstract Sprite createSprite();
 
     @Override
     public void onSpawn() {
         super.onSpawn();
+
+        sprite = createSprite();
+        snapToEntity();
 
         gfx.addSprite(sprite);
     }
@@ -57,6 +54,10 @@ public abstract class SpriteComponent extends EntityComponent {
     public void update(int delta) {
         super.update(delta);
 
+        snapToEntity();
+    }
+
+    private void snapToEntity() {
         // Update Sprite position based on the Entity position
         sprite.x = getX();
         sprite.y = getY();

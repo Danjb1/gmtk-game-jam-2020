@@ -15,8 +15,10 @@ public abstract class State {
 
     /**
      * Called when a State becomes active.
+     *
+     * @throws Exception
      */
-    public void onLoad() {
+    public void onLoad() throws Exception {
         // Do nothing by default
     }
 

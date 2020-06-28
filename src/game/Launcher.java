@@ -57,7 +57,7 @@ public class Launcher {
         window.setGraphicsContext(new GameGraphics(viewport, camera));
 
         // Start in the Game state
-        state = new Game(this);
+        changeState(new Game(this));
 
         /*
          * Start our game loop.
@@ -126,10 +126,17 @@ public class Launcher {
     public void changeState(State newState) {
 
         // Destroy the old state
-        state.destroy();
+        if (state != null) {
+            state.destroy();
+        }
 
+        // Load the new state
         state = newState;
-        newState.onLoad();
+        try {
+            newState.onLoad();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public GraphicsContext getGraphicsContext() {

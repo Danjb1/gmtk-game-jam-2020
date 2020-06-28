@@ -1,5 +1,6 @@
 package game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,6 +9,13 @@ import java.util.stream.Collectors;
 
 import engine.State;
 import engine.entities.Entity;
+import game.entities.player.Player;
+import game.entities.player.PlayerSprite;
+import game.gl.Texture;
+import game.io.ImageData;
+import game.io.ImageReader;
+import game.io.Resources;
+import game.io.TextureBuilder;
 
 public class Game extends State {
 
@@ -42,8 +50,31 @@ public class Game extends State {
      */
     private int nextEntityId = 0;
 
+    private Texture spriteTexture;
+
     public Game(Launcher launcher) {
         super(launcher);
+    }
+
+    @Override
+    public void onLoad() throws Exception {
+        super.onLoad();
+
+        initTextures();
+        initPlayer();
+    }
+
+    private void initTextures() throws IOException {
+        ImageData imgData = ImageReader.loadImage(
+                Resources.SPRITE_DIR + "sprites.png", true);
+        spriteTexture = TextureBuilder.createTexture(imgData);
+    }
+
+    private void initPlayer() {
+        Player player = new Player();
+        player.addComponent(
+                new PlayerSprite((GameGraphics) gfx, spriteTexture));
+        addEntity(100, 100, player);
     }
 
     /**

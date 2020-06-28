@@ -17,14 +17,7 @@ import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_FALSE;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION_MATRIX;
 import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glScalef;
-import static org.lwjgl.opengl.GL11.glTranslatef;
 
 import org.lwjgl.opengl.GL;
 
@@ -94,13 +87,6 @@ public class Window {
     public void draw() {
         glfwPollEvents();
         glClear(GL_COLOR_BUFFER_BIT);
-        glMatrixMode(GL_PROJECTION_MATRIX);
-        glLoadIdentity();
-        glOrtho(0, width, height, 0, 1, -1);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glScalef(2.0f / width, -2.0f / height, 1);
-        glTranslatef(-width / 2.0f, -height / 2.0f, 0);
         gfx.render();
         glfwSwapBuffers(window);
     }

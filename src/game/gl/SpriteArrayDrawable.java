@@ -128,19 +128,23 @@ public class SpriteArrayDrawable extends Drawable {
      */
     protected void fillTexCoordBuffer(Sprite sprite) {
 
-        // For now, just render the whole texture
-        // TODO: Get the texture co-ords from the Sprite
-        float tx1 = 0;
-        float tx2 = 1;
-        float ty1 = 0;
-        float ty2 = 1;
+        float tx1 = sprite.getTexCoord_X1();
+        float tx2 = sprite.getTexCoord_X2();
+        float ty1 = sprite.getTexCoord_Y1();
+        float ty2 = sprite.getTexCoord_Y2();
 
+        // Swap texture co-ordinates if we need to flip the image
         if (sprite.flipX) {
-            // Swap the texture co-ordinates
             float tmp = tx1;
             tx1 = tx2;
             tx2 = tmp;
         }
+        if (sprite.flipY) {
+            float tmp = ty1;
+            ty1 = ty2;
+            ty2 = tmp;
+        }
+
 
         texCoordData
                 .put(tx1).put(ty1)

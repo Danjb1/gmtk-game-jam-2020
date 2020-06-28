@@ -9,7 +9,20 @@ import org.lwjgl.system.MemoryStack;
 
 public class ImageReader {
 
-    public ImageData loadImage(String filename, boolean useOpenGlOrigin)
+    /**
+     * Loads an image from a file.
+     *
+     * @param filename
+     * @param useOpenGlOrigin Whether to flip the image vertically on load.
+     *
+     * <p>This can be useful for the sake of consistency, since whenever we
+     * render to a framebuffer the resulting texture has its origin in the
+     * bottom-left.
+     *
+     * @return
+     * @throws IOException
+     */
+    public static ImageData loadImage(String filename, boolean useOpenGlOrigin)
             throws IOException {
 
         // STB can't load from a JAR so we first load the image to memory
