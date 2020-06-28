@@ -8,7 +8,7 @@
 - [ ] Eddie
 - [ ] Joao
 - [ ] Mark
-- [ ] Matt
+- [x] Matt
 
 ## Discord
 
