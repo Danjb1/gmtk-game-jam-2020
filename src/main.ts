@@ -1,16 +1,25 @@
 import * as PIXI from 'pixi.js';
+import { Game } from './game';
 
-// Hello world
-let type = 'WebGL';
-if (!PIXI.utils.isWebGLSupported()) {
-  type = 'canvas';
-}
+/**
+ * Entry point for the application.
+ */
+;(function () {
 
-PIXI.utils.sayHello(type);
+  // Create canvas
+  const type = PIXI.utils.isWebGLSupported() ? 'WebGL' : 'canvas';
+  PIXI.utils.sayHello(type);
 
-// Create a Pixi Application
-let app = new PIXI.Application({ width: 800, height: 600 });
+  // Create a Pixi Application
+  let app = new PIXI.Application({ width: 800, height: 600 });
 
-// Add the canvas that Pixi automatically created for you to the HTML document
-app.view.id = 'game-canvas';
-document.body.appendChild(app.view);
+  // Add Pixi canvas to the DOM
+  app.view.id = 'game-canvas';
+  document.body.appendChild(app.view);
+
+  // Create our Game
+  const game = new Game();
+
+  // Start the game loop
+  app.ticker.add(delta => game.update(delta));
+})();
