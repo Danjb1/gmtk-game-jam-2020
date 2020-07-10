@@ -1,6 +1,8 @@
-# GMTK Game Jam 2020
+# Herding Cats | GMTK Game Jam 2020
 
-This is a 48 hour game making marathon, focused on design, mechanics, and clever ideas. The jam runs from July 10th, at 8PM UK time, to July 12th, at 8PM UK time.
+This is the Cat Herders' entry to the GMTK Game Jam 2020.
+
+The Jam is a 48 hour game making marathon, focused on design, mechanics, and clever ideas. It runs from July 10th, at 8PM UK time, to July 12th, at 8PM UK time.
 
 [Read more](https://itch.io/jam/gmtk-2020)
 
