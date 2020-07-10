@@ -26,4 +26,3 @@ This is a 48 hour game making marathon, focused on design, mechanics, and clever
 - Countdown - https://www.timeanddate.com/countdown/generic?iso=20200712T20&p0=136&msg=DEADLINE&font=cursive&csz=1
 - Ideas doc - https://docs.google.com/document/d/1eneBIMh5Z55eI2Qlf1S42PwvQwPV42dLbimyjLNlrhk/edit#
 - Trello board - https://trello.com/b/KTkF9bG3/planning
-
