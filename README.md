@@ -4,16 +4,6 @@ This is a 48 hour game making marathon, focused on design, mechanics, and clever
 
 [Read more](https://itch.io/jam/gmtk-2020)
 
-## Check-in
-
-- [x] Aonghas
-- [x] Dan Q
-- [x] Dan S
-- [x] Eddie
-- [ ] Joao
-- [x] Mark
-- [x] Matt
-
 ## Discord
 
 **[Official](https://discord.gg/ewRbsQS)**
