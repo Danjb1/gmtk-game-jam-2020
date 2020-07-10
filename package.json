@@ -1,7 +1,7 @@
 {
-  "name": "webpack-typescript-starter",
+  "name": "cat-herding",
   "version": "0.0.1",
-  "description": "A simple Webpack 4 starter with TypeScript transpilation",
+  "description": "A game about herding cats.",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --port 9000 --inline --progress --profile --colors --watch --content-base src/ --mode development",
