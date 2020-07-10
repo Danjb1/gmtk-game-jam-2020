@@ -9,7 +9,8 @@ if (!PIXI.utils.isWebGLSupported()) {
 PIXI.utils.sayHello(type);
 
 // Create a Pixi Application
-let app = new PIXI.Application({ width: 1000, height: 1000 });
+let app = new PIXI.Application({ width: 800, height: 600 });
 
 // Add the canvas that Pixi automatically created for you to the HTML document
+app.view.id = 'game-canvas';
 document.body.appendChild(app.view);
