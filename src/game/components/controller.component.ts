@@ -6,8 +6,7 @@ import { HitboxComponent } from '../components';
 import { Input } from '../input';
 
 // Utils
-import { getHitboxFrom } from '../utils';
-import { Vector } from '../vector';
+import { getHitboxFrom, Vector } from '../utils';
 
 export class ControllerComponent extends Component {
 

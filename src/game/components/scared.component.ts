@@ -1,14 +1,13 @@
 import { Component } from '../component';
 import { Entity } from '../entity';
 import { Game } from '../game';
-import { Vector } from '../vector';
 
 // Components
 import { ScarerComponent } from './scarer.component';
 import { HitboxComponent } from './hitbox.component';
 
 // Utils
-import { getDistanceBetween, getHitboxFrom } from '../utils';
+import { getDistanceBetween, getHitboxFrom, Vector } from '../utils';
 
 /**
  * Will cause the holding Entity to flee from other Entities which have a
