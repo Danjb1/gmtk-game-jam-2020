@@ -1,5 +1,5 @@
 import { HitboxComponent, Edge } from '../components/hitbox.component';
-import { Vector } from '../vector';
+import { Vector } from './vector';
 
 /**
  * Gives the straight-line distance between the centres of two HitboxComponents.
@@ -34,14 +34,14 @@ export const doLinesIntersect = (
     extendToInfinity = false): boolean => {
 
   // Does either line have length 0?
-  if ((x1 == x2 && y1 == y2) || (x3 == x4 && y3 == y4)) {
+  if ((x1 === x2 && y1 === y2) || (x3 === x4 && y3 === y4)) {
     return false;
   }
 
   const denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
 
   // Are the lines parallel?
-  if (denominator == 0) {
+  if (denominator === 0) {
     return false;
   }
 
@@ -54,7 +54,7 @@ export const doLinesIntersect = (
   }
 
   return true;
-}
+};
 
 /**
  * Calculates the point of intersection between 2 lines.
@@ -83,14 +83,14 @@ export const getLineIntersection = (
   extendToInfinity = false): Vector => {
 
   // Does either line have length 0?
-  if ((x1 == x2 && y1 == y2) || (x3 == x4 && y3 == y4)) {
+  if ((x1 === x2 && y1 === y2) || (x3 === x4 && y3 === y4)) {
     return null;
   }
 
   const denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
 
   // Are the lines parallel?
-  if (denominator == 0) {
+  if (denominator === 0) {
     return null;
   }
 
@@ -107,7 +107,7 @@ export const getLineIntersection = (
   const y = y1 + ua * (y2 - y1);
 
   return new Vector(x, y);
-}
+};
 
 /**
  * Determines which edge of a Hitbox was involved in a collision.
@@ -175,4 +175,4 @@ export const getCollisionEdge = (h1: HitboxComponent, h2: HitboxComponent): Edge
   }
 
   return null;
-}
+};
