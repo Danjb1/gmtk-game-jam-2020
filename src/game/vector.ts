@@ -8,4 +8,10 @@ export class Vector {
   minus(other: Vector): Vector {
     return new Vector(this.x - other.y, this.y - other.y);
   }
+
+  hypotenuse(other: Vector): number {
+    return Math.sqrt(
+      Math.pow((other.x - this.x), 2) + Math.pow((other.y - this.y), 2)
+    );
+  }
 }
