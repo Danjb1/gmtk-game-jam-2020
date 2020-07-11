@@ -16,7 +16,6 @@ import {
   HitboxComponent,
   ControllerComponent
 } from './components';
-import { WanderComponent } from './components/wander.component';
 
 export class Game {
 
@@ -60,6 +59,10 @@ export class Game {
    */
   private initViewport(): void {
     this.viewport = new Viewport({
+      // These should match the internal canvas size
+      // (the dimensions we used to initialise Pixi)
+      screenWidth: 800,
+      screenHeight: 600,
       worldWidth: Game.WORLD_WIDTH,
       worldHeight: Game.WORLD_HEIGHT
     }).fit();
@@ -70,11 +73,12 @@ export class Game {
    * Creates our initial Entities.
    */
   private initEntities(): void {
-    const player = new Entity()
-        .attach(new HitboxComponent(64, 64, 100, 100))
-        .attach(new SpriteComponent('player.png', this.viewport))
-        .attach(new ControllerComponent(this.input, 1.5));
-    this.addEntity(player);
+
+    // Player
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(64, 64, 100, 100))
+      .attach(new SpriteComponent('player.png', this.viewport))
+      .attach(new ControllerComponent(this.input, 1.5)));
   }
 
   /**
