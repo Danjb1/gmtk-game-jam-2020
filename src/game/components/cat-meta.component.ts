@@ -16,6 +16,12 @@ export class CatMetaComponent extends Component {
   // Possible Breeds
   private static readonly VARIETIES: CatVariety[] = ['ash', 'black', 'brown', 'ginger', 'grey', 'greywhite', 'tan', 'white'];
 
+  // min max for duration
+  private static readonly MIN_DURATION = 5000;
+  private static readonly MAX_DURATION = 10000;
+
+  private static readonly CAN_BE_PICKED_UP_THRESHOLD = .9;
+
   constructor() {
     super(CatMetaComponent.KEY);
     this._buildMetaData();
@@ -28,6 +34,7 @@ export class CatMetaComponent extends Component {
     this._value = this._generateValue();
     this._personality = this._generatePersonality();
     this._variety = this._generateVariety();
+    this._duration = this._generateDuration();
   }
 
   /**
@@ -83,4 +90,40 @@ export class CatMetaComponent extends Component {
     return this._variety;
   }
 
+  // When the cat is added
+  private _added: number;
+
+  onSpawn(): void {
+    this._added = Date.now();
+  }
+
+  /**
+   * How close to pickup
+   * 
+   * 0 - just added
+   * 1 - needs to be picked up
+   */
+  get howCloseToPickup(): number {
+    const howClose = ((Date.now() - this._added) / this._duration);
+    // Min 1, max 1
+    return Math.max(0, Math.min(1,howClose));
+  }
+
+  /**
+   * Returns true if the cat can be picked up
+   */
+  get canBePickedUp(): boolean {
+    const howCloseToPickupNow = this.howCloseToPickup;
+    return howCloseToPickupNow > CatMetaComponent.CAN_BE_PICKED_UP_THRESHOLD && howCloseToPickupNow < 1;
+  }
+
+  // Duration in ms
+  private _duration: number;
+
+  private _generateDuration(): number {
+    return boundedGaussianRandom(
+      CatMetaComponent.MIN_DURATION,
+      CatMetaComponent.MAX_DURATION
+    );
+  }
 }
