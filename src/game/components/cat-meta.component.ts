@@ -114,7 +114,7 @@ export class CatMetaComponent extends Component {
    */
   get canBePickedUp(): boolean {
     const howCloseToPickupNow = this.howCloseToPickup;
-    return howCloseToPickupNow > CatMetaComponent.CAN_BE_PICKED_UP_THRESHOLD && howCloseToPickupNow < 1;
+    return howCloseToPickupNow > CatMetaComponent.CAN_BE_PICKED_UP_THRESHOLD;
   }
 
   // Duration in ms
