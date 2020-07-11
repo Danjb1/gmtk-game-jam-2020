@@ -51,30 +51,28 @@ export class ScaredComponent extends Component {
    * frightDistance.
    */
   private getScarer(): Entity {
-
-    // Locate Entities in the world which are Scarers
     const scarers = this.entity.context
       .getEntities()
-      .filter(e => e.getComponent(ScarerComponent.KEY) !== undefined);
-
-    // Find the closest one which is near enough to worry about, if any.
-    // N.B. If we expected to have multiple scarers, this could be improved.
-    const actualScarers = scarers
+      .filter(e => e.getComponent(ScarerComponent.KEY) !== undefined)
       .filter(scarer => this.getRangeTo(scarer) < this.frightDistance)
-      .sort((a, b) => {
-        const aRange = this.getRangeTo(a);
-        const bRange = this.getRangeTo(b);
+      .sort((a, b) => this.sortEntitiesByDistance(a, b));
+    return scarers.length > 0 ? scarers[0] : null;
+  }
 
-        if (aRange < bRange) {
-          return -1;
-        } else if (bRange > aRange) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-    return actualScarers.length > 0 ? actualScarers[0] : null;
+  /**
+   * Comparator for two Entities, sorting by the one closest to the Entity that
+   * holds this Component.
+   */
+  private sortEntitiesByDistance(a: Entity, b: Entity): number {
+    const aRange = this.getRangeTo(a);
+    const bRange = this.getRangeTo(b);
+    if (aRange < bRange) {
+      return -1;
+    } else if (bRange > aRange) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   /**
