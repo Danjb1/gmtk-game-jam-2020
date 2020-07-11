@@ -20,7 +20,8 @@ import {
   ScarerComponent,
   SpawnerComponent,
   JailerComponent,
-  WanderComponent
+  WanderComponent,
+  DifficultyCurveComponent
 } from './components';
 
 // Factories
@@ -124,13 +125,16 @@ export class Game implements EntityContext {
     // Cat Spawner
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, 100, 100))
-      .attach(new SpawnerComponent({
-        attemptsPerInterval: 2,
-        chanceToSpawn: 0.5,
-        createFn: createCat,
-        interval: 1000,
-        maxChildren: 50
-      })));
+      .attach(new SpawnerComponent(
+        createCat,
+        {
+          attemptsPerInterval: 2,
+          chanceToSpawn: 0.5,
+          interval: 1000,
+          maxChildren: 50
+        }
+      ))
+      .attach(new DifficultyCurveComponent()));
 
     // Pen
     this.addEntity(new Entity()

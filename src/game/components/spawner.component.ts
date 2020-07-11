@@ -4,7 +4,6 @@ import { intBetween, getHitboxFrom } from '../utils';
 import { Entity } from '../entity';
 
 export interface SpawnOptions {
-  createFn: any;
   interval: number;
   chanceToSpawn: number;
   attemptsPerInterval: number;
@@ -21,7 +20,10 @@ export class SpawnerComponent extends Component {
 
   private timeUntilSpawn: number;
 
-  constructor(private cfg: SpawnOptions) {
+  constructor(
+    private createFn: (a: any, b: any) => any, 
+    public cfg: SpawnOptions
+  ) {
     super(SpawnerComponent.KEY);
   }
 
@@ -87,7 +89,7 @@ export class SpawnerComponent extends Component {
     const y = intBetween(this.hitbox.y, this.hitbox.bottom);
 
     // Create our Entity
-    const spawned = this.cfg.createFn(x, y);
+    const spawned = this.createFn(x, y);
     this.children.push(spawned);
     this.entity.context.addEntity(spawned);
   }
