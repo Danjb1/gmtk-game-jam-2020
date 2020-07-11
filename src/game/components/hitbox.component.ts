@@ -1,6 +1,7 @@
 import { Component } from '../component';
 import { Game } from '../game';
 import { Entity } from '../entity';
+import { Vector } from '../vector';
 
 export interface HitboxListener {
 
@@ -66,16 +67,30 @@ export class HitboxComponent extends Component {
     return this.width / 2;
   }
 
-  public get halfHeight(): number {
+  get halfHeight(): number {
     return this.height / 2;
   }
 
-  public get centerX(): number {
+  get centerX(): number {
     return this.x + this.halfWidth;
   }
 
-  public get centerY(): number {
+  get centerY(): number {
     return this.y + this.halfHeight;
+  }
+
+  setSpeed(speed: Vector): void {
+    this.speedX = speed.x;
+    this.speedY = speed.y;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Collisions
+  //////////////////////////////////////////////////////////////////////////////
+
+  public collidedWith(other: HitboxComponent) {
+    if (this.onCollisionStayHandler)
+      this.onCollisionStayHandler(other);
   }
 
   // https://github.com/kittykatattack/learningPixi#the-hittestrectangle-function
