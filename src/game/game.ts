@@ -18,6 +18,7 @@ import {
   ControllerComponent,
   ScarerComponent
 } from './components';
+import { createCat } from './factory/cat.factory';
 
 export class Game implements EntityContext {
 

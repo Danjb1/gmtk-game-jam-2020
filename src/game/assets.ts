@@ -28,4 +28,11 @@ export class Assets {
   static texture(filename: string): PIXI.Texture {
     return Assets.loader.resources[Assets.SPRITES_SRC].textures[filename];
   }
+
+  /**
+   * Retrieves a previously-loaded Texture.
+   */
+  static spritesheet(): PIXI.Spritesheet {
+    return Assets.loader.resources[Assets.SPRITES_SRC].spritesheet;
+  }
 }

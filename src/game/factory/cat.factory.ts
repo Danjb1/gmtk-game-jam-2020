@@ -1,12 +1,22 @@
 import { Entity } from '../entity';
-import { EntityContext } from '../entity-context';
+import { Viewport } from 'pixi-viewport';
 
 // Components
-import { CatMetaComponent, HitboxComponent, WanderComponent } from '../components';
+import { CatMetaComponent, HitboxComponent, WanderComponent, AnimatedSpriteComponent } from '../components';
 
-export const createCat = (): Entity => {
-  return new Entity()
-    .attach(new HitboxComponent(0, 0, 10, 10))
-    .attach(new CatMetaComponent())
-    .attach(new WanderComponent());
+/**
+ * Generates a cat entity
+ */
+export const createCat = (viewport: Viewport): Entity => {
+  // Generate the meta before anything else;
+  const catMeta = new CatMetaComponent();
+  const animatedSprite = new AnimatedSpriteComponent(`ash_down`, viewport);
+
+  const catEntity = new Entity()
+    .attach(catMeta)
+    .attach(new HitboxComponent(0, 0, 30, 30))
+    .attach(animatedSprite)
+    .attach(new WanderComponent())
+
+  return catEntity;
 };

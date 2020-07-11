@@ -5,3 +5,4 @@ export * from './scarer.component';
 export * from './scared.component';
 export * from './sprite.component';
 export * from './wander.component';
+export * from './animated-sprite.component';
