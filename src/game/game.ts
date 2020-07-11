@@ -16,6 +16,7 @@ import {
   HitboxComponent,
   ControllerComponent
 } from './components';
+import { WanderComponent } from './components/wander.component';
 
 export class Game {
 
@@ -72,7 +73,7 @@ export class Game {
     const player = new Entity()
         .attach(new HitboxComponent(64, 64, 100, 100))
         .attach(new SpriteComponent('player.png', this.viewport))
-        .attach(new ControllerComponent(this.input));
+        .attach(new ControllerComponent(this.input, 1.5));
     this.addEntity(player);
   }
 
