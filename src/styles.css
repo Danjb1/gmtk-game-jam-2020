@@ -5,22 +5,34 @@
 body {
   background: #444;
   text-align: center;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+}
+
+.container{
+  width: 800px;
+  margin: auto;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  background-color: #949494;
 }
 
 #game-canvas {
-  border: 5px solid white;
   display: block;
   margin: auto;
-  margin-top: 30px;
 }
 
 #game-container {
-  margin: auto;
+  margin: 0 auto;
   position: relative;
-  width: 810px;
   height: 600px;
 }
 
+#pickup-canvas{
+  border:1px solid #d3d3d3; 
+  display: block; 
+  margin: auto;
+}
 
 #ui-overlay{
   position: absolute;
