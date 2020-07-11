@@ -1,4 +1,5 @@
 import { Component } from './component';
+import { EntityContext } from './entity-context';
 
 /**
  * A thing that exists within the game world.
@@ -10,6 +11,8 @@ export class Entity {
   public deleted: boolean;
 
   private components: Component[] = [];
+
+  constructor(private entityContext: EntityContext) {}
 
   /**
    * Attaches a Component to this Entity.

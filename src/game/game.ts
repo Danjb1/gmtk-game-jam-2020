@@ -1,8 +1,9 @@
 // Pixi
 import { Viewport } from 'pixi-viewport';
 
-// Player Input
+// Global Stuff
 import { Input } from './input';
+import { EntityContext } from './entity-context';
 
 // Assets
 import { Assets } from './assets';
@@ -17,7 +18,7 @@ import {
   ControllerComponent
 } from './components';
 
-export class Game {
+export class Game implements EntityContext {
 
   /*
    * Size of the game world.
@@ -75,7 +76,7 @@ export class Game {
   private initEntities(): void {
 
     // Player
-    this.addEntity(new Entity()
+    this.addEntity(new Entity(this)
       .attach(new HitboxComponent(64, 64, 100, 100))
       .attach(new SpriteComponent('player.png', this.viewport))
       .attach(new ControllerComponent(this.input, 8)));
@@ -87,6 +88,13 @@ export class Game {
   public addEntity(e: Entity): void {
     e.spawn();
     this.entities.push(e);
+  }
+
+  /**
+   * Gets all Entities in the world.
+   */
+  public getEntities(): Entity[] {
+    return this.entities;
   }
 
   /**

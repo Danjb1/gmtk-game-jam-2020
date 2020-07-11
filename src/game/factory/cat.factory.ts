@@ -1,9 +1,11 @@
 import { Entity } from '../entity';
-import { HitboxComponent, WanderComponent } from '../components';
-import { CatMetaComponent } from '../components/cat-meta.component';
+import { EntityContext } from '../entity-context';
 
-export const createCat = (): Entity => {
-  return new Entity()
+// Components
+import { CatMetaComponent, HitboxComponent, WanderComponent } from '../components';
+
+export const createCat = (entityContext: EntityContext): Entity => {
+  return new Entity(entityContext)
     .attach(new HitboxComponent(0, 0, 10, 10))
     .attach(new CatMetaComponent())
     .attach(new WanderComponent());
