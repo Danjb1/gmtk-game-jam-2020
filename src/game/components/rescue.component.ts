@@ -21,7 +21,6 @@ export class RescueComponent extends Component {
   }
 
   private _isInJail(): boolean {
-    console.log(this.entity.getComponent(JailedComponent.KEY));
     return !!this.entity.getComponent(JailedComponent.KEY);
   }
 

@@ -7,8 +7,7 @@ import { ScarerComponent } from './scarer.component';
 import { HitboxComponent } from './hitbox.component';
 
 // Utils
-import { getDistanceBetween, getHitboxFrom } from '../utils';
-import { Vector } from '../vector';
+import { getDistanceBetween, getHitboxFrom, Vector } from '../utils';
 
 /**
  * Will cause the holding Entity to flee from other Entities which have a
@@ -31,8 +30,6 @@ export class ScaredComponent extends Component {
   }
 
   update(delta: number): void {
-
-    // Locate closest scarer, if there is one
     const scarer = this.getScarer();
 
     if (scarer) {
@@ -44,9 +41,10 @@ export class ScaredComponent extends Component {
         .scaleToMagnitude(-1 * this.speed);
 
       // Correct flee vector towards centre of screen
+      // (this is to prevent us getting stuck on a wall or in a corner)
       this.hitbox.setSpeed(
         fleeVector
-          .plus(this.getCentreScreenVector())
+          .plus(this.getCentreScreenVector().multiply(0.75))
           .scaleToMagnitude(this.speed)
       );
     }

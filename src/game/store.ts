@@ -1,18 +1,21 @@
 export class GameState {
+
   _lives = 3;
+  _score = 0;
+
   get lives() {
     return this._lives;
   }
+
+  get score() {
+    return this._score;
+  }
+
   looseLife() {
     this._lives--;
   }
 
-  _score = 0;
-  get score(){
-    return this._score
-  }
-
-  increaseScore(amount: number){
+  increaseScore(amount: number) {
     this._score += amount;
     console.log('SCORE UPDATED', this.score);
   }

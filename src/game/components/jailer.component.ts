@@ -1,9 +1,7 @@
 import { Component } from '../component';
 import { getHitboxFrom } from '../utils';
-import { HitboxComponent, HitboxListener } from './hitbox.component';
 import { Entity } from '../entity';
-import { JailableComponent } from './jailable.component';
-import { JailedComponent } from './jailed.component';
+import { HitboxComponent, HitboxListener, JailableComponent, JailedComponent, EscapeComponent } from '.';
 
 export class JailerComponent extends Component implements HitboxListener {
 
@@ -39,18 +37,24 @@ export class JailerComponent extends Component implements HitboxListener {
     this.prisoners = this.prisoners.filter(e => !e.deleted);
   }
 
+  public removeEntityFromPrison(entityToRemove: Entity): void {
+    this.prisoners = this.prisoners.filter(entity => entity !== entityToRemove);
+  }
+
   public hitboxCollided(other: HitboxComponent): void {
     const jailable = <JailableComponent>
-        other.entity.getComponent(JailableComponent.KEY);
+      other.entity.getComponent(JailableComponent.KEY);
 
     if (jailable && !this.prisoners.includes(other.entity)) {
       this.jailEntity(other.entity);
     }
   }
 
-  private jailEntity(e: Entity): void {
-    this.prisoners.push(e);
-    e.attach(new JailedComponent(this));
+  private jailEntity(entity: Entity): void {
+    this.prisoners.push(entity);
+    entity
+      .attach(new JailedComponent(this))
+      .attach(new EscapeComponent());
   }
 
 }

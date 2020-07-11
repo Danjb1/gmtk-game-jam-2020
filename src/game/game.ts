@@ -24,7 +24,6 @@ import {
 // Factories
 import { createCat } from './factory/cat.factory';
 import { getHitboxFrom } from './utils';
-import { listenerCount } from 'stream';
 
 import { GameState } from './store';
 
@@ -108,13 +107,14 @@ export class Game implements EntityContext {
 
     // Pen
     this.addEntity(new Entity()
-    .attach(new HitboxComponent(
-      (Game.WORLD_WIDTH / 2) - 50,
-      (Game.WORLD_HEIGHT) - 100,
-      100, 100,
-      { blocks: ['player'] }))
-    .attach(new SpriteComponent('player.png'))
-    .attach(new JailerComponent()));
+      .attach(new HitboxComponent(
+        (Game.WORLD_WIDTH / 2) - 50,
+        (Game.WORLD_HEIGHT) - 100,
+        100, 100,
+        { blocks: ['player'] }
+      ))
+      .attach(new SpriteComponent('player.png'))
+      .attach(new JailerComponent()));
   }
 
   /**

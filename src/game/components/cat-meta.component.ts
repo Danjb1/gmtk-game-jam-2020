@@ -17,8 +17,8 @@ export class CatMetaComponent extends Component {
   private static readonly VARIETIES: CatVariety[] = ['ash', 'black', 'brown', 'ginger', 'grey', 'greywhite', 'tan', 'white'];
 
   // min max for duration
-  private static readonly MIN_DURATION = 5000;
-  private static readonly MAX_DURATION = 10000;
+  private static readonly MIN_DURATION = 30000;
+  private static readonly MAX_DURATION = 60000;
 
   private static readonly CAN_BE_PICKED_UP_THRESHOLD = .9;
 
@@ -114,7 +114,7 @@ export class CatMetaComponent extends Component {
    */
   get canBePickedUp(): boolean {
     const howCloseToPickupNow = this.howCloseToPickup;
-    return howCloseToPickupNow > CatMetaComponent.CAN_BE_PICKED_UP_THRESHOLD && howCloseToPickupNow < 1;
+    return howCloseToPickupNow > CatMetaComponent.CAN_BE_PICKED_UP_THRESHOLD;
   }
 
   // Duration in ms

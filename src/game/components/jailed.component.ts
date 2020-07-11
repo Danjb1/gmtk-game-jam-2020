@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { JailerComponent } from '.';
 import { Entity } from '../entity';
 import { HitboxComponent } from './hitbox.component';
-import { getHitboxFrom } from '../utils';
+import { getHitboxFrom, Vector } from '../utils';
 
 export class JailedComponent extends Component {
 
@@ -26,8 +26,7 @@ export class JailedComponent extends Component {
     // Put in jail!
     this.hitbox.x = this.jailerHitbox.centerX - this.hitbox.halfWidth;
     this.hitbox.y = this.jailerHitbox.centerY - this.hitbox.halfHeight;
-    this.hitbox.speedX = 0;
-    this.hitbox.speedY = 0;
+    this.hitbox.setSpeed(Vector.zero());
   }
 
   public update(delta: number): void {
@@ -51,6 +50,10 @@ export class JailedComponent extends Component {
       this.hitbox.y = this.jailerHitbox.bottom - this.hitbox.height;
       this.hitbox.speedY = 0;
     }
+  }
+
+  destroy() {
+    this.jailer.removeEntityFromPrison(this.entity);
   }
 
 }

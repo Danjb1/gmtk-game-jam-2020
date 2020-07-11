@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { Game } from '../game';
-import { Vector } from '../vector';
+import { Vector } from '../utils';
 import { getCollisionEdge } from '../utils';
 
 export enum Edge {
