@@ -10,12 +10,18 @@ export class LivesElement extends UiElement {
     super(parent);
   }
 
+  private _prevContent:string;
+
   create(): void {
     this.elem = document.createElement('span');
-    this.elem.id = 'lives';
   }
 
   update(props: Props): void {
-    this.elem.innerText = props.lives.toString();
+    const newContent = `lives: ${props.lives}`;
+    if (newContent === this._prevContent){
+      return;
+    }
+    this._prevContent = newContent;
+    this.elem.innerText = newContent;
   }
 }

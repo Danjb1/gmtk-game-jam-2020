@@ -9,7 +9,7 @@ export class Hud {
   private scoreElement: ScoreElement;
   private livesElement: LivesElement;
 
-  private gameContainer: HTMLElement = document.getElementById('game-container');
+  private overlayElement: HTMLElement = document.getElementById('ui-overlay');
 
   constructor(private game: Game) {
 
@@ -19,8 +19,8 @@ export class Hud {
     div.appendChild(this.pickup.create());
 
     // Score
-    this.scoreElement = new ScoreElement(this.gameContainer);
-    this.livesElement = new LivesElement(this.gameContainer);
+    this.scoreElement = new ScoreElement(this.overlayElement);
+    this.livesElement = new LivesElement(this.overlayElement);
   }
 
   update() {
