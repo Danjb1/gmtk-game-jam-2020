@@ -1,8 +1,12 @@
-import * as PIXI from "pixi.js";
+import * as PIXI from 'pixi.js';
 
-import { Component } from "../component";
-import { Assets } from "../assets";
-import { HitboxComponent } from "./hitbox.component";
+import { Assets } from '../assets';
+
+import { Component } from '../component';
+import { HitboxComponent } from './hitbox.component';
+
+// Utils
+import { getHitboxFrom } from '../utils';
 
 type Direction = 'up' | 'down' | 'left' | 'right';
 
@@ -31,16 +35,14 @@ export class AnimatedSpriteComponent extends Component {
       .addChild(this.sprite);
 
     // Retrieve the Hitbox from the Entity
-    this.hitbox = <HitboxComponent>(
-      this.entity.getComponent(HitboxComponent.KEY)
-    );
+    this.hitbox = getHitboxFrom(this.entity);
 
     this.snapToEntity();
   }
 
   public update(delta: number): void {
     this.updateDirection();
-    if (this.hitbox.speedX == 0 && this.hitbox.speedY == 0) {
+    if (this.hitbox.speedX === 0 && this.hitbox.speedY === 0) {
       this.sprite.stop();
     } else {
       this.sprite.play();
@@ -72,7 +74,9 @@ export class AnimatedSpriteComponent extends Component {
 
     // Update the texture
     this.sprite.destroy();
-    this.sprite = new PIXI.AnimatedSprite(this.spritesheet.animations[`${this.filename}_${newDirection}`])
+    this.sprite = new PIXI.AnimatedSprite(
+      this.spritesheet.animations[`${this.filename}_${newDirection}`]
+    );
     this.entity.context
       .getViewport()
       .addChild(this.sprite);
