@@ -76,17 +76,17 @@ export class Game implements EntityContext {
   private initEntities(): void {
 
     // Player
-    this.addEntity(new Entity(this)
+    this.addEntity(new Entity()
       .attach(new HitboxComponent(64, 64, 100, 100))
       .attach(new SpriteComponent('player.png', this.viewport))
-      .attach(new ControllerComponent(this.input, 80)));
+      .attach(new ControllerComponent(this.input, 250)));
   }
 
   /**
    * Adds an Entity to the world.
    */
   public addEntity(e: Entity): void {
-    e.spawn();
+    e.spawn(this);
     this.entities.push(e);
   }
 

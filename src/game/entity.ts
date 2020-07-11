@@ -9,10 +9,9 @@ import { EntityContext } from './entity-context';
 export class Entity {
 
   public deleted: boolean;
+  public entityContext: EntityContext;
 
   private components: Component[] = [];
-
-  constructor(public entityContext: EntityContext) {}
 
   /**
    * Attaches a Component to this Entity.
@@ -30,7 +29,8 @@ export class Entity {
    *
    * By this point, all Components have been attached.
    */
-  public spawn(): void {
+  public spawn(entityContext: EntityContext): void {
+    this.entityContext = entityContext;
     this.components.forEach(c => c.onSpawn());
   }
 
