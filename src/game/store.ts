@@ -11,7 +11,7 @@ export class GameState {
     return this._score;
   }
 
-  looseLife() {
+  loseLife() {
     this._lives--;
   }
 

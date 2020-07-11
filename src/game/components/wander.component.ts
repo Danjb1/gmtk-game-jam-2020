@@ -25,12 +25,12 @@ export class WanderComponent extends Component {
   /**
    * Maximum x/y speed when wandering.
    */
-  private maxWanderSpeed = 200;
+  private maxWanderSpeed: number;
 
   /**
    * Minimum time to wander, in ms.
    */
-  private minWanderTime = 100;
+  private minWanderTime: number;
 
   /**
    * Maximum time to wander, in ms.
@@ -42,8 +42,10 @@ export class WanderComponent extends Component {
    */
   private wanderTimeRemaining = 0;
 
-  constructor() {
+  constructor(minWanderSpeed: number, maxWanderSpeed: number) {
     super(WanderComponent.KEY);
+    this.minWanderSpeed = minWanderSpeed;
+    this.maxWanderSpeed = maxWanderSpeed;
   }
 
   public onSpawn(): void {
