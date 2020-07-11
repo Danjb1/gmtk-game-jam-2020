@@ -25,7 +25,7 @@ export class Game {
    *
    * @param callbackFn Function to call when the game is loaded.
    */
-  load(callbackFn: any): void {
+  public load(callbackFn: any): void {
     Assets.loadTextures(this.app.loader, () => {
       this.setup();
       callbackFn();
@@ -35,7 +35,7 @@ export class Game {
   /**
    * Called when our Textures have finished loading.
    */
-  setup(): void {
+  private setup(): void {
     this.initViewport();
     this.initEntities();
   }
@@ -43,7 +43,7 @@ export class Game {
   /**
    * Creates the Viewport.
    */
-  initViewport(): void {
+  private initViewport(): void {
     this.viewport = new Viewport({
       worldWidth: Game.WORLD_WIDTH,
       worldHeight: Game.WORLD_HEIGHT
@@ -54,7 +54,7 @@ export class Game {
   /**
    * Creates our initial Entities.
    */
-  initEntities(): void {
+  private initEntities(): void {
     const player = new Entity()
         .attach(new HitboxComponent(64, 64, 100, 100))
         .attach(new SpriteComponent('player.png', this.viewport))
@@ -70,7 +70,7 @@ export class Game {
   /**
    * Adds an Entity to the world.
    */
-  addEntity(e: Entity): void {
+  public addEntity(e: Entity): void {
     e.spawn();
     this.entities.push(e);
   }
@@ -83,7 +83,7 @@ export class Game {
    *  1 = frame is exactly on time
    *  2 = frame has taken twice as long as expected
    */
-  update(delta: number): void {
+  public update(delta: number): void {
 
     // Update our Entities.
     // We make a copy of the array in case the list is changed during iteration.

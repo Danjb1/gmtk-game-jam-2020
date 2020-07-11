@@ -22,14 +22,14 @@ export class SpriteComponent extends Component {
     this.sprite = new PIXI.Sprite(texture);
   }
 
-  onAttach(e: Entity): void {
+  public onAttach(e: Entity): void {
     super.onAttach(e);
 
     // Register this Sprite with Pixi
     this.viewport.addChild(this.sprite);
   }
 
-  onSpawn(): void {
+  public onSpawn(): void {
 
     // Retrieve the Hitbox from the Entity
     this.hitbox = <HitboxComponent>
@@ -38,11 +38,11 @@ export class SpriteComponent extends Component {
     this.snapToEntity();
   }
 
-  update(delta: number): void {
+  public update(delta: number): void {
     this.snapToEntity();
   }
 
-  snapToEntity(): void {
+  private snapToEntity(): void {
     // Update the position of the Sprite based on the Entity position
     this.sprite.x = this.hitbox.x;
     this.sprite.y = this.hitbox.y;

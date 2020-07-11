@@ -15,7 +15,7 @@ export class HitboxComponent extends Component {
     super(HitboxComponent.KEY);
   }
 
-  update(delta: number): void {
+  public update(delta: number): void {
     this.x += this.speedX;
     this.y += this.speedY;
   }

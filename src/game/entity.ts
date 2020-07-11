@@ -16,7 +16,7 @@ export class Entity {
    *
    * Results in a callback to `Component.onAttach`.
    */
-  attach(component: Component) {
+  public attach(component: Component) {
     this.components.push(component);
     component.onAttach(this);
     return this;
@@ -27,7 +27,7 @@ export class Entity {
    *
    * By this point, all Components have been attached.
    */
-  spawn(): void {
+  public spawn(): void {
     this.components.forEach(c => {
       c.onSpawn();
     });
@@ -36,14 +36,14 @@ export class Entity {
   /**
    * Cleans up this Entity.
    */
-  destroy(): void {
+  public destroy(): void {
     this.components.forEach(c => c.destroy());
   }
 
   /**
    * Updates this Entity by one frame.
    */
-  update(delta: number): void {
+  public update(delta: number): void {
 
     // Update our Components.
     // We make a copy of the array in case the list is changed during iteration.
@@ -60,7 +60,10 @@ export class Entity {
     this.components = this.components.filter(c => !c.deleted);
   }
 
-  getComponent(key: Symbol): Component {
+  /**
+   * Retrieves the first Component with the given key.
+   */
+  public getComponent(key: Symbol): Component {
     return this.components.find(c => c.key === key);
   }
 
