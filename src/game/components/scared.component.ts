@@ -56,16 +56,13 @@ export class ScaredComponent extends Component {
     if (actualScarers.length > 0) {
       const scarerHitbox = getHitboxFrom(actualScarers[0]);
 
-      // Work out distance vector to scarer
-      const deltaX = scarerHitbox.x - this.hitbox.x;
-      const deltaY = scarerHitbox.y - this.hitbox.y;
-
       // Calculate proper scale for new vector
       const factor = this.speed / getDistanceBetween(this.hitbox, scarerHitbox);
 
-      // Calculate new vector
-      this.hitbox.speedX = -1 * deltaX * factor;
-      this.hitbox.speedY = -1 * deltaY * factor;
+      // Invert and scale distance vector to scarer
+      // (to go in opposite direction at correct overall speed)
+      this.hitbox.speedX = -1 * (scarerHitbox.x - this.hitbox.x) * factor;
+      this.hitbox.speedY = -1 * (scarerHitbox.y - this.hitbox.y) * factor;
     }
   }
 
