@@ -26,6 +26,8 @@ import { createCat } from './factory/cat.factory';
 import { getHitboxFrom } from './utils';
 import { listenerCount } from 'stream';
 
+import { GameState } from './store';
+
 export class Game implements EntityContext {
 
   /*
@@ -41,7 +43,9 @@ export class Game implements EntityContext {
   private entities: Entity[] = [];
   private input: Input = new Input();
 
-  constructor(private app: PIXI.Application) {}
+  state: GameState = new GameState();
+
+  constructor(private app: PIXI.Application) { }
 
   /**
    * Initialises the game.
@@ -143,8 +147,8 @@ export class Game implements EntityContext {
 
     // Destroy deleted Entities
     this.entities
-        .filter(e => e.deleted)
-        .forEach(e => e.destroy());
+      .filter(e => e.deleted)
+      .forEach(e => e.destroy());
 
     // Remove deleted Entities
     this.entities = this.entities.filter(e => !e.deleted);
@@ -186,6 +190,10 @@ export class Game implements EntityContext {
 
   public getViewport(): Viewport {
     return this.viewport;
+  }
+
+  public getState(): GameState {
+    return this.state;
   }
 
 }
