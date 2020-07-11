@@ -11,11 +11,11 @@ import { PickupComponent } from './ui/pickup.component';
   // Create canvas
   const type = PIXI.utils.isWebGLSupported() ? 'WebGL' : 'canvas';
   PIXI.utils.sayHello(type);
-  
+
   // Create a Pixi Application
   let app = new PIXI.Application({ width: 800, height: 600 });
 
-  //Load the pickup bar
+  // Load the pickup bar
   let pickup = new PickupComponent();
   document.body.appendChild(pickup.create());
 
