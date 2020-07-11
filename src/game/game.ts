@@ -165,6 +165,14 @@ export class Game implements EntityContext {
       new Audio(`${Assets.SOUNDS_BASEPATH}/meow1.ogg`).play();
     }
 
+    if (this.entities[0].context.getState().lives <= 0) {
+      this.load(() => {
+        this.entities = [];
+        this.count = 1;
+        return;
+      })
+    }
+
     // Update our Entities.
     // We make a copy of the array in case the list is changed during iteration.
     [...this.entities].forEach(e => {
