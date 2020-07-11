@@ -1,16 +1,23 @@
+import * as PIXI from 'pixi.js';
 import { Component } from '../component';
 import { Entity } from '../entity';
+import { Assets } from '../assets';
 
 export class SpriteComponent extends Component {
 
-  constructor(private filename: string) {
+  private sprite: PIXI.Sprite;
+
+  constructor(
+      filename: string,
+      private stage: PIXI.Container) {
     super();
+
+    const texture = Assets.texture(filename);
+    this.sprite = new PIXI.Sprite(texture);
   }
 
   onAttach(e: Entity) {
     super.onAttach(e);
-
-    // TODO: Create Pixi graphic
   }
 
   update(delta: number): void {

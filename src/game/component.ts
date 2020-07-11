@@ -11,8 +11,6 @@ export abstract class Component {
 
   /**
    * Callback for when this Component is attached to an Entity.
-   *
-   * Any initialisation should go inside here.
    */
   onAttach(e: Entity): void {
     this.entity = e;

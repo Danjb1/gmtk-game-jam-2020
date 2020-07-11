@@ -17,9 +17,11 @@ import { Game } from './game/game';
   app.view.id = 'game-canvas';
   document.body.appendChild(app.view);
 
-  // Create our Game
+  // Load the Game
   const game = new Game(app);
+  game.load(() => {
+    // Start the game loop
+    app.ticker.add(delta => game.update(delta));
+  });
 
-  // Start the game loop
-  app.ticker.add(delta => game.update(delta));
 })();

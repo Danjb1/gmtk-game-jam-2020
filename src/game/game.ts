@@ -1,20 +1,38 @@
 import { Entity } from './entity';
 import { SpriteComponent } from './components';
+import { Assets } from './assets';
 
 export class Game {
 
   private entities: Entity[] = [];
 
-  constructor(private app: PIXI.Application) {
+  constructor(private app: PIXI.Application) {}
+
+  /**
+   * Initialises the game.
+   *
+   * @param callbackFn Function to call when the game is loaded.
+   */
+  load(callbackFn: any): void {
+    Assets.loadTextures(this.app.loader, () => {
+      this.setup();
+      callbackFn();
+    });
+  }
+
+  /**
+   * Called when our Textures have finished loading.
+   */
+  setup(): void {
     this.initEntities();
   }
 
   /**
-   * Creates our initial Entities
+   * Creates our initial Entities.
    */
   initEntities(): void {
     const player = new Entity();
-    player.attach(new SpriteComponent('player.png'));
+    player.attach(new SpriteComponent('player.png', this.app.stage));
     this.entities.push(player);
   }
 
