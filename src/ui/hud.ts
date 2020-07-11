@@ -24,13 +24,15 @@ export class Hud {
 
   update() {
 
+    const {score, lives } = this.game.getState();
+    
     if (this.game.isGameOver()) {
+      // We still need to update the lives to show the last one disappearing!
+      this.livesElement.update({ lives });
       return;
     }
 
     this.pickup.update(this.game);
-    
-    const {score, lives } = this.game.getState();
     
     this.scoreElement.update({ score });
     this.livesElement.update({ lives });

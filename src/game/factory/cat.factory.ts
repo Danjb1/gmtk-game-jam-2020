@@ -8,7 +8,6 @@ import {
   AnimatedSpriteComponent,
   ScaredComponent,
   JailableComponent,
-  RescueComponent,
   MeowComponent,
   LateComponent
 } from '../components';
@@ -28,7 +27,6 @@ export const createCat = (x: number, y: number): Entity => {
     .attach(new WanderComponent(100, 200))
     .attach(new JailableComponent())
     .attach(new ScaredComponent())
-    .attach(new RescueComponent())
     .attach(new MeowComponent())
     .attach(new LateComponent());
 
