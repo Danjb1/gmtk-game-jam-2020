@@ -117,12 +117,12 @@ export class Game implements EntityContext {
 
     // Dog
     if (cfg.dog.enabled) {
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 32, 32,
-        { tags: ['dog'] }))
-      .attach(new SpriteComponent(cfg.dog.sprite))
-      .attach(new ScarerComponent())
-      .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 32, 32,
+          { tags: ['dog'] }))
+        .attach(new SpriteComponent(cfg.dog.sprite))
+        .attach(new ScarerComponent())
+        .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
     }
 
     // Cat Spawner
@@ -157,8 +157,7 @@ export class Game implements EntityContext {
           cfg.leftTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.leftTable.sprite))
-      );
+        .attach(new SpriteComponent(cfg.leftTable.sprite)));
     }
 
     // Right Table
@@ -171,8 +170,7 @@ export class Game implements EntityContext {
           cfg.rightTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.rightTable.sprite))
-      );
+        .attach(new SpriteComponent(cfg.rightTable.sprite)));
     }
   }
 
