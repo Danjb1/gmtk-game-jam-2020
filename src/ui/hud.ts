@@ -1,10 +1,10 @@
 import { Game } from '../game/game';
-import { PickupComponent } from './pickup.component';
+import { PickupElement } from './pickup.element';
 import { ScoreElement, LivesElement } from './elements/';
 
 export class Hud {
 
-  private pickup: PickupComponent;
+  private pickup: PickupElement;
 
   private scoreElement: ScoreElement;
   private livesElement: LivesElement;
@@ -14,7 +14,7 @@ export class Hud {
   constructor(private game: Game) {
 
     // Pickup bar
-    this.pickup = new PickupComponent(game);
+    this.pickup = new PickupElement(game);
     const div = document.getElementById('ui');
     div.appendChild(this.pickup.create());
 
