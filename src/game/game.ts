@@ -1,9 +1,21 @@
+import { Viewport } from 'pixi-viewport';
+
 import { Assets } from './assets';
 import { Entity } from './entity';
 import { SpriteComponent, HitboxComponent, InputComponent } from './components';
 
 export class Game {
 
+  /*
+   * Size of the game world.
+   *
+   * Entities positioned should be defined in "world units" instead of pixels.
+   * The viewport will adjust the display accordingly.
+   */
+  public static readonly WORLD_WIDTH = 800;
+  public static readonly WORLD_HEIGHT = 600;
+
+  private viewport: Viewport;
   private entities: Entity[] = [];
 
   constructor(private app: PIXI.Application) {}
@@ -24,7 +36,19 @@ export class Game {
    * Called when our Textures have finished loading.
    */
   setup(): void {
+    this.initViewport();
     this.initEntities();
+  }
+
+  /**
+   * Creates the Viewport.
+   */
+  initViewport(): void {
+    this.viewport = new Viewport({
+      worldWidth: Game.WORLD_WIDTH,
+      worldHeight: Game.WORLD_HEIGHT
+    }).fit();
+    this.app.stage.addChild(this.viewport);
   }
 
   /**
