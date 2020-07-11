@@ -1,16 +1,15 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from "pixi.js";
 
-import { Component } from '../component';
-import { Assets } from '../assets';
-import { HitboxComponent } from './hitbox.component';
+import { Component } from "../component";
+import { Assets } from "../assets";
+import { HitboxComponent } from "./hitbox.component";
 
 type Direction = 'up' | 'down' | 'left' | 'right';
 
 export class AnimatedSpriteComponent extends Component {
-
   public static readonly KEY = Symbol();
 
-  private sprite: PIXI.Sprite;
+  private sprite: PIXI.AnimatedSprite;
   private hitbox: HitboxComponent;
   private spritesheet: PIXI.Spritesheet;
 
@@ -23,6 +22,8 @@ export class AnimatedSpriteComponent extends Component {
   }
 
   public onSpawn(): void {
+    this.sprite.animationSpeed = 0.2;
+    this.sprite.play();
 
     // Register this Sprite with Pixi
     this.entity.context
@@ -30,14 +31,20 @@ export class AnimatedSpriteComponent extends Component {
       .addChild(this.sprite);
 
     // Retrieve the Hitbox from the Entity
-    this.hitbox = <HitboxComponent>
-      this.entity.getComponent(HitboxComponent.KEY);
+    this.hitbox = <HitboxComponent>(
+      this.entity.getComponent(HitboxComponent.KEY)
+    );
 
     this.snapToEntity();
   }
 
   public update(delta: number): void {
     this.updateDirection();
+    if (this.hitbox.speedX == 0 && this.hitbox.speedY == 0) {
+      this.sprite.stop();
+    } else {
+      this.sprite.play();
+    }
     this.snapToEntity();
   }
 

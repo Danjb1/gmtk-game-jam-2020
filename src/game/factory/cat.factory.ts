@@ -1,4 +1,5 @@
-import { Entity } from '../entity';
+import { Entity } from "../entity";
+
 // Components
 import {
   CatMetaComponent,
