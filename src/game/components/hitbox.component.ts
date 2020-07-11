@@ -41,7 +41,6 @@ export class HitboxComponent extends Component {
   }
 
   public collidedWith(other: HitboxComponent) {
-    console.log('Entities collided', this, other);
     // TODO: Call 'onCollision' event
   }
 

@@ -141,8 +141,8 @@ export class Game implements EntityContext {
     [...this.entities].forEach(e => {
       const eHitBox = <HitboxComponent>e.getComponent(HitboxComponent.KEY);
       [...this.entities].forEach(eOther => {
-        if (eOther !== eOther) {
-          const eOtherHitBox = <HitboxComponent>eOther.getComponent(HitboxComponent.KEY);
+        const eOtherHitBox = <HitboxComponent>eOther.getComponent(HitboxComponent.KEY);
+        if (eHitBox !== eOtherHitBox) {
           if (eHitBox.intersects(eOtherHitBox)) {
             eHitBox.collidedWith(eOtherHitBox);
           }
