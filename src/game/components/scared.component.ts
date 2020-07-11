@@ -33,12 +33,19 @@ export class ScaredComponent extends Component {
     const scarers = this.getScarers();
 
     if (scarers.length > 0) {
-      const scarerHitbox = getHitboxFrom(scarers[0]);
+      const scarerHitboxes = scarers.map(scarer => getHitboxFrom(scarer));
 
-      // Plot course away from scarer
-      const fleeVector = Vector
-        .between(this.hitbox.centrePosition, scarerHitbox.centrePosition)
-        .scaleToMagnitude(-1 * this.speed);
+      // Sum vectors to all scarers
+      let fleeVector = Vector.zero();
+      scarerHitboxes.forEach(scarerHitbox => {
+        fleeVector = fleeVector.plus(
+          Vector.between(
+            this.hitbox.centrePosition, scarerHitbox.centrePosition
+        ));
+      });
+
+      // Scale flee vector to speed and point away from scarers on average
+      fleeVector = fleeVector.scaleToMagnitude(-1 * this.speed);
 
       // Correct flee vector towards centre of screen
       // (this is to prevent us getting stuck on a wall or in a corner)
