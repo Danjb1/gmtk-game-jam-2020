@@ -33,5 +33,5 @@ import { PickupComponent } from './ui/pickup.component';
   // Load the pickup bar
   let pickup = new PickupComponent(game);
   document.body.appendChild(pickup.create());
-  
+
 })();

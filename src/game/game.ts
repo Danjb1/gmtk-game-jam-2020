@@ -24,7 +24,6 @@ import {
 // Factories
 import { createCat } from './factory/cat.factory';
 import { getHitboxFrom } from './utils';
-import { listenerCount } from 'stream';
 
 import { GameState } from './store';
 
