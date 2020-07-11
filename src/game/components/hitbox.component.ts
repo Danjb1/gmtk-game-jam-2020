@@ -21,19 +21,6 @@ export class HitboxComponent extends Component {
     super(HitboxComponent.KEY);
   }
 
-  get right(): number {
-    return this.x + this.width;
-  }
-
-  get bottom(): number {
-    return this.y + this.height;
-  }
-
-  setSpeed(speed: Vector): void {
-    this.speedX = speed.x;
-    this.speedY = speed.y;
-  }
-
   public update(delta: number): void {
 
     // Calculate change in position for this frame
@@ -50,25 +37,50 @@ export class HitboxComponent extends Component {
     }
   }
 
-  public collidedWith(other: HitboxComponent) {
-    if (this.onCollisionStayHandler)
-      this.onCollisionStayHandler(other);
+  //////////////////////////////////////////////////////////////////////////////
+  // Field Access
+  //////////////////////////////////////////////////////////////////////////////
+
+  get right(): number {
+    return this.x + this.width;
   }
 
-  public get halfWidth(): number {
+  get bottom(): number {
+    return this.y + this.height;
+  }
+
+  get centrePosition(): Vector {
+    return new Vector(this.centerX, this.centerY);
+  }
+
+  get halfWidth(): number {
     return this.width / 2;
   }
 
-  public get halfHeight(): number {
+  get halfHeight(): number {
     return this.height / 2;
   }
 
-  public get centerX(): number {
+  get centerX(): number {
     return this.x + this.halfWidth;
   }
 
-  public get centerY(): number {
+  get centerY(): number {
     return this.y + this.halfHeight;
+  }
+
+  setSpeed(speed: Vector): void {
+    this.speedX = speed.x;
+    this.speedY = speed.y;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Collisions
+  //////////////////////////////////////////////////////////////////////////////
+
+  public collidedWith(other: HitboxComponent) {
+    if (this.onCollisionStayHandler)
+      this.onCollisionStayHandler(other);
   }
 
   // https://github.com/kittykatattack/learningPixi#the-hittestrectangle-function
