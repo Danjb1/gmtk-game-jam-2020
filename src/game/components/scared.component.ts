@@ -14,14 +14,14 @@ export class ScaredComponent extends Component {
 
   private hitbox: HitboxComponent;
   private frightDistance = 100;
-  private speed = 12;
+  private speed = 300;
 
   constructor() {
     super(ScaredComponent.KEY);
   }
 
   onSpawn(): void {
-    this.hitbox = <HitboxComponent> this.entity.getComponent(HitboxComponent.KEY);
+    this.hitbox = this.extractHitbox(this.entity);
   }
 
   update(): void {
@@ -50,18 +50,26 @@ export class ScaredComponent extends Component {
 
     // If there is one, plot a course away from it
     if (actualScarers.length > 0) {
-      console.log('AAAAAH');
-      // TODO
+      const scarerHitbox = this.extractHitbox(actualScarers[0]);
+      console.log('AAAAAH!!');
+      // TODO: move away from it
     }
   }
 
   /**
    * Gets the distance from the parent Entity to another Entity.
    */
-  getRangeTo(otherEntity: Entity): number {
+  private getRangeTo(otherEntity: Entity): number {
     return getDistanceBetween(
       this.hitbox,
-      <HitboxComponent> otherEntity.getComponent(HitboxComponent.KEY)
+      this.extractHitbox(otherEntity)
     );
+  }
+
+  /**
+   * Gets the HitboxComponent from an Entity, if it has one.
+   */
+  private extractHitbox(entity: Entity): HitboxComponent {
+    return <HitboxComponent> entity.getComponent(HitboxComponent.KEY);
   }
 }

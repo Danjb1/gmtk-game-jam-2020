@@ -16,6 +16,7 @@ import {
   SpriteComponent,
   HitboxComponent,
   ControllerComponent,
+  ScarerComponent
 } from './components';
 
 export class Game implements EntityContext {
@@ -79,7 +80,8 @@ export class Game implements EntityContext {
     this.addEntity(new Entity()
       .attach(new HitboxComponent(64, 64, 100, 100))
       .attach(new SpriteComponent('player.png', this.viewport))
-      .attach(new ControllerComponent(this.input, 250)));
+      .attach(new ControllerComponent(this.input, 250))
+      .attach(new ScarerComponent()));
   }
 
   /**
