@@ -9,6 +9,7 @@ import {
   ScaredComponent,
   JailableComponent,
   RescueComponent,
+  MeowComponent,
   LateComponent
 } from '../components';
 
@@ -28,6 +29,7 @@ export const createCat = (x: number, y: number): Entity => {
     .attach(new JailableComponent())
     .attach(new ScaredComponent())
     .attach(new RescueComponent())
+    .attach(new MeowComponent())
     .attach(new LateComponent());
 
   return catEntity;

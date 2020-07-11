@@ -110,7 +110,7 @@ export class Game implements EntityContext {
       .attach(new HitboxComponent(128, 128, 32, 32,
         { tags: ['player'] }))
       .attach(new SpriteComponent('player.png'))
-      .attach(new ControllerComponent(this.input, 300))
+      .attach(new ControllerComponent(this.input, 350))
       .attach(new ScarerComponent()));
 
     // Dog
@@ -169,8 +169,8 @@ export class Game implements EntityContext {
    */
   public update(): void {
 
-    if (Math.random() < 0.01) {
-      new Audio(`${Assets.SOUNDS_BASEPATH}/meow1.ogg`).play();
+    if (this.isGameOver()) {
+      return;
     }
 
     // Update our Entities.
@@ -193,6 +193,10 @@ export class Game implements EntityContext {
     [...this.entities].forEach(e => {
       e.lateUpdate(this.app.ticker.deltaMS);
     });
+  }
+
+  private isGameOver(): boolean {
+    return this.state.lives <= 0;
   }
 
   private detectCollisions(): void {

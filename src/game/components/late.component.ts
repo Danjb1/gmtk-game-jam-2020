@@ -26,6 +26,6 @@ export class LateComponent extends Component {
     
     this.entity.context
       .getState()
-      .looseLife();
+      .loseLife();
   }
 }
