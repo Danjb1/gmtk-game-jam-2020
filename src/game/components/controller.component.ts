@@ -20,32 +20,20 @@ export class ControllerComponent extends Component {
   }
 
   update(delta: number): void {
+    this.hitbox.speedX = this.getAxisSpeed(Input.LEFT, Input.RIGHT);
+    this.hitbox.speedY = this.getAxisSpeed(Input.UP, Input.DOWN);
+  }
 
-    // Detect current inputs
-    const up = this.input.isPressed(Input.UP);
-    const down = this.input.isPressed(Input.DOWN);
-    const left = this.input.isPressed(Input.LEFT);
-    const right = this.input.isPressed(Input.RIGHT);
-
-    // Determine how entity should move
-    let speedX = 0;
-    let speedY = 0;
-
-    if (up && !down) {
-      speedY = -1 * this.speed;
-    } else if (!up && down) {
-      speedY = this.speed;
+  private getAxisSpeed(positiveName: String, negativeName: String): number {
+    const positive = this.input.isPressed(positiveName);
+    const negative = this.input.isPressed(negativeName);
+    let speed = 0;
+    if (positive && !negative) {
+      speed = -1 * this.speed;
+    } else if (!positive && negative) {
+      speed = this.speed;
     }
-
-    if (left && !right) {
-      speedX = -1 * this.speed;
-    } else if (!left && right) {
-      speedX = this.speed;
-    }
-
-    // Apply speeds to hitbox
-    this.hitbox.speedX = speedX;
-    this.hitbox.speedY = speedY;
+    return speed;
   }
 
   onSpawn(): void {
