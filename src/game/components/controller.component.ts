@@ -1,5 +1,8 @@
-import { Component } from '../component';
 import { Entity } from '../entity';
+
+// Components
+import { Component } from '../component';
+import { HitboxComponent, InputComponent } from '../components';
 
 export class ControllerComponent extends Component {
 
@@ -11,6 +14,9 @@ export class ControllerComponent extends Component {
 
   public static readonly KEY = Symbol();
 
+  private input: InputComponent;
+  private hitbox: HitboxComponent;
+
   constructor() {
     super(ControllerComponent.KEY);
   }
@@ -21,5 +27,8 @@ export class ControllerComponent extends Component {
 
   update(delta: number): void {}
 
-  onSpawn(): void {}
+  onSpawn(): void {
+    this.input = <InputComponent> this.entity.getComponent(InputComponent.KEY);
+    this.hitbox = <HitboxComponent> this.entity.getComponent(HitboxComponent.KEY);
+  }
 }
