@@ -1,5 +1,6 @@
 import { Component } from '../component';
 import { CatMetaComponent } from './cat-meta.component';
+import { JailedComponent } from '.';
 
 /**
  * Handles a cat being picked up
@@ -15,7 +16,7 @@ export class RescueComponent extends Component {
   }
 
   private _isInJail(): boolean {
-    return false; // TODO implement is it in jail?
+    return !!this.entity.getComponent(JailedComponent.KEY);
   }
 
   update() {
@@ -23,7 +24,10 @@ export class RescueComponent extends Component {
       return
     }
     // Add the cats score to the game state
-    this.entity.context.getState().score += this._catMeta.value;
+    this.entity.context
+      .getState()
+      .increaseScore(this._catMeta.value);
+      
     // Delete the cat
     this.entity.deleted = true;
   }

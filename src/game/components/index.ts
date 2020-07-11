@@ -4,6 +4,7 @@ export * from './controller.component';
 export * from './hitbox.component';
 export * from './jailable.component';
 export * from './jailer.component';
+export * from './jailed.component';
 export * from './scarer.component';
 export * from './scared.component';
 export * from './spawner.component';
