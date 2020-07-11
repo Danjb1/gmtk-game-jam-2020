@@ -21,7 +21,7 @@ import { Hud } from './ui/hud';
 
   // Add Pixi canvas to the DOM
   app.view.id = 'game-canvas';
-  document.body.appendChild(app.view);
+  document.getElementById('game-container').appendChild(app.view);
 
   // Load the Game
   const game = new Game(app);
