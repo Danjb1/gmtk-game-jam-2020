@@ -10,6 +10,7 @@ export class PickupElement extends UiElement {
 
   private static readonly HEIGHT = 50;
   private static readonly WIDTH = 800;
+  private static readonly IMAGE_WIDTH = 16;
 
   public catMetaDataComponents = new Array<CatMetaComponent>();
   public catHeights = new Map<number, number>();
@@ -80,7 +81,7 @@ export class PickupElement extends UiElement {
   }
 
   moveCatAlongProgressBar(cat: CatMetaComponent, context: CanvasRenderingContext2D, height: number) {
-    let width = (PickupElement.WIDTH * cat.howCloseToPickup) - 35;
+    let width = (PickupElement.WIDTH * cat.howCloseToPickup) - PickupElement.IMAGE_WIDTH;
     context.drawImage(this.image, width, height);
   }
 
