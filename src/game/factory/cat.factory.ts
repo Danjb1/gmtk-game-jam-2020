@@ -22,7 +22,7 @@ export const createCat = (x: number, y: number): Entity => {
     .attach(new HitboxComponent(x, y, 30, 30))
     .attach(animatedSprite)
     .attach(new WanderComponent())
-    .attach(new ScaredComponent);
+    .attach(new ScaredComponent());
 
   return catEntity;
 };
