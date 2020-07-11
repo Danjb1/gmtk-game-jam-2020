@@ -13,7 +13,11 @@ import { PickupComponent } from './ui/pickup.component';
   PIXI.utils.sayHello(type);
 
   // Create a Pixi Application
-  let app = new PIXI.Application({ width: 800, height: 600 });
+  let app = new PIXI.Application({
+    width: 800,
+    height: 600,
+    backgroundColor: 0x0c8b30
+  });
 
   // Load the pickup bar
   let pickup = new PickupComponent();
