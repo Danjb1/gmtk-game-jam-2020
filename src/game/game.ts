@@ -80,9 +80,9 @@ export class Game implements EntityContext {
 
     // Player
     this.addEntity(new Entity()
-      .attach(new HitboxComponent(64, 64, 100, 100))
+      .attach(new HitboxComponent(64, 64, 32, 32))
       .attach(new SpriteComponent('player.png'))
-      .attach(new ControllerComponent(this.input, 250))
+      .attach(new ControllerComponent(this.input, 300))
       .attach(new ScarerComponent()));
 
     // Cat Spawner
