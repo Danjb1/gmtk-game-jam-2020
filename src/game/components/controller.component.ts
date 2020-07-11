@@ -19,11 +19,11 @@ export class ControllerComponent extends Component {
     super(ControllerComponent.KEY);
   }
 
-  onAttach(e: Entity): void {
+  public onAttach(e: Entity): void {
     super.onAttach(e);
   }
 
-  update(delta: number): void {
+  public update(delta: number): void {
     this.hitbox.setSpeed(new Vector(
       this.getAxisSpeed(Input.LEFT, Input.RIGHT),
       this.getAxisSpeed(Input.UP, Input.DOWN)
@@ -42,7 +42,7 @@ export class ControllerComponent extends Component {
     return speed;
   }
 
-  onSpawn(): void {
+  public onSpawn(): void {
     this.hitbox = getHitboxFrom(this.entity);
   }
 }
