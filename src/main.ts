@@ -25,14 +25,16 @@ import { PickupComponent } from './ui/pickup.component';
 
   // Load the Game
   const game = new Game(app);
-  game.load(() => {
-    // Start the game loop
-    app.ticker.add(delta => game.update());
-  });
 
   // Load the pickup bar
   let pickup = new PickupComponent(game);
   let div = document.getElementById('ui');
   div.appendChild(pickup.create());
 
+  game.load(() => {
+    app.ticker.add(delta => pickup.update())
+
+    // Start the game loop
+    app.ticker.add(delta => game.update());
+  });
 })();
