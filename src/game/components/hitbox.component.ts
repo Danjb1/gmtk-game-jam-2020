@@ -25,7 +25,6 @@ export class HitboxComponent extends Component {
     }
   }
 
-
   private gameBoundaryCollision() {
     if (this.x <= 0 || (this.x + this.width) >= Game.WORLD_WIDTH) {
       this.speedX = 0;
