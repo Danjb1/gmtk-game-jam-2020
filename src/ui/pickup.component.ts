@@ -2,8 +2,11 @@ export class PickupComponent {
 
     private canvas: HTMLCanvasElement;
 
+    public height: number = 0;
+
     constructor() {
-        setInterval(() => this.moveAcrossTheScreen(), 10000);
+        setInterval(() => this.createPerson(), 10000);
+        //setInterval(() => this.width++, 10000)
     }
 
     public create(): HTMLCanvasElement {
@@ -14,19 +17,24 @@ export class PickupComponent {
         return canvas;
     }
 
-    moveAcrossTheScreen() {
-        let time = 30;
+    createPerson() {
         var canvas = document.getElementById("pickupCanvas") as HTMLCanvasElement;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(this.insertImage(), 1, 2);
-
-    }
-
-    insertImage(): CanvasImageSource {
+        var context = canvas.getContext("2d");
         let image = new Image();
         image.src = '../assets/images/player.png';
-        return image;
-      }
-      
+        image.onload = () => {
+            context.drawImage(image, 0, this.height);
+            if (this.height <= 30) {
+                this.height += 5;
+            } else {
+                this.height -= 5
+            }
+        };
 
+        return image;
+    }
+
+    movePersonAcrossTheScreen() {
+        
+    }  
 }
