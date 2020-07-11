@@ -1,11 +1,20 @@
+import { Game } from "../game/game";
+import { CatMetaComponent } from "../game/components";
+
 export class PickupComponent {
     
     private canvas: HTMLCanvasElement;
-    
+    public catMetaDataComponents = new Array<CatMetaComponent>();
     public height: number = 0;
     
-    constructor() {
-        setInterval(() => this.createPerson(), 10000);
+    constructor(game: Game) {
+        setInterval(() => {
+            let catMetaDataComponents = game.getEntities()
+            .filter(entity => entity.getComponent(CatMetaComponent.KEY))
+            .map(entity => entity.getComponent(CatMetaComponent.KEY));
+
+            this.catMetaDataComponents = catMetaDataComponents as Array<CatMetaComponent>;
+        }, 10000);
     }
     
     public create(): HTMLCanvasElement {

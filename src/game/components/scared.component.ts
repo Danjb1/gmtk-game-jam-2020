@@ -46,7 +46,7 @@ export class ScaredComponent extends Component {
       // Correct flee vector towards centre of screen
       this.hitbox.setSpeed(
         fleeVector
-          .plus(this.getCentreScreenVector())
+          .plus(this.getCentreScreenVector().multiply(0.75))
           .scaleToMagnitude(this.speed)
       );
     }

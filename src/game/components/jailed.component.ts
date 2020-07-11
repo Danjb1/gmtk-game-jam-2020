@@ -39,13 +39,17 @@ export class JailedComponent extends Component {
   private keepInJail(): void {
     if (this.hitbox.x < this.jailerHitbox.x) {
       this.hitbox.x = this.jailerHitbox.x;
+      this.hitbox.speedX = 0;
     } else if (this.hitbox.right > this.jailerHitbox.right) {
       this.hitbox.x = this.jailerHitbox.right - this.hitbox.width;
+      this.hitbox.speedX = 0;
     }
     if (this.hitbox.y < this.jailerHitbox.y) {
       this.hitbox.y = this.jailerHitbox.y;
+      this.hitbox.speedY = 0;
     } else if (this.hitbox.bottom > this.jailerHitbox.bottom) {
       this.hitbox.y = this.jailerHitbox.bottom - this.hitbox.height;
+      this.hitbox.speedY = 0;
     }
   }
 

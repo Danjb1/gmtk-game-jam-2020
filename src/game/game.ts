@@ -109,7 +109,7 @@ export class Game implements EntityContext {
     this.addEntity(new Entity()
     .attach(new HitboxComponent(
       (Game.WORLD_WIDTH / 2) - 50,
-      (Game.WORLD_HEIGHT / 2) - 50,
+      (Game.WORLD_HEIGHT) - 100,
       100,
       100))
     .attach(new SpriteComponent('player.png'))
