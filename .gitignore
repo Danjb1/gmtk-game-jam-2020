@@ -15,3 +15,5 @@ coverage
 npm-debug.log
 debug.log
 .DS_Store
+.gradle
+build
