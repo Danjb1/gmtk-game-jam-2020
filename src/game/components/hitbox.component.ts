@@ -5,6 +5,7 @@ export class HitboxComponent extends Component {
 
   public static readonly KEY = Symbol();
 
+  // Speed, in units per second
   public speedX = 0;
   public speedY = 0;
 
@@ -17,9 +18,16 @@ export class HitboxComponent extends Component {
   }
 
   public update(delta: number): void {
-    this.x += this.speedX;
-    this.y += this.speedY;
 
+    // Calculate change in position for this frame
+    const dx = (this.speedX * delta) / 1000;
+    const dy = (this.speedY * delta) / 1000;
+
+    // Move the Entity
+    this.x += dx;
+    this.y += dy;
+
+    // If the Entity moved, keep it in bounds
     if (this.speedX !== 0 || this.speedY !== 0) {
       this.gameBoundaryCollision();
     }

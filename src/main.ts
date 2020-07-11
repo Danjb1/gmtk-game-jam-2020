@@ -22,7 +22,7 @@ import { Game } from './game/game';
   const game = new Game(app);
   game.load(() => {
     // Start the game loop
-    app.ticker.add(delta => game.update(delta));
+    app.ticker.add(delta => game.update());
   });
 
 })();

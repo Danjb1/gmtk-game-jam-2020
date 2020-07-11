@@ -15,7 +15,7 @@ import { Entity } from './entity';
 import {
   SpriteComponent,
   HitboxComponent,
-  ControllerComponent
+  ControllerComponent,
 } from './components';
 
 export class Game implements EntityContext {
@@ -79,7 +79,7 @@ export class Game implements EntityContext {
     this.addEntity(new Entity(this)
       .attach(new HitboxComponent(64, 64, 100, 100))
       .attach(new SpriteComponent('player.png', this.viewport))
-      .attach(new ControllerComponent(this.input, 8)));
+      .attach(new ControllerComponent(this.input, 80)));
   }
 
   /**
@@ -100,17 +100,15 @@ export class Game implements EntityContext {
   /**
    * Updates the game by one frame.
    *
-   * @param delta Amount of fractional lag between frames:
-   *
-   *  1 = frame is exactly on time
-   *  2 = frame has taken twice as long as expected
+   * The precise amount of time that has passed can be obtained from
+   * `app.ticker`.
    */
-  public update(delta: number): void {
+  public update(): void {
 
     // Update our Entities.
     // We make a copy of the array in case the list is changed during iteration.
     [...this.entities].forEach(e => {
-      e.update(delta);
+      e.update(this.app.ticker.deltaMS);
     });
 
     // Destroy deleted Entities
