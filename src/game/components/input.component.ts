@@ -26,7 +26,7 @@ export class InputComponent extends Component {
     this.pressedKeys = new Map();
   }
 
-  onAttach(e: Entity) {
+  onAttach(e: Entity): void {
     super.onAttach(e);
 
     // Register controls
