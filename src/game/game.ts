@@ -1,4 +1,5 @@
-// Pixi
+// Libs
+import * as createjs from 'createjs-module';
 import { Viewport } from 'pixi-viewport';
 
 // Global Stuff
@@ -52,19 +53,24 @@ export class Game implements EntityContext {
    * @param callbackFn Function to call when the game is loaded.
    */
   public load(callbackFn: any): void {
-    Assets.loader = this.app.loader;
-    const _this = this;
 
-    const loadSounds = Assets.loadSoundsAsync();
-    loadSounds.then(() => console.log("Sounds loaded"))
-              .catch((err) => console.error("Error loading sounds", err));
-    const loadTextures = Assets.loadTexturesAsync(this.app.loader);
-    loadTextures.then(() => console.log("Textures loaded"))
-                .catch((err) => console.error("Error loading extures", err));;
+    // Load textures
+    const p1 = new Promise<void>((resolve, reject) => {
+      Assets.loadTextures(this.app.loader, () => {
+        resolve();
+      });
+    });
 
-    Promise.all([/*loadSounds,*/ loadTextures]).then(() => {
-      // console.log("All assets loaded");
-      _this.setup();
+    // Load sounds
+    const p2 = new Promise<void>((resolve, reject) => {
+      Assets.loadSounds(() => {
+        resolve();
+      });
+    });
+
+    // Wait for everything to complete
+    Promise.all([p1, p2]).then(() => {
+      this.setup();
       callbackFn();
     });
   }
@@ -150,6 +156,10 @@ export class Game implements EntityContext {
    * `app.ticker`.
    */
   public update(): void {
+
+    if (Math.random() < 0.01) {
+      new Audio(`${Assets.SOUNDS_BASEPATH}/meow1.ogg`).play();
+    }
 
     // Update our Entities.
     // We make a copy of the array in case the list is changed during iteration.
