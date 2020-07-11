@@ -14,10 +14,16 @@ export class LivesElement extends UiElement {
 
   create(): void {
     this.elem = document.createElement('span');
+    this.elem.classList.add('lives');
+  }
+
+  rating(lives:number):string {
+    return '★'.repeat(lives).padEnd(5, '☆');
   }
 
   update(props: Props): void {
-    const newContent = `lives: ${props.lives}`;
+    const newContent = `${this.rating(props.lives)}`;
+
     if (newContent === this._prevContent){
       return;
     }

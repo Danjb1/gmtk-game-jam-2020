@@ -1,6 +1,5 @@
 import { Game } from '../game/game';
-import { PickupElement } from './pickup.element';
-import { ScoreElement, LivesElement } from './elements/';
+import { ScoreElement, LivesElement, PickupElement } from './elements/';
 
 export class Hud {
 
@@ -14,9 +13,9 @@ export class Hud {
   constructor(private game: Game) {
 
     // Pickup bar
-    this.pickup = new PickupElement(game);
     const div = document.getElementById('ui');
-    div.appendChild(this.pickup.create());
+    this.pickup = new PickupElement(div);
+    this.pickup.update(game);
 
     // Score
     this.scoreElement = new ScoreElement(this.overlayElement);
@@ -24,10 +23,15 @@ export class Hud {
   }
 
   update() {
-    this.pickup.update();
 
+    if (this.game.isGameOver()) {
+      return;
+    }
+
+    this.pickup.update(this.game);
+    
     const {score, lives } = this.game.getState();
-
+    
     this.scoreElement.update({ score });
     this.livesElement.update({ lives });
   }

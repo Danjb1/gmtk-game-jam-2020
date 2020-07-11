@@ -19,7 +19,8 @@ import {
   ControllerComponent,
   ScarerComponent,
   SpawnerComponent,
-  JailerComponent
+  JailerComponent,
+  WanderComponent
 } from './components';
 
 // Factories
@@ -109,19 +110,26 @@ export class Game implements EntityContext {
       .attach(new HitboxComponent(128, 128, 32, 32,
         { tags: ['player'] }))
       .attach(new SpriteComponent('player.png'))
-      .attach(new ControllerComponent(this.input, 300))
+      .attach(new ControllerComponent(this.input, 350))
       .attach(new ScarerComponent()));
-      
+
+    // Dog
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(300, 100, 32, 32,
+        { tags: ['dog'] }))
+      .attach(new SpriteComponent('player.png'))
+      .attach(new ScarerComponent())
+      .attach(new WanderComponent(50, 100)));
 
     // Cat Spawner
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, 100, 100))
       .attach(new SpawnerComponent({
-        attemptsPerInterval: 1,
+        attemptsPerInterval: 2,
         chanceToSpawn: 0.5,
         createFn: createCat,
         interval: 1000,
-        maxChildren: 15
+        maxChildren: 50
       })));
 
     // Pen
@@ -130,10 +138,32 @@ export class Game implements EntityContext {
         (Game.WORLD_WIDTH / 2) - 50,
         (Game.WORLD_HEIGHT) - 100,
         100, 100,
-        { blocks: ['player'] }
+        { blocks: ['player', 'dog'] }
       ))
       .attach(new SpriteComponent('player.png'))
       .attach(new JailerComponent()));
+
+    // Left Table
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(
+        (Game.WORLD_WIDTH / 4) - 20,
+        (Game.WORLD_HEIGHT / 2) - 90,
+        40, 180,
+        { blocks: ['player'] }
+      ))
+      .attach(new SpriteComponent('player.png'))
+    );
+
+    // Right Table
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(
+        ((Game.WORLD_WIDTH / 4) * 3) - 20,
+        (Game.WORLD_HEIGHT / 2) - 90,
+        40, 180,
+        { blocks: ['player'] }
+      ))
+      .attach(new SpriteComponent('player.png'))
+    );
   }
 
   /**
@@ -161,8 +191,8 @@ export class Game implements EntityContext {
    */
   public update(): void {
 
-    if (Math.random() < 0.01) {
-      new Audio(`${Assets.SOUNDS_BASEPATH}/meow1.ogg`).play();
+    if (this.isGameOver()) {
+      return;
     }
 
     if (this.entities[0].context.getState().lives <= 0) {
@@ -193,6 +223,10 @@ export class Game implements EntityContext {
     [...this.entities].forEach(e => {
       e.lateUpdate(this.app.ticker.deltaMS);
     });
+  }
+
+  public isGameOver(): boolean {
+    return this.state.lives <= 0;
   }
 
   private detectCollisions(): void {

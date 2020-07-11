@@ -21,8 +21,11 @@ export const boundedGaussianRandom = (min: number, max: number) => {
   return Math.floor(min + gaussianRandom() * (max - min + 1));
 };
 
+/**
+ * Gets a random integer between 2 values (inclusive).
+ */
 export const intBetween = (min: number, max: number): number => {
-  return min + Math.random() * (max - min);
+  return Math.floor(min + Math.random() * (max - min + 1));
 };
 
 export const randomSign = (): number => {
