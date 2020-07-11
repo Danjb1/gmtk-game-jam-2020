@@ -7,7 +7,7 @@ export abstract class Component {
 
   public deleted: boolean;
 
-  private entity: Entity;
+  protected entity: Entity;
 
   /**
    * Callback for when this Component is attached to an Entity.

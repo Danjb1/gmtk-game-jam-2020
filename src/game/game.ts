@@ -1,6 +1,6 @@
-import { Entity } from './entity';
-import { SpriteComponent } from './components';
 import { Assets } from './assets';
+import { Entity } from './entity';
+import { SpriteComponent, HitboxComponent } from './components';
 
 export class Game {
 
@@ -32,8 +32,16 @@ export class Game {
    */
   initEntities(): void {
     const player = new Entity();
+    player.attach(new HitboxComponent(64, 64, 100, 100));
     player.attach(new SpriteComponent('player.png', this.app.stage));
-    this.entities.push(player);
+    this.addEntity(player);
+  }
+
+  /**
+   * Adds an Entity to the world.
+   */
+  addEntity(e: Entity): void {
+    this.entities.push(e);
   }
 
   /**

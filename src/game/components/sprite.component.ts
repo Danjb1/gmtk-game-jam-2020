@@ -20,10 +20,18 @@ export class SpriteComponent extends Component {
     super.onAttach(e);
 
     this.stage.addChild(this.sprite);
+    
+    this.snapToEntity();
   }
 
   update(delta: number): void {
-    // TODO: Update position of Pixi graphic based on Entity position
+    this.snapToEntity();
+  }
+
+  snapToEntity(): void {
+    // TODO: need to get the Hitbox from the Entity
+    //this.sprite.x = this.entity.x;
+    //this.sprite.y = this.entity.y;
   }
 
 }
