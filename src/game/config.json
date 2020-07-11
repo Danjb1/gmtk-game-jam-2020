@@ -6,8 +6,8 @@
         "sprite": "player.png"
     },
     "catSpawner": {
-        "positionX": 128,
-        "positionY": 128,
+        "positionX": 0,
+        "positionY": 0,
         "attemptsPerInterval": 2,
         "chanceToSpawn": 0.5,
         "interval": 1000,
