@@ -30,15 +30,22 @@ export class ScaredComponent extends Component {
   }
 
   update(delta: number): void {
-    const scarer = this.getScarer();
+    const scarers = this.getScarers();
 
-    if (scarer) {
-      const scarerHitbox = getHitboxFrom(scarer);
+    if (scarers.length > 0) {
+      const scarerHitboxes = scarers.map(scarer => getHitboxFrom(scarer));
 
-      // Plot course away from scarer
-      const fleeVector = Vector
-        .between(this.hitbox.centrePosition, scarerHitbox.centrePosition)
-        .scaleToMagnitude(-1 * this.speed);
+      // Sum vectors to all scarers
+      let fleeVector = Vector.zero();
+      scarerHitboxes.forEach(scarerHitbox => {
+        fleeVector = fleeVector.plus(
+          Vector.between(
+            this.hitbox.centrePosition, scarerHitbox.centrePosition
+        ));
+      });
+
+      // Scale flee vector to speed and point away from scarers on average
+      fleeVector = fleeVector.scaleToMagnitude(-1 * this.speed);
 
       // Correct flee vector towards centre of screen
       // (this is to prevent us getting stuck on a wall or in a corner)
@@ -51,16 +58,13 @@ export class ScaredComponent extends Component {
   }
 
   /**
-   * Gets the closest Entity which is a Scarer, provided there is one within the
-   * frightDistance.
+   * Gets all Entities within fright distance.
    */
-  private getScarer(): Entity {
-    const scarers = this.entity.context
+  private getScarers(): Entity[] {
+    return this.entity.context
       .getEntities()
-      .filter(e => e.getComponent(ScarerComponent.KEY) !== undefined)
-      .filter(scarer => this.getRangeTo(scarer) < this.frightDistance)
-      .sort((a, b) => this.sortEntitiesByDistance(a, b));
-    return scarers.length > 0 ? scarers[0] : null;
+      .filter(entity => entity.getComponent(ScarerComponent.KEY) !== undefined)
+      .filter(scarer => this.getRangeTo(scarer) < this.frightDistance);
   }
 
   /**
@@ -70,22 +74,6 @@ export class ScaredComponent extends Component {
   private getCentreScreenVector(): Vector {
     const centreScreen = new Vector(Game.WORLD_WIDTH / 2, Game.WORLD_HEIGHT / 2);
     return centreScreen.minus(this.hitbox.centrePosition);
-  }
-
-  /**
-   * Comparator for two Entities, sorting by the one closest to the Entity that
-   * holds this Component.
-   */
-  private sortEntitiesByDistance(a: Entity, b: Entity): number {
-    const aRange = this.getRangeTo(a);
-    const bRange = this.getRangeTo(b);
-    if (aRange < bRange) {
-      return -1;
-    } else if (bRange > aRange) {
-      return 1;
-    } else {
-      return 0;
-    }
   }
 
   /**
