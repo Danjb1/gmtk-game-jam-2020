@@ -23,6 +23,11 @@ export class Hud {
   }
 
   update() {
+
+    if (this.game.isGameOver()) {
+      return;
+    }
+
     this.pickup.update(this.game);
     
     const {score, lives } = this.game.getState();

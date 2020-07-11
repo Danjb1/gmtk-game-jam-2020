@@ -30,6 +30,8 @@ import { getHitboxFrom } from './utils';
 
 import { GameState } from './store';
 
+import cfg from './config.json';
+
 export class Game implements EntityContext {
 
   /*
@@ -108,19 +110,21 @@ export class Game implements EntityContext {
 
     // Player
     this.addEntity(new Entity()
-      .attach(new HitboxComponent(128, 128, 32, 32,
+      .attach(new HitboxComponent(cfg.player.startX, cfg.player.startY, 32, 32,
         { tags: ['player'] }))
-      .attach(new SpriteComponent('player.png'))
-      .attach(new ControllerComponent(this.input, 350))
+      .attach(new SpriteComponent(cfg.player.sprite))
+      .attach(new ControllerComponent(this.input, cfg.player.speed))
       .attach(new ScarerComponent()));
 
     // Dog
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(300, 100, 32, 32,
-        { tags: ['player'] }))
-      .attach(new SpriteComponent('player.png'))
-      .attach(new ScarerComponent())
-      .attach(new WanderComponent(100, 400)));
+    if (cfg.dog.enabled) {
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 32, 32,
+          { tags: ['dog'] }))
+        .attach(new SpriteComponent(cfg.dog.sprite))
+        .attach(new ScarerComponent())
+        .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
+    }
 
     // Cat Spawner
     this.addEntity(new Entity()
@@ -128,10 +132,10 @@ export class Game implements EntityContext {
       .attach(new SpawnerComponent(
         createCat,
         {
-          attemptsPerInterval: 2,
-          chanceToSpawn: 0.5,
-          interval: 1000,
-          maxChildren: 50
+          attemptsPerInterval: cfg.catSpawnerConfig.attemptsPerInterval.min,
+          chanceToSpawn: cfg.catSpawnerConfig.chanceToSpawn.min,
+          interval: cfg.catSpawnerConfig.interval.min,
+          maxChildren: cfg.catSpawnerConfig.maxChildren.min
         }
       ))
       .attach(new DifficultyCurveComponent()));
@@ -139,33 +143,41 @@ export class Game implements EntityContext {
     // Pen
     this.addEntity(new Entity()
       .attach(new HitboxComponent(
-        (Game.WORLD_WIDTH / 2) - 50,
-        (Game.WORLD_HEIGHT) - 100,
-        100, 100,
-        { blocks: ['player'] }
+        cfg.pen.positionX,
+        cfg.pen.positionY,
+        cfg.pen.width, cfg.pen.height,
+        { blocks: ['player', 'dog'] }
       ))
-      .attach(new SpriteComponent('player.png'))
+      .attach(new SpriteComponent(cfg.pen.sprite))
       .attach(new JailerComponent()));
 
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(
-        (Game.WORLD_WIDTH / 4) - 20,
-        (Game.WORLD_HEIGHT / 2) - 90,
-        40, 180,
-        { blocks: ['player'] }
-      ))
-      .attach(new SpriteComponent('player.png'))
-    );
+    // Left Table
+    if (cfg.leftTable.enabled) {
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(
+          cfg.leftTable.positionX,
+          cfg.leftTable.positionY,
+          cfg.leftTable.width,
+          cfg.leftTable.height,
+          { blocks: ['player'] }
+        ))
+        .attach(new SpriteComponent(cfg.leftTable.sprite))
+      );
+    }
 
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(
-        ((Game.WORLD_WIDTH / 4) * 3) - 20,
-        (Game.WORLD_HEIGHT / 2) - 90,
-        40, 180,
-        { blocks: ['player'] }
-      ))
-      .attach(new SpriteComponent('player.png'))
-    );
+    // Right Table
+    if (cfg.rightTable.enabled) {
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(
+          cfg.rightTable.positionX,
+          cfg.rightTable.positionY,
+          cfg.rightTable.width,
+          cfg.rightTable.height,
+          { blocks: ['player'] }
+        ))
+        .attach(new SpriteComponent(cfg.rightTable.sprite))
+      );
+    }
   }
 
   /**
@@ -219,7 +231,7 @@ export class Game implements EntityContext {
     });
   }
 
-  private isGameOver(): boolean {
+  public isGameOver(): boolean {
     return this.state.lives <= 0;
   }
 
