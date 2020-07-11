@@ -1,4 +1,5 @@
 import { Component } from './component';
+import { EntityContext } from './entity-context';
 
 /**
  * A thing that exists within the game world.
@@ -8,6 +9,7 @@ import { Component } from './component';
 export class Entity {
 
   public deleted: boolean;
+  public entityContext: EntityContext;
 
   private components: Component[] = [];
 
@@ -27,7 +29,8 @@ export class Entity {
    *
    * By this point, all Components have been attached.
    */
-  public spawn(): void {
+  public spawn(entityContext: EntityContext): void {
+    this.entityContext = entityContext;
     this.components.forEach(c => c.onSpawn());
   }
 
@@ -40,6 +43,8 @@ export class Entity {
 
   /**
    * Updates this Entity by one frame.
+   *
+   * @param delta Milliseconds passed since last frame.
    */
   public update(delta: number): void {
 

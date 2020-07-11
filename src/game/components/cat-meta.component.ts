@@ -11,7 +11,7 @@ export class CatMetaComponent extends Component {
   // Max value for the cat
   private static readonly MAX_VALUE = 200;
   // Possible personalities for the cat
-  private static readonly PERSONALITIES: CatPersonality[] = ['normal']
+  private static readonly PERSONALITIES: CatPersonality[] = ['normal'];
 
   constructor() {
     super(CatMetaComponent.KEY);
@@ -32,7 +32,7 @@ export class CatMetaComponent extends Component {
    */
   private _generateValue(): number {
     return boundedGaussianRandom(
-      CatMetaComponent.MIN_VALUE, 
+      CatMetaComponent.MIN_VALUE,
       CatMetaComponent.MAX_VALUE
     );
   }

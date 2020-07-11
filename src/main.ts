@@ -27,7 +27,7 @@ import { PickupComponent } from './ui/pickup.component';
   const game = new Game(app);
   game.load(() => {
     // Start the game loop
-    app.ticker.add(delta => game.update(delta));
+    app.ticker.add(delta => game.update());
   });
 
 })();
