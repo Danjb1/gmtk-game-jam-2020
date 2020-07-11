@@ -34,6 +34,8 @@ export abstract class Component {
 
   /**
    * Updates this Component by one frame.
+   *
+   * @param delta Milliseconds passed since last frame.
    */
   update(delta: number): void {
     // Do nothing by default

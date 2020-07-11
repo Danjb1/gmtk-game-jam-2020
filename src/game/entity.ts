@@ -43,6 +43,8 @@ export class Entity {
 
   /**
    * Updates this Entity by one frame.
+   *
+   * @param delta Milliseconds passed since last frame.
    */
   public update(delta: number): void {
 

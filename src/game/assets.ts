@@ -1,6 +1,6 @@
 export class Assets {
   // public static readonly IMAGE_DIR = "../assets/images";
-  public static readonly SPRITES_SRC = "../images/sprites.json";
+  public static readonly SPRITES_SRC = '../images/sprites.json';
 
   public static loader: PIXI.Loader;
 
