@@ -30,10 +30,10 @@ export class ScaredComponent extends Component {
   }
 
   update(delta: number): void {
-    const scarer = this.getScarer();
+    const scarers = this.getScarers();
 
-    if (scarer) {
-      const scarerHitbox = getHitboxFrom(scarer);
+    if (scarers.length > 0) {
+      const scarerHitbox = getHitboxFrom(scarers[0]);
 
       // Plot course away from scarer
       const fleeVector = Vector
@@ -51,16 +51,13 @@ export class ScaredComponent extends Component {
   }
 
   /**
-   * Gets the closest Entity which is a Scarer, provided there is one within the
-   * frightDistance.
+   * Gets all Entities within fright distance.
    */
-  private getScarer(): Entity {
-    const scarers = this.entity.context
+  private getScarers(): Entity[] {
+    return this.entity.context
       .getEntities()
-      .filter(e => e.getComponent(ScarerComponent.KEY) !== undefined)
-      .filter(scarer => this.getRangeTo(scarer) < this.frightDistance)
-      .sort((a, b) => this.sortEntitiesByDistance(a, b));
-    return scarers.length > 0 ? scarers[0] : null;
+      .filter(entity => entity.getComponent(ScarerComponent.KEY) !== undefined)
+      .filter(scarer => this.getRangeTo(scarer) < this.frightDistance);
   }
 
   /**
@@ -70,22 +67,6 @@ export class ScaredComponent extends Component {
   private getCentreScreenVector(): Vector {
     const centreScreen = new Vector(Game.WORLD_WIDTH / 2, Game.WORLD_HEIGHT / 2);
     return centreScreen.minus(this.hitbox.centrePosition);
-  }
-
-  /**
-   * Comparator for two Entities, sorting by the one closest to the Entity that
-   * holds this Component.
-   */
-  private sortEntitiesByDistance(a: Entity, b: Entity): number {
-    const aRange = this.getRangeTo(a);
-    const bRange = this.getRangeTo(b);
-    if (aRange < bRange) {
-      return -1;
-    } else if (bRange > aRange) {
-      return 1;
-    } else {
-      return 0;
-    }
   }
 
   /**
