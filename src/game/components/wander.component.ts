@@ -106,8 +106,9 @@ export class WanderComponent extends Component {
 
     // Random time
     this.wanderTimeRemaining = intBetween(
-        this.minWanderTime,
-        this.maxWanderTime);
+      this.minWanderTime,
+      this.maxWanderTime
+    );
   }
 
 }
