@@ -10,6 +10,7 @@ export class Entity {
 
   public deleted: boolean;
   public context: EntityContext;
+  public entityId: number;
 
   private components: Component[] = [];
 

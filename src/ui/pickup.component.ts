@@ -1,21 +1,22 @@
 import { Game } from "../game/game";
 import { CatMetaComponent } from "../game/components";
 
-export class PickupComponent {
+export class PickupElement {
     
     private canvas: HTMLCanvasElement;
     public catMetaDataComponents = new Array<CatMetaComponent>();
-    public catsOnScreen = new Array<CatMetaComponent>();
+    public catHeights = new Map<number, number>();
+    private game: Game;
+    private image: HTMLImageElement;
+    private loaded = false;
 
     constructor(game: Game) {
-        setInterval(() => {
-            let catMetaDataComponents = game.getEntities()
-                .filter(entity => entity.getComponent(CatMetaComponent.KEY))
-                .map(entity => entity.getComponent(CatMetaComponent.KEY));
-
-            this.catMetaDataComponents = (catMetaDataComponents as Array<CatMetaComponent>).filter(c => c.howCloseToPickup !== 1);
-            this.progress();
-        }, 10);
+        this.game = game;
+        this.image = new Image();
+        this.image.src = '../assets/images/player.png';
+        this.image.onload = () => {
+            this.loaded = true;
+        };
     }
     
     public create(): HTMLCanvasElement {
@@ -26,7 +27,19 @@ export class PickupComponent {
         return canvas;
     }
 
-    public update() {}
+    public update() {
+
+        if (!this.loaded) {
+            return;
+        }
+
+        let catMetaDataComponents = this.game.getEntities()
+                                            .filter(entity => entity.getComponent(CatMetaComponent.KEY))
+                                            .map(entity => entity.getComponent(CatMetaComponent.KEY));
+
+        this.catMetaDataComponents = (catMetaDataComponents as Array<CatMetaComponent>).filter(c => c.howCloseToPickup !== 1);
+        this.progress();
+    }
 
     progress() {
         var canvas = document.getElementById("pickupCanvas") as HTMLCanvasElement;
@@ -42,17 +55,11 @@ export class PickupComponent {
     }
     
     moveCatAlongProgressBar(cat: CatMetaComponent, context: CanvasRenderingContext2D) {
-        if (cat.howCloseToPickup === 1) {
-            return;
-        }
+        let width = 800 * cat.howCloseToPickup;
+        context.drawImage(this.image, width, cat.value / 4);
+    }
 
-        let image = new Image();
-        image.src = '../assets/images/player.png';
-        image.onload = () => {
-            let width = 800 * cat.howCloseToPickup;
-            context.drawImage(image, width, cat.value / 4);
-        };
-        
-        return image;
+    getRandomHeight() {
+        return Math.random() * (51 - 1) + 1;
     }
 }
