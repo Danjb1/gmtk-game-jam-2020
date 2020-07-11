@@ -26,7 +26,7 @@ export class RescueComponent extends Component {
   }
 
   update() {
-    if (!this._catMeta.canBePickedUp || !this._isInJail) {
+    if (!this._catMeta.canBePickedUp || !this._isInJail()) {
       return
     }
     // Add the cats score to the game state
