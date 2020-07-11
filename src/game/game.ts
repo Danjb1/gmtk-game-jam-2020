@@ -20,7 +20,8 @@ import {
   ScarerComponent,
   SpawnerComponent,
   JailerComponent,
-  WanderComponent
+  WanderComponent,
+  CatMetaComponent
 } from './components';
 
 // Factories
@@ -83,6 +84,7 @@ export class Game implements EntityContext {
    * Called when our Textures have finished loading.
    */
   private setup(): void {
+    CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
     this.initEntities();
   }
