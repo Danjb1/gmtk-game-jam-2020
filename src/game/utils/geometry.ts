@@ -2,36 +2,37 @@ import { HitboxComponent, Edge } from '../components/hitbox.component';
 import { Vector } from './vector';
 
 /**
- * Gives the straight-line distance between the centres of two HitboxComponents.
- */
+* Gives the straight-line distance between the centres of two HitboxComponents.
+*/
 export const getDistanceBetween = (a: HitboxComponent, b: HitboxComponent): number => {
   return a.centrePosition.hypotenuse(b.centrePosition);
 };
 
 /**
- * Determines if 2 lines intersect.
- *
- * <p>This is a simplification of {@link #getLineIntersection}.
- *
- * @param x1
- * @param y1
- * @param x2
- * @param y2
- * @param x3
- * @param y3
- * @param x4
- * @param y4
- * @param extendToInfinity Whether to extend the lines beyond the given
- * segments.
- *
- * @return Point, or null if the lines do no intersect.
- */
+* Determines if 2 lines intersect.
+*
+* <p>This is a simplification of {@link #getLineIntersection}.
+*
+* @param x1
+* @param y1
+* @param x2
+* @param y2
+* @param x3
+* @param y3
+* @param x4
+* @param y4
+* @param extendToInfinity Whether to extend the lines beyond the given
+* segments.
+*
+* @return Point, or null if the lines do no intersect.
+*/
 export const doLinesIntersect = (
-    x1: number, y1: number,
-    x2: number, y2: number,
-    x3: number, y3: number,
-    x4: number, y4: number,
-    extendToInfinity = false): boolean => {
+  x1: number, y1: number,
+  x2: number, y2: number,
+  x3: number, y3: number,
+  x4: number, y4: number,
+  extendToInfinity = false
+): boolean => {
 
   // Does either line have length 0?
   if ((x1 === x2 && y1 === y2) || (x3 === x4 && y3 === y4)) {
@@ -75,12 +76,13 @@ export const doLinesIntersect = (
  *
  * @return Point, or null if the lines do no intersect.
  */
-export const getLineIntersection = (
-    x1: number, y1: number,
-    x2: number, y2: number,
-    x3: number, y3: number,
-    x4: number, y4: number,
-    extendToInfinity = false): Vector => {
+ export const getLineIntersection = (
+  x1: number, y1: number,
+  x2: number, y2: number,
+  x3: number, y3: number,
+  x4: number, y4: number,
+  extendToInfinity = false
+): Vector => {
 
   // Does either line have length 0?
   if ((x1 === x2 && y1 === y2) || (x3 === x4 && y3 === y4)) {
@@ -122,57 +124,62 @@ export const getLineIntersection = (
  * @return Edge of h2 with which h1 collided, or null if no edge collision
  * occurred.
  */
-export const getCollisionEdge = (
-    h1: HitboxComponent,
-    h2: HitboxComponent): Edge => {
+ export const getCollisionEdge = (
+  h1: HitboxComponent,
+  h2: HitboxComponent
+): Edge => {
 
   // Find the corners of h1 before and after movement
   const cornersBefore = [
-        new Vector(h1.prevX, h1.prevY),
-        new Vector(h1.prevX + h1.width, h1.prevY),
-        new Vector(h1.prevX + h1.width, h1.prevY + h1.height),
-        new Vector(h1.prevX, h1.prevY + h1.height)
+    new Vector(h1.prevX, h1.prevY),
+    new Vector(h1.prevX + h1.width, h1.prevY),
+    new Vector(h1.prevX + h1.width, h1.prevY + h1.height),
+    new Vector(h1.prevX, h1.prevY + h1.height)
   ];
   const cornersAfter = [
-        new Vector(h1.x, h1.y),
-        new Vector(h1.x + h1.width, h1.y),
-        new Vector(h1.x + h1.width, h1.y + h1.height),
-        new Vector(h1.x, h1.y + h1.height)
+    new Vector(h1.x, h1.y),
+    new Vector(h1.x + h1.width, h1.y),
+    new Vector(h1.x + h1.width, h1.y + h1.height),
+    new Vector(h1.x, h1.y + h1.height)
   ];
 
   // Check if any corner of h1 intersected with any edge of h2
   for (let i = 0; i < cornersBefore.length; i++) {
 
     if (doLinesIntersect(
-            cornersBefore[i].x, cornersBefore[i].y,
-            cornersAfter[i].x, cornersAfter[i].y,
-            h2.x, h2.y,
-            h2.right, h2.y)) {
-        return Edge.TOP;
+      cornersBefore[i].x, cornersBefore[i].y,
+      cornersAfter[i].x, cornersAfter[i].y,
+      h2.x, h2.y,
+      h2.right, h2.y)
+    ) {
+      return Edge.TOP;
     }
 
     if (doLinesIntersect(
-            cornersBefore[i].x, cornersBefore[i].y,
-            cornersAfter[i].x, cornersAfter[i].y,
-            h2.x, h2.y,
-            h2.x, h2.bottom)) {
-        return Edge.LEFT;
+      cornersBefore[i].x, cornersBefore[i].y,
+      cornersAfter[i].x, cornersAfter[i].y,
+      h2.x, h2.y,
+      h2.x, h2.bottom)
+    ) {
+      return Edge.LEFT;
     }
 
     if (doLinesIntersect(
-            cornersBefore[i].x, cornersBefore[i].y,
-            cornersAfter[i].x, cornersAfter[i].y,
-            h2.x, h2.bottom,
-            h2.right, h2.bottom)) {
-        return Edge.BOTTOM;
+      cornersBefore[i].x, cornersBefore[i].y,
+      cornersAfter[i].x, cornersAfter[i].y,
+      h2.x, h2.bottom,
+      h2.right, h2.bottom)
+    ) {
+      return Edge.BOTTOM;
     }
 
     if (doLinesIntersect(
-            cornersBefore[i].x, cornersBefore[i].y,
-            cornersAfter[i].x, cornersAfter[i].y,
-            h2.right, h2.y,
-            h2.right, h2.bottom)) {
-        return Edge.RIGHT;
+      cornersBefore[i].x, cornersBefore[i].y,
+      cornersAfter[i].x, cornersAfter[i].y,
+      h2.right, h2.y,
+      h2.right, h2.bottom)
+    ) {
+      return Edge.RIGHT;
     }
   }
 
