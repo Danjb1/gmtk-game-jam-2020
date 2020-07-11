@@ -111,7 +111,7 @@ export class Game implements EntityContext {
       .attach(new SpriteComponent('player.png'))
       .attach(new ControllerComponent(this.input, 350))
       .attach(new ScarerComponent()));
-      
+
 
     // Cat Spawner
     this.addEntity(new Entity()
@@ -134,6 +134,26 @@ export class Game implements EntityContext {
       ))
       .attach(new SpriteComponent('player.png'))
       .attach(new JailerComponent()));
+
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(
+        (Game.WORLD_WIDTH / 4) - 20,
+        (Game.WORLD_HEIGHT / 2) - 90,
+        40, 180,
+        { blocks: ['player'] }
+      ))
+      .attach(new SpriteComponent('player.png'))
+    );
+
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(
+        ((Game.WORLD_WIDTH / 4) * 3) - 20,
+        (Game.WORLD_HEIGHT / 2) - 90,
+        40, 180,
+        { blocks: ['player'] }
+      ))
+      .attach(new SpriteComponent('player.png'))
+    );
   }
 
   /**
