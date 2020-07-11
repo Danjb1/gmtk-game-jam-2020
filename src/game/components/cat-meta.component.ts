@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { boundedGaussianRandom } from '../utils';
 
 export type CatPersonality = 'normal' | 'lazy' | 'hyper';
-export type CatBreed = 'british-shorthair' | 'persian';
+export type CatVariety = 'ash' | 'black' | 'brown' | 'ginger' | 'grey' | 'greywhite' | 'tan' | 'white';
 
 export class CatMetaComponent extends Component {
   // Component symbol
@@ -14,7 +14,7 @@ export class CatMetaComponent extends Component {
   // Possible personalities for the cat
   private static readonly PERSONALITIES: CatPersonality[] = ['normal'];
   // Possible Breeds
-  private static readonly BREEDS: CatBreed[] = ['british-shorthair', 'persian'];
+  private static readonly VARIETIES: CatVariety[] = ['ash', 'black', 'brown', 'ginger', 'grey', 'greywhite', 'tan', 'white'];
 
   constructor() {
     super(CatMetaComponent.KEY);
@@ -27,7 +27,7 @@ export class CatMetaComponent extends Component {
   private _buildMetaData() {
     this._value = this._generateValue();
     this._personality = this._generatePersonality();
-    this._breed = this._generateBreed();
+    this._variety = this._generateVariety();
   }
 
   /**
@@ -71,16 +71,16 @@ export class CatMetaComponent extends Component {
   /**
    * Randomly assigns a breed
    */
-  private _generateBreed(): CatBreed {
-    return CatMetaComponent.BREEDS[
-      Math.floor(Math.random() * CatMetaComponent.BREEDS.length)
+  private _generateVariety(): CatVariety {
+    return CatMetaComponent.VARIETIES[
+      Math.floor(Math.random() * CatMetaComponent.VARIETIES.length)
     ];
   }
 
-  private _breed: CatBreed;
+  private _variety: CatVariety;
 
-  get breed(): CatBreed {
-    return this._breed;
+  get variety(): CatVariety {
+    return this._variety;
   }
 
 }
