@@ -215,7 +215,7 @@ export class Game implements EntityContext {
     });
   }
 
-  private isGameOver(): boolean {
+  public isGameOver(): boolean {
     return this.state.lives <= 0;
   }
 
