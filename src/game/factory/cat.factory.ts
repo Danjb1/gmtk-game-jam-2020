@@ -6,7 +6,8 @@ import {
   HitboxComponent,
   WanderComponent,
   AnimatedSpriteComponent,
-  ScaredComponent
+  ScaredComponent,
+  JailableComponent
 } from '../components';
 
 /**
@@ -22,6 +23,7 @@ export const createCat = (x: number, y: number): Entity => {
     .attach(new HitboxComponent(x, y, 30, 30))
     .attach(animatedSprite)
     .attach(new WanderComponent())
+    .attach(new JailableComponent())
     .attach(new ScaredComponent());
 
   return catEntity;

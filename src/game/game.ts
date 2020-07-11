@@ -17,9 +17,16 @@ import {
   HitboxComponent,
   ControllerComponent,
   ScarerComponent,
-  SpawnerComponent
+  SpawnerComponent,
+  JailerComponent
 } from './components';
+
+// Factories
 import { createCat } from './factory/cat.factory';
+import { getHitboxFrom } from './utils';
+import { listenerCount } from 'stream';
+
+import { GameState } from './store';
 
 export class Game implements EntityContext {
 
@@ -36,7 +43,9 @@ export class Game implements EntityContext {
   private entities: Entity[] = [];
   private input: Input = new Input();
 
-  constructor(private app: PIXI.Application) {}
+  state: GameState = new GameState();
+
+  constructor(private app: PIXI.Application) { }
 
   /**
    * Initialises the game.
@@ -95,6 +104,16 @@ export class Game implements EntityContext {
         interval: 1000,
         maxChildren: 15
       })));
+
+    // Pen
+    this.addEntity(new Entity()
+    .attach(new HitboxComponent(
+      (Game.WORLD_WIDTH / 2) - 50,
+      (Game.WORLD_HEIGHT / 2) - 50,
+      100,
+      100))
+    .attach(new SpriteComponent('player.png'))
+    .attach(new JailerComponent()));
   }
 
   /**
@@ -128,8 +147,8 @@ export class Game implements EntityContext {
 
     // Destroy deleted Entities
     this.entities
-        .filter(e => e.deleted)
-        .forEach(e => e.destroy());
+      .filter(e => e.deleted)
+      .forEach(e => e.destroy());
 
     // Remove deleted Entities
     this.entities = this.entities.filter(e => !e.deleted);
@@ -138,22 +157,43 @@ export class Game implements EntityContext {
   }
 
   private detectCollisions(): void {
-    [...this.entities].forEach((e, i) => {
-      const eHitBox = <HitboxComponent>e.getComponent(HitboxComponent.KEY);
-      for (let j = i + 1; j < this.entities.length; j++) {
-        const eOtherHitBox = <HitboxComponent>this.entities[j].getComponent(HitboxComponent.KEY);
-        if (eHitBox !== eOtherHitBox) {
-          if (eHitBox.intersects(eOtherHitBox)) {
-            eHitBox.collidedWith(eOtherHitBox);
-            eOtherHitBox.collidedWith(eHitBox);
-          }
+
+    const collidingEntities = [...this.entities];
+
+    // Check for collisions between every pair of Entities
+    for (let i = 0; i < collidingEntities.length; i++) {
+
+      const e1: Entity = collidingEntities[i];
+
+      if (e1.deleted) {
+        continue;
+      }
+
+      for (let j = i + 1; j < collidingEntities.length; j++) {
+
+        const e2 = collidingEntities[j];
+
+        if (e2.deleted) {
+          continue;
         }
-      };
-    });
+
+        const e1Hitbox = getHitboxFrom(e1);
+        const e2Hitbox = getHitboxFrom(e2);
+
+        if (e1Hitbox.intersects(e2Hitbox)) {
+          e1Hitbox.collidedWith(e2Hitbox);
+          e2Hitbox.collidedWith(e1Hitbox);
+        }
+      }
+    }
   }
 
   public getViewport(): Viewport {
     return this.viewport;
+  }
+
+  public getState(): GameState {
+    return this.state;
   }
 
 }

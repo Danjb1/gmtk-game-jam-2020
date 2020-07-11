@@ -34,6 +34,10 @@ export class SpriteComponent extends Component {
     this.snapToEntity();
   }
 
+  public destroy(): void {
+    this.entity.context.getViewport().removeChild(this.sprite);
+  }
+
   public update(delta: number): void {
     this.snapToEntity();
   }

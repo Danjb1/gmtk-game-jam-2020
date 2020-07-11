@@ -1,6 +1,7 @@
 import { Viewport } from 'pixi-viewport';
 
 import { Entity } from './entity';
+import { GameState } from './store';
 
 /**
  * Describes a context for Entities to exist in, with the ability to access the
@@ -13,5 +14,7 @@ export interface EntityContext {
   getEntities: () => Entity[];
 
   getViewport(): Viewport;
+
+  getState() : GameState;
 
 }
