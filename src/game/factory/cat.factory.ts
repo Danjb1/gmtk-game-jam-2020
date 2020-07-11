@@ -6,7 +6,8 @@ import {
   CatMetaComponent,
   HitboxComponent,
   WanderComponent,
-  AnimatedSpriteComponent
+  AnimatedSpriteComponent,
+  ScaredComponent
 } from '../components';
 
 /**
@@ -21,7 +22,8 @@ export const createCat = (x: number, y: number, viewport: Viewport): Entity => {
     .attach(catMeta)
     .attach(new HitboxComponent(x, y, 30, 30))
     .attach(animatedSprite)
-    .attach(new WanderComponent());
+    .attach(new WanderComponent())
+    .attach(new ScaredComponent());
 
   return catEntity;
 };

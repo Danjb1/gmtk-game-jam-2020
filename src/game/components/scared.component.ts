@@ -17,8 +17,8 @@ export class ScaredComponent extends Component {
   public static readonly KEY = Symbol();
 
   private hitbox: HitboxComponent;
-  private frightDistance = 100;
-  private speed = 300;
+  private frightDistance = 120;
+  private speed = 250;
 
   constructor() {
     super(ScaredComponent.KEY);
@@ -28,7 +28,7 @@ export class ScaredComponent extends Component {
     this.hitbox = getHitboxFrom(this.entity);
   }
 
-  update(): void {
+  update(delta: number): void {
 
     // Locate Entities in the world which are Scarers
     const scarers = this.entity.context
@@ -55,8 +55,17 @@ export class ScaredComponent extends Component {
     // If there is one, plot a course away from it
     if (actualScarers.length > 0) {
       const scarerHitbox = getHitboxFrom(actualScarers[0]);
-      console.log('AAAAAH!!');
-      // TODO: move away from it
+
+      // Work out distance vector to scarer
+      const deltaX = scarerHitbox.x - this.hitbox.x;
+      const deltaY = scarerHitbox.y - this.hitbox.y;
+
+      // Calculate proper scale for new vector
+      const factor = this.speed / getDistanceBetween(this.hitbox, scarerHitbox);
+
+      // Calculate new vector
+      this.hitbox.speedX = -1 * deltaX * factor;
+      this.hitbox.speedY = -1 * deltaY * factor;
     }
   }
 
