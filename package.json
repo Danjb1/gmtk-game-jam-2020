@@ -21,6 +21,12 @@
   "author": "Team Cat Herders",
   "license": "None",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/preset-env": "^7.4.1",
+    "@babel/preset-typescript": "^7.3.3",
     "@types/jasmine": "2.8.7",
     "@types/node": "7.0.0",
     "awesome-typescript-loader": "5.2.0",
@@ -35,15 +41,10 @@
     "typescript": "3.5.1",
     "webpack": "4.12.0",
     "webpack-cli": "3.0.8",
-    "webpack-dev-server": "3.1.4",
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.4.0",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
-    "@babel/preset-env": "^7.4.1",
-    "@babel/preset-typescript": "^7.3.3"
+    "webpack-dev-server": "3.1.4"
   },
   "dependencies": {
+    "createjs-module": "^0.8.3",
     "pixi-viewport": "^4.12.1",
     "pixi.js": "^5.3.0"
   }

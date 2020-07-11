@@ -1,4 +1,5 @@
-// Pixi
+// Libs
+import * as createjs from 'createjs-module';
 import { Viewport } from 'pixi-viewport';
 
 // Global Stuff
@@ -53,7 +54,23 @@ export class Game implements EntityContext {
    * @param callbackFn Function to call when the game is loaded.
    */
   public load(callbackFn: any): void {
-    Assets.loadTextures(this.app.loader, () => {
+
+    // Load textures
+    const p1 = new Promise<void>((resolve, reject) => {
+      Assets.loadTextures(this.app.loader, () => {
+        resolve();
+      });
+    });
+
+    // Load sounds
+    const p2 = new Promise<void>((resolve, reject) => {
+      Assets.loadSounds(() => {
+        resolve();
+      });
+    });
+
+    // Wait for everything to complete
+    Promise.all([p1, p2]).then(() => {
       this.setup();
       callbackFn();
     });
@@ -100,11 +117,11 @@ export class Game implements EntityContext {
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, 100, 100))
       .attach(new SpawnerComponent({
-        attemptsPerInterval: 1,
+        attemptsPerInterval: 2,
         chanceToSpawn: 0.5,
         createFn: createCat,
         interval: 1000,
-        maxChildren: 15
+        maxChildren: 50
       })));
 
     // Pen
@@ -143,6 +160,10 @@ export class Game implements EntityContext {
    * `app.ticker`.
    */
   public update(): void {
+
+    if (Math.random() < 0.01) {
+      new Audio(`${Assets.SOUNDS_BASEPATH}/meow1.ogg`).play();
+    }
 
     // Update our Entities.
     // We make a copy of the array in case the list is changed during iteration.
