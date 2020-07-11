@@ -42,8 +42,17 @@ export class Vector {
    * Scales this vector such that it has the given magnitude.
    */
   scaleToMagnitude(magnitude: number): Vector {
-    const currentMagnitude = this.hypotenuse(Vector.zero());
-    const ratio = magnitude / currentMagnitude;
+    const ratio = magnitude / this.magnitude;
     return new Vector(this.x * ratio, this.y * ratio);
+  }
+
+  /**
+   * Scales this vector such that it has the given magnitude, or its current
+   * magnitude - whichever is smaller.
+   */
+  capMagnitude(magnitude: number): Vector {
+    return this.magnitude < magnitude
+      ? new Vector(this.x, this.y)
+      : this.scaleToMagnitude(magnitude);
   }
 }
