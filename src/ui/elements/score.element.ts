@@ -1,7 +1,7 @@
 import { UiElement } from './element';
 
 interface Props {
-  score: number
+  score: number;
 }
 
 export class ScoreElement extends UiElement {
@@ -10,7 +10,7 @@ export class ScoreElement extends UiElement {
     super(parent);
   }
 
-  private _prevContent:string;
+  private _prevContent: string;
 
   create(): void {
     this.elem = document.createElement('span');
@@ -18,7 +18,7 @@ export class ScoreElement extends UiElement {
 
   update(props: Props): void {
     const newContent = `£${props.score}`;
-    if (newContent === this._prevContent){
+    if (newContent === this._prevContent) {
       return;
     }
     this._prevContent = newContent;
