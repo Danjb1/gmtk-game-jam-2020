@@ -6,6 +6,9 @@ import { Entity } from '../entity';
 import { Assets } from '../assets';
 import { HitboxComponent } from './hitbox.component';
 
+// Utils
+import { getHitboxFrom } from '../utils';
+
 export class SpriteComponent extends Component {
 
   public static readonly KEY = Symbol();
@@ -32,8 +35,7 @@ export class SpriteComponent extends Component {
   public onSpawn(): void {
 
     // Retrieve the Hitbox from the Entity
-    this.hitbox = <HitboxComponent>
-        this.entity.getComponent(HitboxComponent.KEY);
+    this.hitbox = getHitboxFrom(this.entity);
 
     this.snapToEntity();
   }

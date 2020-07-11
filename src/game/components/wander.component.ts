@@ -1,6 +1,8 @@
 import { Component } from '../component';
 import { HitboxComponent } from './hitbox.component';
-import { RandomUtils } from '../random.utils';
+
+// Utils
+import { getHitboxFrom, intBetween, randomSign } from '../utils';
 
 export class WanderComponent extends Component {
 
@@ -45,8 +47,7 @@ export class WanderComponent extends Component {
   }
 
   public onSpawn(): void {
-    this.hitbox = <HitboxComponent>
-        this.entity.getComponent(HitboxComponent.KEY);
+    this.hitbox = getHitboxFrom(this.entity);
   }
 
   public update(delta: number): void {
@@ -98,13 +99,13 @@ export class WanderComponent extends Component {
   private startWandering(): void {
 
     // Random speed
-    this.hitbox.speedX = RandomUtils.randomSign() *
-        RandomUtils.intBetween(this.minWanderSpeed, this.maxWanderSpeed);
-    this.hitbox.speedY = RandomUtils.randomSign() *
-        RandomUtils.intBetween(this.minWanderSpeed, this.maxWanderSpeed);
+    this.hitbox.speedX = randomSign() *
+        intBetween(this.minWanderSpeed, this.maxWanderSpeed);
+    this.hitbox.speedY = randomSign() *
+        intBetween(this.minWanderSpeed, this.maxWanderSpeed);
 
     // Random time
-    this.wanderTimeRemaining = RandomUtils.intBetween(
+    this.wanderTimeRemaining = intBetween(
         this.minWanderTime,
         this.maxWanderTime);
   }

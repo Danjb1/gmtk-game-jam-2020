@@ -20,3 +20,11 @@ export const gaussianRandom = (precision = 6): number => {
 export const boundedGaussianRandom = (min: number, max: number) => {
   return Math.floor(min + gaussianRandom() * (max - min + 1));
 };
+
+export const intBetween = (min: number, max: number): number => {
+  return min + Math.random() * (max - min);
+};
+
+export const randomSign = (): number => {
+  return Math.random() < 0.5 ? -1 : 1;
+};
