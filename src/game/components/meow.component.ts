@@ -1,9 +1,12 @@
 import { Assets } from '../assets';
 import { Component } from '../component';
+import { intBetween } from '../utils';
 
 export class MeowComponent extends Component {
 
   public static readonly KEY = Symbol();
+
+  private static readonly NUM_SOUNDS = 9;
 
   private interval = 3000;
   private timeUntilSound: number;
@@ -38,7 +41,8 @@ export class MeowComponent extends Component {
   }
 
   private playSound(): void {
-    new Audio(`${Assets.SOUNDS_BASEPATH}/meow1.ogg`).play();
+    const soundId = intBetween(1, MeowComponent.NUM_SOUNDS);
+    new Audio(`${Assets.SOUNDS_BASEPATH}/meow${soundId}.ogg`).play();
   }
 
   private resetSoundTimer(): void {
