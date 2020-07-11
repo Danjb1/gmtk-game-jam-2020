@@ -1,10 +1,10 @@
 import * as PIXI from 'pixi.js';
-import { Game } from './game';
+import { Game } from './game/game';
 
 /**
  * Entry point for the application.
  */
-;(function () {
+(() => {
 
   // Create canvas
   const type = PIXI.utils.isWebGLSupported() ? 'WebGL' : 'canvas';
@@ -18,7 +18,7 @@ import { Game } from './game';
   document.body.appendChild(app.view);
 
   // Create our Game
-  const game = new Game();
+  const game = new Game(app);
 
   // Start the game loop
   app.ticker.add(delta => game.update(delta));
