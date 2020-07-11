@@ -18,10 +18,12 @@ export class SpriteComponent extends Component {
 
   onAttach(e: Entity) {
     super.onAttach(e);
+
+    this.stage.addChild(this.sprite);
   }
 
   update(delta: number): void {
-    // TODO: Update position of Pixi graphic
+    // TODO: Update position of Pixi graphic based on Entity position
   }
 
 }
