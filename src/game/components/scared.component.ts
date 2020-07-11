@@ -44,7 +44,7 @@ export class ScaredComponent extends Component {
       // (this is to prevent us getting stuck on a wall or in a corner)
       this.hitbox.setSpeed(
         fleeVector
-          .plus(this.getCentreScreenVector().multiply(0.75))
+          .plus(this.getCentreScreenVector())
           .scaleToMagnitude(this.speed)
       );
     }
