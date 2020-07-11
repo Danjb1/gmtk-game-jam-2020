@@ -2,11 +2,11 @@ interface KeyHandler {
   values: String[];
   isDown: boolean;
   isUp: boolean;
-  press?: Function;
-  release?: Function;
-  downHandler?: any;
-  upHandler?: any;
-  unsubscribe?: Function;
+  press?: () => void;
+  release?: () => void;
+  downHandler?: (event: any) => void;
+  upHandler?: (event: any) => void;
+  unsubscribe?: () => void;
 }
 
 interface KeyBinding {
