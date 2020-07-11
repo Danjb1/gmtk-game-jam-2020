@@ -6,15 +6,22 @@ export class PickupComponent {
     private canvas: HTMLCanvasElement;
     public catMetaDataComponents = new Array<CatMetaComponent>();
     public height: number = 0;
-    
+    public catsOnScreen = new Array<CatMetaComponent>();
+
     constructor(game: Game) {
         setInterval(() => {
             let catMetaDataComponents = game.getEntities()
-            .filter(entity => entity.getComponent(CatMetaComponent.KEY))
-            .map(entity => entity.getComponent(CatMetaComponent.KEY));
+                .filter(entity => entity.getComponent(CatMetaComponent.KEY))
+                .map(entity => entity.getComponent(CatMetaComponent.KEY));
 
             this.catMetaDataComponents = catMetaDataComponents as Array<CatMetaComponent>;
-        }, 10000);
+            [...this.catMetaDataComponents].forEach(x => {
+                if (!this.catsOnScreen.some(catMeta => catMeta.value === x.value)) {
+                    this.createPerson(x);
+                    this.catsOnScreen.push(x);
+                }
+            });
+        }, 500);
     }
     
     public create(): HTMLCanvasElement {
@@ -25,7 +32,7 @@ export class PickupComponent {
         return canvas;
     }
     
-    createPerson() {
+    createPerson(x: CatMetaComponent) {
         var canvas = document.getElementById("pickupCanvas") as HTMLCanvasElement;
         var context = canvas.getContext("2d");
         let image = new Image();

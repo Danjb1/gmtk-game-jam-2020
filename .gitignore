@@ -1,12 +1,17 @@
+# Editor artifacts
 .idea
 .vscode
+
+# Build artifacts
 node_modules
 src/**/*.js
 src/**/*.js.map
 typings
 dist
-coverage
 ts-out
+
+# Other stuff
+coverage
 npm-debug.log
 debug.log
 .DS_Store
