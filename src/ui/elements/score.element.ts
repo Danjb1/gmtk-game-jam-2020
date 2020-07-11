@@ -17,7 +17,7 @@ export class ScoreElement extends UiElement {
   }
 
   update(props: Props): void {
-    const newContent = `score: ${props.score}`;
+    const newContent = `£${props.score}`;
     if (newContent === this._prevContent){
       return;
     }
