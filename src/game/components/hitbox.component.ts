@@ -27,12 +27,20 @@ export class HitboxComponent extends Component {
 
 
   private gameBoundaryCollision() {
-    if (this.x <= 0 || (this.x + this.width) >= Game.WORLD_WIDTH) {
+    if (this.x <= 0) {
       this.speedX = 0;
+      this.x = 0;
+    } else if ((this.x + this.width) >= Game.WORLD_WIDTH) {
+      this.speedX = 0;
+      this.x = Game.WORLD_WIDTH - this.width;
     }
 
-    if (this.y <= 0 || (this.y + this.height) >= Game.WORLD_HEIGHT) {
+    if (this.y <= 0) {
       this.speedY = 0;
+      this.y = 0;
+    } else if ((this.y + this.height) >= Game.WORLD_HEIGHT) {
+      this.speedY = 0;
+      this.y = Game.WORLD_HEIGHT - this.height;
     }
   }
 }
