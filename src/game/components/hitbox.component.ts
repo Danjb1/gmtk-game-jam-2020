@@ -5,6 +5,10 @@ import { Vector } from '../vector';
 export class HitboxComponent extends Component {
   public static readonly KEY = Symbol();
 
+  public onCollisionStayHandler?: (other: any) => void;
+  // public onCollisionEnterHandler?: (other: any) => void;
+  // public onCollisionExitHandler?: (other: any) => void;
+
   // Speed, in units per second
   public speedX = 0;
   public speedY = 0;
@@ -47,7 +51,8 @@ export class HitboxComponent extends Component {
   }
 
   public collidedWith(other: HitboxComponent) {
-    // TODO: Call 'onCollision' event
+    if (this.onCollisionStayHandler)
+      this.onCollisionStayHandler(other);
   }
 
   public get halfWidth(): number {
