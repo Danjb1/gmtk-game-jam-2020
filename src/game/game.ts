@@ -19,7 +19,8 @@ import {
   ControllerComponent,
   ScarerComponent,
   SpawnerComponent,
-  JailerComponent
+  JailerComponent,
+  WanderComponent
 } from './components';
 
 // Factories
@@ -111,7 +112,14 @@ export class Game implements EntityContext {
       .attach(new SpriteComponent('player.png'))
       .attach(new ControllerComponent(this.input, 350))
       .attach(new ScarerComponent()));
-      
+
+    // Dog
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(300, 100, 32, 32,
+        { tags: ['player'] }))
+      .attach(new SpriteComponent('player.png'))
+      .attach(new ScarerComponent())
+      .attach(new WanderComponent(100, 400)));
 
     // Cat Spawner
     this.addEntity(new Entity()
