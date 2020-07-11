@@ -1,5 +1,3 @@
-import { KeyBinding } from './models/key-binding.model';
-
 interface KeyHandler {
   value: String;
   isDown: boolean;
@@ -10,6 +8,12 @@ interface KeyHandler {
   upHandler?: any;
   unsubscribe?: Function;
 }
+
+interface KeyBinding {
+  name: String;
+  value: String;
+}
+
 
 export class Input {
 
