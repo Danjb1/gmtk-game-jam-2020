@@ -17,8 +17,11 @@ import {
   HitboxComponent,
   ControllerComponent,
   ScarerComponent,
-  SpawnerComponent
+  SpawnerComponent,
+  JailerComponent
 } from './components';
+
+// Factories
 import { createCat } from './factory/cat.factory';
 
 export class Game implements EntityContext {
@@ -95,6 +98,15 @@ export class Game implements EntityContext {
         interval: 1000,
         maxChildren: 15
       })));
+
+    // Pen
+    this.addEntity(new Entity()
+    .attach(new HitboxComponent(
+      (Game.WORLD_WIDTH / 2) - 50,
+      (Game.WORLD_HEIGHT / 2) - 50,
+      (Game.WORLD_WIDTH / 2) + 50,
+      (Game.WORLD_WIDTH / 2) + 50))
+    .attach(new JailerComponent()));
   }
 
   /**
