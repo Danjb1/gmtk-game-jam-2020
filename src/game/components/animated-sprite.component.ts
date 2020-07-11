@@ -33,15 +33,15 @@ export class AnimatedSpriteComponent extends Component {
   }
 
   public update(delta: number): void {
-    this.snapToEntity();
-  }
-
-  private snapToEntity(): void {
     if (this.hitbox.speedX == 0 && this.hitbox.speedY == 0) {
       this.sprite.stop();
     } else {
       this.sprite.play();
     }
+    this.snapToEntity();
+  }
+
+  private snapToEntity(): void {
     // Update the position of the Sprite based on the Entity position
     this.sprite.x = this.hitbox.x;
     this.sprite.y = this.hitbox.y;
