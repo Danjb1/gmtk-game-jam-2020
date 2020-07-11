@@ -1,5 +1,6 @@
 import { Component } from '../component';
 import { Entity } from '../entity';
+import { KeyBinding } from './models/key-binding.model';
 
 interface KeyHandler {
   value: String;
@@ -13,14 +14,6 @@ interface KeyHandler {
 }
 
 /**
- * Represents a key to bind to.
- */
-export interface Binding {
-  name: String;
-  value: String;
-}
-
-/**
  * Component that permits listening to key events.
  */
 export class InputComponent extends Component {
@@ -28,16 +21,16 @@ export class InputComponent extends Component {
   public static readonly KEY = Symbol();
   private pressedKeys: Map<String, boolean>;
 
-  constructor(private bindings: Binding[]) {
+  constructor(private bindings: KeyBinding[]) {
     super(InputComponent.KEY);
     this.pressedKeys = new Map();
   }
 
-  onAttach(e: Entity) {
+  onAttach(e: Entity): void {
     super.onAttach(e);
 
     // Register controls
-    this.bindings.forEach((binding: Binding) => {
+    this.bindings.forEach((binding: KeyBinding) => {
 
       // Create handler
       const handler = this.registerKeyHandler(binding.value);
