@@ -138,16 +138,17 @@ export class Game implements EntityContext {
   }
 
   private detectCollisions(): void {
-    [...this.entities].forEach(e => {
+    [...this.entities].forEach((e, i) => {
       const eHitBox = <HitboxComponent>e.getComponent(HitboxComponent.KEY);
-      [...this.entities].forEach(eOther => {
-        const eOtherHitBox = <HitboxComponent>eOther.getComponent(HitboxComponent.KEY);
+      for (let j = i + 1; j < this.entities.length; j++) {
+        const eOtherHitBox = <HitboxComponent>this.entities[j].getComponent(HitboxComponent.KEY);
         if (eHitBox !== eOtherHitBox) {
           if (eHitBox.intersects(eOtherHitBox)) {
             eHitBox.collidedWith(eOtherHitBox);
+            eOtherHitBox.collidedWith(eHitBox);
           }
         }
-      });
+      };
     });
   }
 
