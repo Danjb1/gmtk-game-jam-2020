@@ -18,7 +18,7 @@ export class ScaredComponent extends Component {
 
   private hitbox: HitboxComponent;
   private frightDistance = 120;
-  private speed = 250;
+  private speed = 350;
 
   constructor() {
     super(ScaredComponent.KEY);
