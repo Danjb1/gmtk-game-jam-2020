@@ -23,12 +23,12 @@ export class JailerComponent extends Component implements HitboxListener {
     this.hitbox.removeListener(this);
   }
 
-  public hitboxCollided(other: Entity): void {
+  public hitboxCollided(other: HitboxComponent): void {
     const jailable = <JailableComponent>
-        other.getComponent(JailableComponent.KEY);
+        other.entity.getComponent(JailableComponent.KEY);
 
     if (jailable) {
-      this.jailEntity(other);
+      this.jailEntity(other.entity);
     }
   }
 

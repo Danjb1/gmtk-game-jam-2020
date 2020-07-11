@@ -99,14 +99,14 @@ export class CatMetaComponent extends Component {
 
   /**
    * How close to pickup
-   * 
+   *
    * 0 - just added
    * 1 - needs to be picked up
    */
   get howCloseToPickup(): number {
     const howClose = ((Date.now() - this._added) / this._duration);
     // Min 1, max 1
-    return Math.max(0, Math.min(1,howClose));
+    return Math.max(0, Math.min(1, howClose));
   }
 
   /**
