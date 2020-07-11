@@ -11,10 +11,10 @@ export class RescueComponent extends Component {
 
   private _catMeta: CatMetaComponent;
 
-  constructor(){
+  constructor() {
     super(RescueComponent.KEY);
   }
-  
+
   onAttach(e: Entity): void {
     super.onAttach(e);
     this._catMeta = this.entity.getComponent(CatMetaComponent.KEY) as CatMetaComponent;
@@ -26,13 +26,13 @@ export class RescueComponent extends Component {
 
   update() {
     if (!this._catMeta.canBePickedUp || !this._isInJail()) {
-      return
+      return;
     }
     // Add the cats score to the game state
     this.entity.context
       .getState()
       .increaseScore(this._catMeta.value);
-      
+
     // Delete the cat
     this.entity.deleted = true;
   }
