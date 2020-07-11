@@ -32,6 +32,7 @@ import { PickupComponent } from './ui/pickup.component';
 
   // Load the pickup bar
   let pickup = new PickupComponent(game);
-  document.body.appendChild(pickup.create());
-  
+  let div = document.getElementById('ui');
+  div.appendChild(pickup.create());
+
 })();

@@ -2,8 +2,7 @@ import { Component } from '../component';
 import { HitboxComponent } from './hitbox.component';
 
 // Utils
-import { getHitboxFrom, intBetween, randomSign } from '../utils';
-import { Vector } from '../vector';
+import { getHitboxFrom, intBetween, randomSign, Vector } from '../utils';
 
 export class WanderComponent extends Component {
 
@@ -106,8 +105,9 @@ export class WanderComponent extends Component {
 
     // Random time
     this.wanderTimeRemaining = intBetween(
-        this.minWanderTime,
-        this.maxWanderTime);
+      this.minWanderTime,
+      this.maxWanderTime
+    );
   }
 
 }
