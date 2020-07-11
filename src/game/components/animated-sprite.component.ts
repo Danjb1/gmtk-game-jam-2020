@@ -51,6 +51,9 @@ export class AnimatedSpriteComponent extends Component {
     } else {
       this.sprite.play();
     }
+  }
+
+  public lateUpdate(delta: number): void {
     this.snapToEntity();
   }
 

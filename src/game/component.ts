@@ -35,11 +35,20 @@ export abstract class Component {
   }
 
   /**
-   * Updates this Component by one frame.
+   * Updates this Component by one frame, BEFORE collision handling.
    *
    * @param delta Milliseconds passed since last frame.
    */
   public update(delta: number): void {
+    // Do nothing by default
+  }
+
+  /**
+   * Updates this Component by one frame, AFTER collision handling.
+   *
+   * @param delta Milliseconds passed since last frame.
+   */
+  public lateUpdate(delta: number): void {
     // Do nothing by default
   }
 

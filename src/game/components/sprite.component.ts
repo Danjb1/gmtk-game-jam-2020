@@ -38,7 +38,7 @@ export class SpriteComponent extends Component {
     this.entity.context.getViewport().removeChild(this.sprite);
   }
 
-  public update(delta: number): void {
+  public lateUpdate(delta: number): void {
     this.snapToEntity();
   }
 

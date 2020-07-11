@@ -76,11 +76,11 @@ export const doLinesIntersect = (
  * @return Point, or null if the lines do no intersect.
  */
 export const getLineIntersection = (
-  x1: number, y1: number,
-  x2: number, y2: number,
-  x3: number, y3: number,
-  x4: number, y4: number,
-  extendToInfinity = false): Vector => {
+    x1: number, y1: number,
+    x2: number, y2: number,
+    x3: number, y3: number,
+    x4: number, y4: number,
+    extendToInfinity = false): Vector => {
 
   // Does either line have length 0?
   if ((x1 === x2 && y1 === y2) || (x3 === x4 && y3 === y4)) {
@@ -122,7 +122,9 @@ export const getLineIntersection = (
  * @return Edge of h2 with which h1 collided, or null if no edge collision
  * occurred.
  */
-export const getCollisionEdge = (h1: HitboxComponent, h2: HitboxComponent): Edge => {
+export const getCollisionEdge = (
+    h1: HitboxComponent,
+    h2: HitboxComponent): Edge => {
 
   // Find the corners of h1 before and after movement
   const cornersBefore = [
@@ -145,7 +147,7 @@ export const getCollisionEdge = (h1: HitboxComponent, h2: HitboxComponent): Edge
             cornersBefore[i].x, cornersBefore[i].y,
             cornersAfter[i].x, cornersAfter[i].y,
             h2.x, h2.y,
-            h2.x + h2.width, h2.y)) {
+            h2.right, h2.y)) {
         return Edge.TOP;
     }
 
@@ -153,23 +155,23 @@ export const getCollisionEdge = (h1: HitboxComponent, h2: HitboxComponent): Edge
             cornersBefore[i].x, cornersBefore[i].y,
             cornersAfter[i].x, cornersAfter[i].y,
             h2.x, h2.y,
-            h2.x, h2.y + h2.height)) {
+            h2.x, h2.bottom)) {
         return Edge.LEFT;
     }
 
     if (doLinesIntersect(
             cornersBefore[i].x, cornersBefore[i].y,
             cornersAfter[i].x, cornersAfter[i].y,
-            h2.x, h2.y + h2.height,
-            h2.x + h2.width, h2.y + h2.height)) {
+            h2.x, h2.bottom,
+            h2.right, h2.bottom)) {
         return Edge.BOTTOM;
     }
 
     if (doLinesIntersect(
             cornersBefore[i].x, cornersBefore[i].y,
             cornersAfter[i].x, cornersAfter[i].y,
-            h2.x + h2.width, h2.y,
-            h2.x + h2.width, h2.y + h2.height)) {
+            h2.right, h2.y,
+            h2.right, h2.bottom)) {
         return Edge.RIGHT;
     }
   }

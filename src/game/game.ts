@@ -155,6 +155,11 @@ export class Game implements EntityContext {
     this.entities = this.entities.filter(e => !e.deleted);
 
     this.detectCollisions();
+
+    // Update our Entities again!
+    [...this.entities].forEach(e => {
+      e.lateUpdate(this.app.ticker.deltaMS);
+    });
   }
 
   private detectCollisions(): void {

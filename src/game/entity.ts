@@ -42,7 +42,7 @@ export class Entity {
   }
 
   /**
-   * Updates this Entity by one frame.
+   * Updates this Entity by one frame, BEFORE collision handling.
    *
    * @param delta Milliseconds passed since last frame.
    */
@@ -52,6 +52,28 @@ export class Entity {
     // We make a copy of the array in case the list is changed during iteration.
     [...this.components].forEach(c => {
       c.update(delta);
+    });
+
+    // Destroy deleted Components
+    this.components
+        .filter(c => c.deleted)
+        .forEach(c => c.destroy());
+
+    // Remove deleted Components
+    this.components = this.components.filter(c => !c.deleted);
+  }
+
+  /**
+   * Updates this Entity by one frame, AFTER collision handling.
+   *
+   * @param delta Milliseconds passed since last frame.
+   */
+  public lateUpdate(delta: number): void {
+
+    // Update our Components.
+    // We make a copy of the array in case the list is changed during iteration.
+    [...this.components].forEach(c => {
+      c.lateUpdate(delta);
     });
 
     // Destroy deleted Components
