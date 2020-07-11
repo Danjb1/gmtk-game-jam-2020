@@ -16,6 +16,6 @@ export class ScoreElement extends UiElement {
   }
 
   update(props: Props): void {
-    this.elem.innerText = props.score.toString();
+    this.elem.innerText = `${props.score}`;
   }
 }
