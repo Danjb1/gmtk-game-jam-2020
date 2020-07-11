@@ -120,6 +120,8 @@ export class Game implements EntityContext {
 
     // Remove deleted Entities
     this.entities = this.entities.filter(e => !e.deleted);
+
+    this.detectCollisions();
   }
 
   private detectCollisions(): void {
