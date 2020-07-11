@@ -1,3 +1,5 @@
+import { Viewport } from 'pixi-viewport';
+
 import { Entity } from './entity';
 
 /**
@@ -9,5 +11,7 @@ export interface EntityContext {
   addEntity(e: Entity): void;
 
   getEntities: () => Entity[];
+
+  getViewport(): Viewport;
 
 }

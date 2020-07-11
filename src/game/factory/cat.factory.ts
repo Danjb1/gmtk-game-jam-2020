@@ -1,5 +1,4 @@
-import { Entity } from '../entity';
-import { Viewport } from 'pixi-viewport';
+import { Entity } from "../entity";
 
 // Components
 import {
@@ -13,10 +12,10 @@ import {
 /**
  * Generates a cat entity
  */
-export const createCat = (x: number, y: number, viewport: Viewport): Entity => {
+export const createCat = (x: number, y: number): Entity => {
   // Generate the meta before anything else;
   const catMeta = new CatMetaComponent();
-  const animatedSprite = new AnimatedSpriteComponent(`ash_down`, viewport);
+  const animatedSprite = new AnimatedSpriteComponent(`ash_right`);
 
   const catEntity = new Entity()
     .attach(catMeta)

@@ -20,6 +20,8 @@ export abstract class Component {
 
   /**
    * Callback for when the parent Entity is added to the world.
+   *
+   * Use this if you need access to the EntityContext, or any other Components.
    */
   onSpawn(): void {
     // Do nothing by default

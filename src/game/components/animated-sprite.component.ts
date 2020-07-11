@@ -1,45 +1,43 @@
-import * as PIXI from 'pixi.js';
-import { Viewport } from 'pixi-viewport';
+import * as PIXI from "pixi.js";
 
-import { Component } from '../component';
-import { Entity } from '../entity';
-import { Assets } from '../assets';
-import { HitboxComponent } from './hitbox.component';
+import { Component } from "../component";
+import { Assets } from "../assets";
+import { HitboxComponent } from "./hitbox.component";
 
 export class AnimatedSpriteComponent extends Component {
-
   public static readonly KEY = Symbol();
 
-  private sprite: PIXI.Sprite;
+  private sprite: PIXI.AnimatedSprite;
   private hitbox: HitboxComponent;
 
-  constructor(
-    filename: string,
-    private viewport: Viewport
-  ) {
+  constructor(filename: string) {
     super(AnimatedSpriteComponent.KEY);
 
     const spritesheet = Assets.spritesheet();
     this.sprite = new PIXI.AnimatedSprite(spritesheet.animations[filename]);
   }
 
-  public onAttach(e: Entity): void {
-    super.onAttach(e);
+  public onSpawn(): void {
+    this.sprite.animationSpeed = 0.2;
+    this.sprite.play();
 
     // Register this Sprite with Pixi
-    this.viewport.addChild(this.sprite);
-  }
-
-  public onSpawn(): void {
+    this.entity.context.getViewport().addChild(this.sprite);
 
     // Retrieve the Hitbox from the Entity
-    this.hitbox = <HitboxComponent>
-      this.entity.getComponent(HitboxComponent.KEY);
+    this.hitbox = <HitboxComponent>(
+      this.entity.getComponent(HitboxComponent.KEY)
+    );
 
     this.snapToEntity();
   }
 
   public update(delta: number): void {
+    if (this.hitbox.speedX == 0 && this.hitbox.speedY == 0) {
+      this.sprite.stop();
+    } else {
+      this.sprite.play();
+    }
     this.snapToEntity();
   }
 
@@ -50,5 +48,4 @@ export class AnimatedSpriteComponent extends Component {
     this.sprite.width = this.hitbox.width;
     this.sprite.height = this.hitbox.height;
   }
-
 }
