@@ -14,6 +14,7 @@ import {
   InputComponent,
   ControllerComponent
 } from './components';
+import { WanderComponent } from './components/wander.component';
 
 export class Game {
 
