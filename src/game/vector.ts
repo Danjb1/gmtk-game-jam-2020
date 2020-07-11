@@ -1,3 +1,6 @@
+/**
+ * Represents a 2D vector, which can either be a velocity or a position.
+ */
 export class Vector {
   constructor(public x: number, public y: number) {}
 
