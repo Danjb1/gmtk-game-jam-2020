@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { boundedGaussianRandom } from '../utils/random';
+import { boundedGaussianRandom } from '../utils';
 
 type CatPersonality = 'normal' | 'lazy' | 'hyper';
 
