@@ -117,11 +117,11 @@ export class Game implements EntityContext {
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, 100, 100))
       .attach(new SpawnerComponent({
-        attemptsPerInterval: 1,
+        attemptsPerInterval: 2,
         chanceToSpawn: 0.5,
         createFn: createCat,
         interval: 1000,
-        maxChildren: 15
+        maxChildren: 50
       })));
 
     // Pen
