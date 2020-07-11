@@ -7,7 +7,7 @@ export abstract class Component {
 
   public deleted: boolean;
 
-  protected entity: Entity;
+  public entity: Entity;
 
   constructor(private _key: Symbol) {}
 

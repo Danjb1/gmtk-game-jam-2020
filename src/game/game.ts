@@ -181,8 +181,8 @@ export class Game implements EntityContext {
         const e2Hitbox = getHitboxFrom(e2);
 
         if (e1Hitbox.intersects(e2Hitbox)) {
-          e1Hitbox.collidedWith(e2);
-          e2Hitbox.collidedWith(e1);
+          e1Hitbox.collidedWith(e2Hitbox);
+          e2Hitbox.collidedWith(e1Hitbox);
         }
       }
     }

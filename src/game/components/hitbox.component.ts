@@ -1,11 +1,10 @@
 import { Component } from '../component';
 import { Game } from '../game';
-import { Entity } from '../entity';
 import { Vector } from '../vector';
 
 export interface HitboxListener {
 
-  hitboxCollided: (other: Entity) => void;
+  hitboxCollided: (other: HitboxComponent) => void;
 
 }
 
@@ -29,14 +28,6 @@ export class HitboxComponent extends Component {
   public destroy(): void {
     // Clear listeners to prevent any dangling references
     this.listeners = [];
-  }
-
-  get right(): number {
-    return this.x + this.width;
-  }
-
-  get bottom(): number {
-    return this.y + this.height;
   }
 
   public update(delta: number): void {
@@ -63,7 +54,23 @@ export class HitboxComponent extends Component {
     this.listeners = this.listeners.filter(l => l !== listener);
   }
 
-  public get halfWidth(): number {
+  //////////////////////////////////////////////////////////////////////////////
+  // Field Access
+  //////////////////////////////////////////////////////////////////////////////
+
+  get right(): number {
+    return this.x + this.width;
+  }
+
+  get bottom(): number {
+    return this.y + this.height;
+  }
+
+  get centrePosition(): Vector {
+    return new Vector(this.centerX, this.centerY);
+  }
+
+  get halfWidth(): number {
     return this.width / 2;
   }
 
@@ -87,11 +94,6 @@ export class HitboxComponent extends Component {
   //////////////////////////////////////////////////////////////////////////////
   // Collisions
   //////////////////////////////////////////////////////////////////////////////
-
-  public collidedWith(other: HitboxComponent) {
-    if (this.onCollisionStayHandler)
-      this.onCollisionStayHandler(other);
-  }
 
   // https://github.com/kittykatattack/learningPixi#the-hittestrectangle-function
   public intersects(other: HitboxComponent): boolean {
@@ -150,7 +152,7 @@ export class HitboxComponent extends Component {
     }
   }
 
-  public collidedWith(other: Entity): void {
+  public collidedWith(other: HitboxComponent): void {
     this.listeners.forEach(l => l.hitboxCollided(other));
   }
 
