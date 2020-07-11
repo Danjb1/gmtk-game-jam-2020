@@ -1,5 +1,3 @@
-import { Component } from '../component';
-import { Entity } from '../entity';
 import { KeyBinding } from './models/key-binding.model';
 
 interface KeyHandler {
@@ -13,25 +11,27 @@ interface KeyHandler {
   unsubscribe?: Function;
 }
 
-/**
- * Component that permits listening to key events.
- */
-export class InputComponent extends Component {
+export class Input {
 
-  public static readonly KEY = Symbol();
-  private pressedKeys: Map<String, boolean>;
+  // Game keys
+  public static readonly UP = 'Up';
+  public static readonly DOWN = 'Down';
+  public static readonly LEFT = 'Left';
+  public static readonly RIGHT = 'Right';
 
-  constructor(private bindings: KeyBinding[]) {
-    super(InputComponent.KEY);
-    this.pressedKeys = new Map();
-  }
+  // Key bindings
+  public static readonly BINDINGS: KeyBinding[] = [
+    { name: Input.UP, value: 'w' },
+    { name: Input.DOWN, value: 's' },
+    { name: Input.LEFT, value: 'a' },
+    { name: Input.RIGHT, value: 'd' },
+  ];
 
-  onAttach(e: Entity): void {
-    super.onAttach(e);
+  // State of currently-pressed keys
+  private pressedKeys: Map<String, boolean> = new Map();
 
-    // Register controls
-    this.bindings.forEach((binding: KeyBinding) => {
-
+  constructor() {
+    Input.BINDINGS.forEach((binding: KeyBinding) => {
       // Create handler
       const handler = this.registerKeyHandler(binding.value);
 
@@ -43,10 +43,6 @@ export class InputComponent extends Component {
       handler.release = () => this.pressedKeys.set(binding.name, false);
     });
   }
-
-  update(delta: number): void {}
-
-  onSpawn(): void {}
 
   /**
    * Checks whether the key with the given name is currently pressed.

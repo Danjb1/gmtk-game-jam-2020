@@ -1,6 +1,9 @@
 // Pixi
 import { Viewport } from 'pixi-viewport';
 
+// Player Input
+import { Input } from './input';
+
 // Assets
 import { Assets } from './assets';
 
@@ -11,7 +14,6 @@ import { Entity } from './entity';
 import {
   SpriteComponent,
   HitboxComponent,
-  InputComponent,
   ControllerComponent
 } from './components';
 
@@ -28,6 +30,7 @@ export class Game {
 
   private viewport: Viewport;
   private entities: Entity[] = [];
+  private input: Input = new Input();
 
   constructor(private app: PIXI.Application) {}
 
@@ -69,13 +72,7 @@ export class Game {
     const player = new Entity()
         .attach(new HitboxComponent(64, 64, 100, 100))
         .attach(new SpriteComponent('player.png', this.viewport))
-        .attach(new ControllerComponent())
-        .attach(new InputComponent([
-          {name: ControllerComponent.UP_NAME, value: 'w'},
-          {name: ControllerComponent.DOWN_NAME, value: 's'},
-          {name: ControllerComponent.LEFT_NAME, value: 'a'},
-          {name: ControllerComponent.RIGHT_NAME, value: 'd'}
-        ]));
+        .attach(new ControllerComponent(this.input));
     this.addEntity(player);
   }
 
