@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { Game } from './game/game';
-import { PickupComponent } from './ui/pickup.component';
+import { Hud } from './ui/hud';
 
 /**
  * Entry point for the application.
@@ -25,14 +25,15 @@ import { PickupComponent } from './ui/pickup.component';
 
   // Load the Game
   const game = new Game(app);
+
+  // Load the HUD
+  const hud = new Hud(game);
+
   game.load(() => {
     // Start the game loop
-    app.ticker.add(delta => game.update());
+    app.ticker.add(delta => {
+      hud.update();
+      game.update();
+    });
   });
-
-  // Load the pickup bar
-  let pickup = new PickupComponent(game);
-  let div = document.getElementById('ui');
-  div.appendChild(pickup.create());
-
 })();

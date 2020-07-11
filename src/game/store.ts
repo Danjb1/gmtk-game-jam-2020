@@ -17,7 +17,6 @@ export class GameState {
 
   increaseScore(amount: number) {
     this._score += amount;
-    console.log('SCORE UPDATED', this.score);
   }
 
 }

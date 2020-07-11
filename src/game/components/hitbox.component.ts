@@ -1,6 +1,14 @@
 import { Component } from '../component';
 import { Game } from '../game';
 import { Vector } from '../utils';
+import { getCollisionEdge } from '../utils';
+
+export enum Edge {
+  TOP,
+  LEFT,
+  BOTTOM,
+  RIGHT
+}
 
 export interface HitboxListener {
 
@@ -8,8 +16,26 @@ export interface HitboxListener {
 
 }
 
+export interface HitboxProperties {
+
+  /**
+   * List of tags that are blocked by this Hitbox.
+   */
+  blocks?: string[];
+
+  /**
+   * Tags that apply to this Hitbox.
+   */
+  tags?: string[];
+
+}
+
 export class HitboxComponent extends Component {
   public static readonly KEY = Symbol();
+
+    // Previous position
+    public prevX: number;
+    public prevY: number;
 
   // Speed, in units per second
   public speedX = 0;
@@ -21,8 +47,19 @@ export class HitboxComponent extends Component {
       public x: number,
       public y: number,
       public width: number,
-      public height: number) {
+      public height: number,
+      public props?: HitboxProperties) {
     super(HitboxComponent.KEY);
+
+    this.prevX = x;
+    this.prevY = y;
+
+    // Ensure props are populated
+    this.props = {
+      blocks: [],
+      tags: [],
+      ...props,
+    };
   }
 
   public destroy(): void {
@@ -31,6 +68,11 @@ export class HitboxComponent extends Component {
   }
 
   public update(delta: number): void {
+
+    // Remember the position before any movement takes place.
+    // This comes in handy during collision handling.
+    this.prevX = this.x;
+    this.prevY = this.y;
 
     // Calculate change in position for this frame
     const dx = (this.speedX * delta) / 1000;
@@ -42,7 +84,7 @@ export class HitboxComponent extends Component {
 
     // If the Entity moved, keep it in bounds
     if (this.speedX !== 0 || this.speedY !== 0) {
-      this.gameBoundaryCollision();
+      this.checkBounds();
     }
   }
 
@@ -98,43 +140,26 @@ export class HitboxComponent extends Component {
   // https://github.com/kittykatattack/learningPixi#the-hittestrectangle-function
   public intersects(other: HitboxComponent): boolean {
 
-    // Define the variables we'll need to calculate
-    let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
-
-    // hit will determine whether there's a collision
-    hit = false;
-
     // Calculate the distance vector between the sprites
-    vx = this.centerX - other.centerX;
-    vy = this.centerY - other.centerY;
+    const vx = this.centerX - other.centerX;
+    const vy = this.centerY - other.centerY;
 
     // Figure out the combined half-widths and half-heights
-    combinedHalfWidths = this.halfWidth + other.halfWidth;
-    combinedHalfHeights = this.halfHeight + other.halfHeight;
+    const combinedHalfWidths = this.halfWidth + other.halfWidth;
+    const combinedHalfHeights = this.halfHeight + other.halfHeight;
 
     // Check for a collision on the x axis
     if (Math.abs(vx) < combinedHalfWidths) {
 
-      // A collision might be occurring. Check for a collision on the y axis
-      if (Math.abs(vy) < combinedHalfHeights) {
+      // A collision might be occurring - check for a collision on the y axis
+      return Math.abs(vy) < combinedHalfHeights;
 
-        // There's definitely a collision happening
-        hit = true;
-      } else {
-
-        // There's no collision on the y axis
-        hit = false;
-      }
-    } else {
-
-      // There's no collision on the x axis
-      hit = false;
     }
 
-    return hit;
+    return false;
   }
 
-  private gameBoundaryCollision(): void {
+  private checkBounds(): void {
     if (this.x <= 0) {
       this.speedX = 0;
       this.x = 0;
@@ -153,7 +178,43 @@ export class HitboxComponent extends Component {
   }
 
   public collidedWith(other: HitboxComponent): void {
+    if (this.shouldBlock(other)) {
+      this.block(other);
+      return;
+    }
     this.listeners.forEach(l => l.hitboxCollided(other));
+  }
+
+  private shouldBlock(other: HitboxComponent): boolean {
+    // Is this Hitbox set to block any tags of the other Hitbox?
+    return !!this.props.blocks.find(tag => other.props.tags.includes(tag));
+  }
+
+  /**
+   * Blocks another Hitbox from intersecting this one.
+   *
+   * More specifically, this will move the given Hitbox OUT of this Hitbox,
+   * based on which edge it collided with.
+   */
+  private block(other: HitboxComponent): void {
+
+    // Find the edge of THIS Hitbox that was collided with
+    const collisionEdge: Edge = getCollisionEdge(other, this);
+
+    // Move the colliding Entity to that edge
+    if (collisionEdge === Edge.TOP) {
+      other.y = this.y - other.height;
+      other.speedY = 0;
+    } else if (collisionEdge === Edge.BOTTOM) {
+      other.y = this.bottom;
+      other.speedY = 0;
+    } else if (collisionEdge === Edge.LEFT) {
+      other.x = this.x - other.width;
+      other.speedX = 0;
+    } else if (collisionEdge === Edge.RIGHT) {
+      other.x = this.right;
+      other.speedX = 0;
+    }
   }
 
 }

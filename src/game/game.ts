@@ -88,7 +88,8 @@ export class Game implements EntityContext {
 
     // Player
     this.addEntity(new Entity()
-      .attach(new HitboxComponent(64, 64, 32, 32))
+      .attach(new HitboxComponent(128, 128, 32, 32,
+        { tags: ['player'] }))
       .attach(new SpriteComponent('player.png'))
       .attach(new ControllerComponent(this.input, 300))
       .attach(new ScarerComponent()));
@@ -106,13 +107,14 @@ export class Game implements EntityContext {
 
     // Pen
     this.addEntity(new Entity()
-    .attach(new HitboxComponent(
-      (Game.WORLD_WIDTH / 2) - 50,
-      (Game.WORLD_HEIGHT) - 100,
-      100,
-      100))
-    .attach(new SpriteComponent('player.png'))
-    .attach(new JailerComponent()));
+      .attach(new HitboxComponent(
+        (Game.WORLD_WIDTH / 2) - 50,
+        (Game.WORLD_HEIGHT) - 100,
+        100, 100,
+        { blocks: ['player'] }
+      ))
+      .attach(new SpriteComponent('player.png'))
+      .attach(new JailerComponent()));
   }
 
   /**
@@ -153,6 +155,11 @@ export class Game implements EntityContext {
     this.entities = this.entities.filter(e => !e.deleted);
 
     this.detectCollisions();
+
+    // Update our Entities again!
+    [...this.entities].forEach(e => {
+      e.lateUpdate(this.app.ticker.deltaMS);
+    });
   }
 
   private detectCollisions(): void {

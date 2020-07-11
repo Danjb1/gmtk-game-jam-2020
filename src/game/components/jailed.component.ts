@@ -52,4 +52,8 @@ export class JailedComponent extends Component {
     }
   }
 
+  destroy() {
+    this.jailer.removeEntityFromPrison(this.entity);
+  }
+
 }
