@@ -60,6 +60,10 @@ export class Game {
    */
   private initViewport(): void {
     this.viewport = new Viewport({
+      // These should match the internal canvas size
+      // (the dimensions we used to initialise Pixi)
+      screenWidth: 800,
+      screenHeight: 600,
       worldWidth: Game.WORLD_WIDTH,
       worldHeight: Game.WORLD_HEIGHT
     }).fit();
