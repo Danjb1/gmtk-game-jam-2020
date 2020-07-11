@@ -24,7 +24,7 @@ export const createCat = (x: number, y: number): Entity => {
     .attach(catMeta)
     .attach(new HitboxComponent(x, y, 30, 30))
     .attach(animatedSprite)
-    .attach(new WanderComponent())
+    .attach(new WanderComponent(100, 200))
     .attach(new JailableComponent())
     .attach(new ScaredComponent())
     .attach(new RescueComponent())
