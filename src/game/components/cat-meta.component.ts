@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { boundedGaussianRandom } from '../utils';
+import { boundedGaussianRandom, easeOutSine } from '../utils';
 
 export type CatPersonality = 'normal' | 'lazy' | 'hyper';
 export type CatVariety = 'ash' | 'black' | 'brown' | 'ginger' | 'grey' | 'greywhite' | 'tan' | 'white';
@@ -104,9 +104,13 @@ export class CatMetaComponent extends Component {
    * 1 - needs to be picked up
    */
   get howCloseToPickup(): number {
-    const howClose = ((Date.now() - this._added) / this._duration);
+    let howClose = ((Date.now() - this._added) / this._duration);
+
     // Min 1, max 1
-    return Math.max(0, Math.min(1, howClose));
+    howClose = Math.max(0, Math.min(1, howClose));
+
+    // Add easing
+    return easeOutSine(howClose);
   }
 
   /**
