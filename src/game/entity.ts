@@ -12,7 +12,7 @@ export class Entity {
 
   private components: Component[] = [];
 
-  constructor(private entityContext: EntityContext) {}
+  constructor(public entityContext: EntityContext) {}
 
   /**
    * Attaches a Component to this Entity.
