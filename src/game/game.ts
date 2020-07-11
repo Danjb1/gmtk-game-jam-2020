@@ -52,8 +52,19 @@ export class Game implements EntityContext {
    * @param callbackFn Function to call when the game is loaded.
    */
   public load(callbackFn: any): void {
-    Assets.loadTextures(this.app.loader, () => {
-      this.setup();
+    Assets.loader = this.app.loader;
+    const _this = this;
+
+    const loadSounds = Assets.loadSoundsAsync();
+    loadSounds.then(() => console.log("Sounds loaded"))
+              .catch((err) => console.error("Error loading sounds", err));
+    const loadTextures = Assets.loadTexturesAsync(this.app.loader);
+    loadTextures.then(() => console.log("Textures loaded"))
+                .catch((err) => console.error("Error loading extures", err));;
+
+    Promise.all([/*loadSounds,*/ loadTextures]).then(() => {
+      // console.log("All assets loaded");
+      _this.setup();
       callbackFn();
     });
   }
