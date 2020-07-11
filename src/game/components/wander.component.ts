@@ -83,7 +83,7 @@ export class WanderComponent extends Component {
    */
   private stopWandering(): void {
     this.wanderTimeRemaining = 0;
-    this.hitbox.setSpeed(new Vector(0, 0));
+    this.hitbox.setSpeed(Vector.zero());
   }
 
   /**
