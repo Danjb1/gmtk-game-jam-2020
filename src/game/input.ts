@@ -14,7 +14,6 @@ interface KeyBinding {
   value: String;
 }
 
-
 export class Input {
 
   // Game keys
