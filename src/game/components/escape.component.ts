@@ -1,14 +1,19 @@
-import { Component } from "../component";
-import { CatMetaComponent } from "./cat-meta.component";
-import { Entity } from "../entity";
-import { JailedComponent, JailerComponent } from ".";
-import { Game } from "../game";
-import { HitboxComponent } from "./hitbox.component";
+import { Entity } from '../entity';
+import { Game } from '../game';
+import { Component } from '../component';
+
+// Components
+import { CatMetaComponent } from './cat-meta.component';
+import { JailedComponent } from './jailed.component';
+import { HitboxComponent } from './hitbox.component';
 
 export class EscapeComponent extends Component {
 
-  private readonly CHANCE_OF_ESCAPE = .05; // fraction: 1 = always escape, 0 = never escape
-  private readonly MINIMUM_TIME_IN_PRISON = 500; // ms
+  // fraction: 1 = always escape, 0 = never escape
+  private readonly CHANCE_OF_ESCAPE = .05;
+
+  // Minimum time in prison, in milliseconds
+  private readonly MINIMUM_TIME_IN_PRISON = 500;
 
   private _jailedAt: number;
   private _catMeta: CatMetaComponent;
@@ -28,7 +33,7 @@ export class EscapeComponent extends Component {
   update() {
     // Enforce remaining in prison for a specific amount of time
     if (Date.now() < this._jailedAt + this.MINIMUM_TIME_IN_PRISON) {
-      return
+      return;
     }
 
     // If they are close to pickup, don't screw the player
@@ -38,7 +43,7 @@ export class EscapeComponent extends Component {
 
     // Cat has tried and failed
     if (Math.random() > this.CHANCE_OF_ESCAPE) {
-      return
+      return;
     }
 
     // Ninja cat has escaped!
