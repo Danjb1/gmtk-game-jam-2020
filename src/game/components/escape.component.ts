@@ -7,6 +7,7 @@ import { CatMetaComponent } from './cat-meta.component';
 import { JailedComponent } from './jailed.component';
 import { HitboxComponent } from './hitbox.component';
 
+
 export class EscapeComponent extends Component {
 
   // fraction: 1 = always escape, 0 = never escape

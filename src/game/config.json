@@ -7,11 +7,25 @@
     },
     "catSpawner": {
         "positionX": 128,
-        "positionY": 128,
-        "attemptsPerInterval": 2,
-        "chanceToSpawn": 0.5,
-        "interval": 1000,
-        "maxChildren": 50
+        "positionY": 128
+    },
+    "catSpawnerConfig": {
+        "attemptsPerInterval": {
+            "min": 1,
+            "max": 2
+        },
+        "chanceToSpawn": {
+            "min": 0.3,
+            "max": 0.4
+        },
+        "interval": {
+            "min": 1000,
+            "max": 1000
+        },
+        "maxChildren": {
+            "max": 20,
+            "min": 60
+        }
     },
     "dog": {
         "enabled": true,
@@ -32,7 +46,7 @@
         "enabled": true,
         "positionX": 140,
         "positionY": 150,
-        "width": 40, 
+        "width": 40,
         "height": 180,
         "sprite": "player.png"
     },
@@ -40,7 +54,7 @@
         "enabled": true,
         "positionX": 460,
         "positionY": 150,
-        "width": 40, 
+        "width": 40,
         "height": 180,
         "sprite": "player.png"
     }
