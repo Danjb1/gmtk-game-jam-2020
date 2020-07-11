@@ -17,7 +17,7 @@ export class SpawnerComponent extends Component {
    */
   private spawnChance = 0.01;
 
-  constructor(private createFn: any, private viewport: Viewport) {
+  constructor(private createFn: any) {
     super(SpawnerComponent.KEY);
   }
 
@@ -43,7 +43,7 @@ export class SpawnerComponent extends Component {
     const y = intBetween(this.hitbox.y, this.hitbox.bottom);
 
     // Create our Entity
-    const spawned = this.createFn(x, y, this.viewport);
+    const spawned = this.createFn(x, y);
     this.entity.context.addEntity(spawned);
   }
 

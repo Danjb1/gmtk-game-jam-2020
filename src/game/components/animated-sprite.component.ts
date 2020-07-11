@@ -1,11 +1,8 @@
 import * as PIXI from 'pixi.js';
-import { Viewport } from 'pixi-viewport';
 
 import { Component } from '../component';
-import { Entity } from '../entity';
 import { Assets } from '../assets';
 import { HitboxComponent } from './hitbox.component';
-
 
 type Direction = 'up' | 'down' | 'left' | 'right';
 
@@ -25,16 +22,12 @@ export class AnimatedSpriteComponent extends Component {
     this.sprite = new PIXI.AnimatedSprite(this.spritesheet.animations[`${filename}_down`]);
   }
 
-  public onAttach(e: Entity): void {
-    super.onAttach(e);
+  public onSpawn(): void {
 
     // Register this Sprite with Pixi
     this.entity.context
       .getViewport()
       .addChild(this.sprite);
-  }
-
-  public onSpawn(): void {
 
     // Retrieve the Hitbox from the Entity
     this.hitbox = <HitboxComponent>
@@ -59,19 +52,23 @@ export class AnimatedSpriteComponent extends Component {
   private updateDirection() {
     let newDirection: Direction;
     if (this.sprite.x > this.hitbox.x) {
-      newDirection = 'right';
-    } else if (this.sprite.x < this.hitbox.x) {
       newDirection = 'left';
-    } else if (this.sprite.y > this.hitbox.y) {
-      newDirection = 'down';
+    } else if (this.sprite.x < this.hitbox.x) {
+      newDirection = 'right';
     } else if (this.sprite.y > this.hitbox.y) {
       newDirection = 'up';
+    } else if (this.sprite.y < this.hitbox.y) {
+      newDirection = 'down';
     } else {
       return;
     }
 
     // Update the texture
-    this.sprite.texture = this.spritesheet.animations[`${this.filename}_${newDirection}`];
+    this.sprite.destroy();
+    this.sprite = new PIXI.AnimatedSprite(this.spritesheet.animations[`${this.filename}_${newDirection}`])
+    this.entity.context
+      .getViewport()
+      .addChild(this.sprite);
   }
 
 }
