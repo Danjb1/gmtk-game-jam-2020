@@ -78,7 +78,7 @@ export class Game {
     this.addEntity(new Entity()
       .attach(new HitboxComponent(64, 64, 100, 100))
       .attach(new SpriteComponent('player.png', this.viewport))
-      .attach(new ControllerComponent(this.input, 1.5)));
+      .attach(new ControllerComponent(this.input, 8)));
   }
 
   /**
