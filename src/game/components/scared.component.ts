@@ -1,7 +1,11 @@
 import { Component } from '../component';
 import { Entity } from '../entity';
+
+// Components
 import { ScarerComponent } from './scarer.component';
 import { HitboxComponent } from './hitbox.component';
+
+// Utils
 import { getDistanceBetween } from '../utils/geometry';
 
 /**
