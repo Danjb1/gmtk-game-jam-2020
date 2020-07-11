@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { Game } from './game/game';
+import { PickupComponent } from './ui/pickup.component';
 
 /**
  * Entry point for the application.
@@ -10,9 +11,13 @@ import { Game } from './game/game';
   // Create canvas
   const type = PIXI.utils.isWebGLSupported() ? 'WebGL' : 'canvas';
   PIXI.utils.sayHello(type);
-
+  
   // Create a Pixi Application
   let app = new PIXI.Application({ width: 800, height: 600 });
+
+  //Load the pickup bar
+  let pickup = new PickupComponent();
+  document.body.appendChild(pickup.create());
 
   // Add Pixi canvas to the DOM
   app.view.id = 'game-canvas';
@@ -22,7 +27,7 @@ import { Game } from './game/game';
   const game = new Game(app);
   game.load(() => {
     // Start the game loop
-    app.ticker.add(delta => game.update(delta));
+    app.ticker.add(delta => game.update());
   });
 
 })();

@@ -1,8 +1,9 @@
 // Pixi
 import { Viewport } from 'pixi-viewport';
 
-// Player Input
+// Global Stuff
 import { Input } from './input';
+import { EntityContext } from './entity-context';
 
 // Assets
 import { Assets } from './assets';
@@ -14,11 +15,12 @@ import { Entity } from './entity';
 import {
   SpriteComponent,
   HitboxComponent,
-  ControllerComponent
+  ControllerComponent,
+  ScarerComponent
 } from './components';
 import { createCat } from './factory/cat.factory';
 
-export class Game {
+export class Game implements EntityContext {
 
   /*
    * Size of the game world.
@@ -79,33 +81,37 @@ export class Game {
     this.addEntity(new Entity()
       .attach(new HitboxComponent(64, 64, 100, 100))
       .attach(new SpriteComponent('player.png', this.viewport))
-      .attach(new ControllerComponent(this.input, 8)));
-
-    this.addEntity(createCat(this.viewport));
+      .attach(new ControllerComponent(this.input, 250))
+      .attach(new ScarerComponent()));
   }
 
   /**
    * Adds an Entity to the world.
    */
   public addEntity(e: Entity): void {
-    e.spawn();
+    e.spawn(this);
     this.entities.push(e);
+  }
+
+  /**
+   * Gets all Entities in the world.
+   */
+  public getEntities(): Entity[] {
+    return this.entities;
   }
 
   /**
    * Updates the game by one frame.
    *
-   * @param delta Amount of fractional lag between frames:
-   *
-   *  1 = frame is exactly on time
-   *  2 = frame has taken twice as long as expected
+   * The precise amount of time that has passed can be obtained from
+   * `app.ticker`.
    */
-  public update(delta: number): void {
+  public update(): void {
 
     // Update our Entities.
     // We make a copy of the array in case the list is changed during iteration.
     [...this.entities].forEach(e => {
-      e.update(delta);
+      e.update(this.app.ticker.deltaMS);
     });
 
     // Destroy deleted Entities
@@ -115,6 +121,22 @@ export class Game {
 
     // Remove deleted Entities
     this.entities = this.entities.filter(e => !e.deleted);
+
+    this.detectCollisions();
+  }
+
+  private detectCollisions(): void {
+    [...this.entities].forEach(e => {
+      const eHitBox = <HitboxComponent>e.getComponent(HitboxComponent.KEY);
+      [...this.entities].forEach(eOther => {
+        if (eOther !== eOther) {
+          const eOtherHitBox = <HitboxComponent>eOther.getComponent(HitboxComponent.KEY);
+          if (eHitBox.intersects(eOtherHitBox)) {
+            eHitBox.collidedWith(eOtherHitBox);
+          }
+        }
+      });
+    });
   }
 
 }

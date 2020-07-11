@@ -4,4 +4,8 @@ export class RandomUtils {
     return min + Math.random() * (max - min);
   }
 
+  public static randomSign(): number {
+    return Math.random() < 0.5 ? -1 : 1;
+  }
+
 }

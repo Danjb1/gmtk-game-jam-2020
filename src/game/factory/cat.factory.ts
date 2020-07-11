@@ -1,8 +1,8 @@
 import { Entity } from '../entity';
-import { HitboxComponent, WanderComponent, SpriteComponent } from '../components';
-import { CatMetaComponent, CatBreed } from '../components/cat-meta.component';
 import { Viewport } from 'pixi-viewport';
-import { AnimatedSpriteComponent } from '../components/animated-sprite.component';
+
+// Components
+import { CatMetaComponent, HitboxComponent, WanderComponent, AnimatedSpriteComponent } from '../components';
 
 /**
  * Generates a cat entity
@@ -15,7 +15,8 @@ export const createCat = (viewport: Viewport): Entity => {
   const catEntity = new Entity()
     .attach(catMeta)
     .attach(new HitboxComponent(0, 0, 30, 30))
-    .attach(animatedSprite);
+    .attach(animatedSprite)
+    .attach(new WanderComponent())
 
   return catEntity;
 };
