@@ -2,7 +2,7 @@ import { Viewport } from 'pixi-viewport';
 
 import { Component } from '../component';
 import { HitboxComponent } from './hitbox.component';
-import { RandomUtils } from '../random.utils';
+import { intBetween } from '../utils';
 
 export class SpawnerComponent extends Component {
 
@@ -39,12 +39,12 @@ export class SpawnerComponent extends Component {
   private spawnEntity(): void {
 
     // Pick a random position within the spawner entity's Hitbox
-    const x = RandomUtils.intBetween(this.hitbox.x, this.hitbox.right);
-    const y = RandomUtils.intBetween(this.hitbox.y, this.hitbox.bottom);
+    const x = intBetween(this.hitbox.x, this.hitbox.right);
+    const y = intBetween(this.hitbox.y, this.hitbox.bottom);
 
     // Create our Entity
     const spawned = this.createFn(x, y, this.viewport);
-    this.entityContext.addEntity(spawned);
+    this.entity.context.addEntity(spawned);
   }
 
 }

@@ -5,5 +5,9 @@ import { Entity } from './entity';
  * other Entities in the context.
  */
 export interface EntityContext {
+
+  addEntity(e: Entity): void;
+
   getEntities: () => Entity[];
+
 }

@@ -9,7 +9,7 @@ import { EntityContext } from './entity-context';
 export class Entity {
 
   public deleted: boolean;
-  public entityContext: EntityContext;
+  public context: EntityContext;
 
   private components: Component[] = [];
 
@@ -29,8 +29,8 @@ export class Entity {
    *
    * By this point, all Components have been attached.
    */
-  public spawn(entityContext: EntityContext): void {
-    this.entityContext = entityContext;
+  public spawn(context: EntityContext): void {
+    this.context = context;
     this.components.forEach(c => c.onSpawn());
   }
 

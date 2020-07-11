@@ -31,7 +31,7 @@ export class ScaredComponent extends Component {
   update(): void {
 
     // Locate Entities in the world which are Scarers
-    const scarers = this.entity.entityContext
+    const scarers = this.entity.context
       .getEntities()
       .filter(e => e.getComponent(ScarerComponent.KEY) !== undefined);
 
