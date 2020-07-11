@@ -28,9 +28,7 @@ export class Entity {
    * By this point, all Components have been attached.
    */
   public spawn(): void {
-    this.components.forEach(c => {
-      c.onSpawn();
-    });
+    this.components.forEach(c => c.onSpawn());
   }
 
   /**
