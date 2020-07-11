@@ -29,6 +29,8 @@ import { getHitboxFrom } from './utils';
 
 import { GameState } from './store';
 
+import cfg from './config.json';
+
 export class Game implements EntityContext {
 
   /*
@@ -107,63 +109,69 @@ export class Game implements EntityContext {
 
     // Player
     this.addEntity(new Entity()
-      .attach(new HitboxComponent(128, 128, 32, 32,
+      .attach(new HitboxComponent(cfg.player.startX, cfg.player.startY, 32, 32,
         { tags: ['player'] }))
-      .attach(new SpriteComponent('player.png'))
-      .attach(new ControllerComponent(this.input, 350))
+      .attach(new SpriteComponent(cfg.player.sprite))
+      .attach(new ControllerComponent(this.input, cfg.player.speed))
       .attach(new ScarerComponent()));
 
     // Dog
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(300, 100, 32, 32,
-        { tags: ['dog'] }))
-      .attach(new SpriteComponent('player.png'))
-      .attach(new ScarerComponent())
-      .attach(new WanderComponent(50, 100)));
+    if (cfg.dog.enabled) {
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 32, 32,
+          { tags: ['dog'] }))
+        .attach(new SpriteComponent(cfg.dog.sprite))
+        .attach(new ScarerComponent())
+        .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
+    }
 
     // Cat Spawner
     this.addEntity(new Entity()
-      .attach(new HitboxComponent(0, 0, 100, 100))
+      .attach(new HitboxComponent(cfg.catSpawner.positionX, cfg.catSpawner.positionY, 100, 100))
       .attach(new SpawnerComponent({
-        attemptsPerInterval: 2,
-        chanceToSpawn: 0.5,
+        attemptsPerInterval: cfg.catSpawner.attemptsPerInterval,
+        chanceToSpawn: cfg.catSpawner.chanceToSpawn,
         createFn: createCat,
-        interval: 1000,
-        maxChildren: 50
+        interval: cfg.catSpawner.interval,
+        maxChildren: cfg.catSpawner.maxChildren
       })));
 
     // Pen
     this.addEntity(new Entity()
       .attach(new HitboxComponent(
-        (Game.WORLD_WIDTH / 2) - 50,
-        (Game.WORLD_HEIGHT) - 100,
-        100, 100,
+        cfg.pen.positionX,
+        cfg.pen.positionY,
+        cfg.pen.width, cfg.pen.height,
         { blocks: ['player', 'dog'] }
       ))
-      .attach(new SpriteComponent('player.png'))
+      .attach(new SpriteComponent(cfg.pen.sprite))
       .attach(new JailerComponent()));
 
     // Left Table
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(
-        (Game.WORLD_WIDTH / 4) - 20,
-        (Game.WORLD_HEIGHT / 2) - 90,
-        40, 180,
-        { blocks: ['player'] }
-      ))
-      .attach(new SpriteComponent('player.png'))
-    );
+    if (cfg.leftTable.enabled) {
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(
+          cfg.leftTable.positionX,
+          cfg.leftTable.positionY,
+          cfg.leftTable.width,
+          cfg.leftTable.height,
+          { blocks: ['player'] }
+        ))
+        .attach(new SpriteComponent(cfg.leftTable.sprite)));
+    }
 
     // Right Table
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(
-        ((Game.WORLD_WIDTH / 4) * 3) - 20,
-        (Game.WORLD_HEIGHT / 2) - 90,
-        40, 180,
-        { blocks: ['player'] }
-      ))
-      .attach(new SpriteComponent('player.png'))
-    );
+    if (cfg.rightTable.enabled) {
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(
+          cfg.rightTable.positionX,
+          cfg.rightTable.positionY,
+          cfg.rightTable.width,
+          cfg.rightTable.height,
+          { blocks: ['player'] }
+        ))
+        .attach(new SpriteComponent(cfg.rightTable.sprite)));
+    }
   }
 
   /**
