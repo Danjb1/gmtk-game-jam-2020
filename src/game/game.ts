@@ -41,6 +41,7 @@ export class Game {
    * Adds an Entity to the world.
    */
   addEntity(e: Entity): void {
+    e.spawn();
     this.entities.push(e);
   }
 

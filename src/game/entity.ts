@@ -23,6 +23,17 @@ export class Entity {
   }
 
   /**
+   * Called when this Entity is added to the world.
+   *
+   * By this point, all Components have been attached.
+   */
+  spawn(): void {
+    this.components.forEach(c => {
+      c.onSpawn();
+    });
+  }
+
+  /**
    * Cleans up this Entity.
    */
   destroy(): void {
@@ -49,8 +60,8 @@ export class Entity {
     this.components = this.components.filter(c => !c.deleted);
   }
 
-  getComponent(condition: any): Component {
-    return this.components.find(c => condition(c));
+  getComponent(key: Symbol): Component {
+    return this.components.find(c => c.key === key);
   }
 
 }

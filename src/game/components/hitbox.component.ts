@@ -2,6 +2,8 @@ import { Component } from '../component';
 
 export class HitboxComponent extends Component {
 
+  public static readonly KEY = Symbol();
+
   public speedX = 0;
   public speedY = 0;
 
@@ -10,7 +12,7 @@ export class HitboxComponent extends Component {
       public y: number,
       public width: number,
       public height: number) {
-    super();
+    super(HitboxComponent.KEY);
   }
 
   update(delta: number): void {

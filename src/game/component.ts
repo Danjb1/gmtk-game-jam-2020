@@ -9,11 +9,20 @@ export abstract class Component {
 
   protected entity: Entity;
 
+  constructor(private _key: Symbol) {}
+
   /**
    * Callback for when this Component is attached to an Entity.
    */
   onAttach(e: Entity): void {
     this.entity = e;
+  }
+
+  /**
+   * Callback for when the parent Entity is added to the world.
+   */
+  onSpawn(): void {
+    // Do nothing by default
   }
 
   /**
@@ -28,6 +37,10 @@ export abstract class Component {
    */
   update(delta: number): void {
     // Do nothing by default
+  }
+
+  get key() {
+    return this._key;
   }
 
 }
