@@ -8,6 +8,8 @@ export class JailedComponent extends Component {
 
   public static readonly KEY = Symbol();
 
+  public jailedTime: number;
+
   private hitbox: HitboxComponent;
   private jailerHitbox: HitboxComponent;
 
@@ -28,7 +30,9 @@ export class JailedComponent extends Component {
     this.hitbox.speedY = 0;
   }
 
-  public update(): void {
+  public update(delta: number): void {
+    this.jailedTime += delta;
+
     this.keepInJail();
   }
 

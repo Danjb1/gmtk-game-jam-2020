@@ -1,5 +1,6 @@
 import { Component } from '../component';
 import { Entity } from '../entity';
+import { Game } from '../game';
 
 // Components
 import { ScarerComponent } from './scarer.component';
@@ -8,7 +9,6 @@ import { HitboxComponent } from './hitbox.component';
 // Utils
 import { getDistanceBetween, getHitboxFrom } from '../utils';
 import { Vector } from '../vector';
-import { Game } from '../game';
 
 /**
  * Will cause the holding Entity to flee from other Entities which have a
@@ -19,8 +19,8 @@ export class ScaredComponent extends Component {
   public static readonly KEY = Symbol();
 
   private hitbox: HitboxComponent;
-  private frightDistance = 120;
-  private speed = 350;
+  private frightDistance = 100;
+  private speed = 330;
 
   constructor() {
     super(ScaredComponent.KEY);
@@ -39,14 +39,16 @@ export class ScaredComponent extends Component {
       const scarerHitbox = getHitboxFrom(scarer);
 
       // Plot course away from scarer
-      const factor = -1 * this.speed / getDistanceBetween(this.hitbox, scarerHitbox);
-      const fleeVector = new Vector(
-        factor * (scarerHitbox.centerX - this.hitbox.centerX),
-        factor * (scarerHitbox.centerY - this.hitbox.centerY)
-      );
+      const fleeVector = Vector
+        .between(this.hitbox.centrePosition, scarerHitbox.centrePosition)
+        .scaleToMagnitude(-1 * this.speed);
 
       // Correct flee vector towards centre of screen
-      this.hitbox.setSpeed(fleeVector.plus(this.getCentreScreenVector()));
+      this.hitbox.setSpeed(
+        fleeVector
+          .plus(this.getCentreScreenVector())
+          .scaleToMagnitude(this.speed)
+      );
     }
   }
 

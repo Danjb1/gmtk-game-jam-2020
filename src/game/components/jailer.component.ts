@@ -10,9 +10,15 @@ export class JailerComponent extends Component implements HitboxListener {
   public static readonly KEY = Symbol();
 
   private hitbox: HitboxComponent;
+  private prisoners: Entity[] = [];
 
   constructor() {
     super(JailerComponent.KEY);
+  }
+
+  public destroy(): void {
+    // Clear prisoners to prevent any dangling references
+    this.prisoners = [];
   }
 
   public onSpawn(): void {
@@ -24,16 +30,26 @@ export class JailerComponent extends Component implements HitboxListener {
     this.hitbox.removeListener(this);
   }
 
+  public update(): void {
+    this.removeDeletedPrisoners();
+  }
+
+  private removeDeletedPrisoners(): void {
+    // Forget about any prisoners that have been deleted
+    this.prisoners = this.prisoners.filter(e => !e.deleted);
+  }
+
   public hitboxCollided(other: HitboxComponent): void {
     const jailable = <JailableComponent>
         other.entity.getComponent(JailableComponent.KEY);
 
-    if (jailable) {
+    if (jailable && !this.prisoners.includes(other.entity)) {
       this.jailEntity(other.entity);
     }
   }
 
   private jailEntity(e: Entity): void {
+    this.prisoners.push(e);
     e.attach(new JailedComponent(this));
   }
 
