@@ -31,6 +31,11 @@ export class SpawnerComponent extends Component {
     this.resetSpawnTimer();
   }
 
+  public destroy(): void {
+    // Clear children to prevent any dangling references
+    this.children = [];
+  }
+
   public onSpawn(): void {
     this.hitbox = getHitboxFrom(this.entity);
   }
