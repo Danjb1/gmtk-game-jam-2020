@@ -1,6 +1,6 @@
 import { Assets } from './assets';
 import { Entity } from './entity';
-import { SpriteComponent, HitboxComponent } from './components';
+import { SpriteComponent, HitboxComponent, InputComponent } from './components';
 
 export class Game {
 
@@ -33,7 +33,13 @@ export class Game {
   initEntities(): void {
     const player = new Entity()
         .attach(new HitboxComponent(64, 64, 100, 100))
-        .attach(new SpriteComponent('player.png', this.app.stage));
+        .attach(new SpriteComponent('player.png', this.app.stage))
+        .attach(new InputComponent([
+          {name: 'Up', value: 'w'},
+          {name: 'Down', value: 's'},
+          {name: 'Left', value: 'a'},
+          {name: 'Right', value: 'd'}
+        ]));
     this.addEntity(player);
   }
 

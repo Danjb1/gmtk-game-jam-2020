@@ -51,9 +51,6 @@ export class InputComponent extends Component {
     });
   }
 
-  /**
-   * Does nothing, because key presses can occur at any time.
-   */
   update(delta: number): void {}
 
   onSpawn(): void {}
