@@ -10,7 +10,7 @@ import { HitboxComponent } from './hitbox.component';
 export class EscapeComponent extends Component {
 
   // fraction: 1 = always escape, 0 = never escape
-  private readonly CHANCE_OF_ESCAPE = .05;
+  private readonly CHANCE_OF_ESCAPE = .005;
 
   // Minimum time in prison, in milliseconds
   private readonly MINIMUM_TIME_IN_PRISON = 500;

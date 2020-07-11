@@ -1,11 +1,15 @@
 import { Game } from '../game/game';
 import { PickupComponent } from './pickup.component';
-import { ScoreComponent } from './score.component';
+import { ScoreElement, LivesElement } from './elements/';
 
 export class Hud {
 
   private pickup: PickupComponent;
-  private scoreComponent: ScoreComponent;
+
+  private scoreElement: ScoreElement;
+  private livesElement: LivesElement;
+
+  private gameContainer: HTMLElement = document.getElementById('game-container');
 
   constructor(private game: Game) {
 
@@ -15,14 +19,17 @@ export class Hud {
     div.appendChild(this.pickup.create());
 
     // Score
-    this.scoreComponent = new ScoreComponent(game.getState());
-    const gameContainer = document.getElementById('game-container');
-    gameContainer.appendChild(this.scoreComponent.create());
+    this.scoreElement = new ScoreElement(this.gameContainer);
+    this.livesElement = new LivesElement(this.gameContainer);
   }
 
   update() {
     this.pickup.update();
-    this.scoreComponent.update();
+
+    const {score, lives } = this.game.getState();
+
+    this.scoreElement.update({ score });
+    this.livesElement.update({ lives });
   }
 
 }
