@@ -19,6 +19,7 @@ export class Entity {
   attach(component: Component) {
     this.components.push(component);
     component.onAttach(this);
+    return this;
   }
 
   /**
@@ -46,6 +47,10 @@ export class Entity {
 
     // Remove deleted Components
     this.components = this.components.filter(c => !c.deleted);
+  }
+
+  getComponent(condition: any): Component {
+    return this.components.find(c => condition(c));
   }
 
 }

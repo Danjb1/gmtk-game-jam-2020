@@ -2,8 +2,8 @@ import { Component } from '../component';
 
 export class HitboxComponent extends Component {
 
-  public speedX: number;
-  public speedY: number;
+  public speedX = 0;
+  public speedY = 0;
 
   constructor(
       public x: number,

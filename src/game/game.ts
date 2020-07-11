@@ -31,9 +31,9 @@ export class Game {
    * Creates our initial Entities.
    */
   initEntities(): void {
-    const player = new Entity();
-    player.attach(new HitboxComponent(64, 64, 100, 100));
-    player.attach(new SpriteComponent('player.png', this.app.stage));
+    const player = new Entity()
+        .attach(new HitboxComponent(64, 64, 100, 100))
+        .attach(new SpriteComponent('player.png', this.app.stage));
     this.addEntity(player);
   }
 
