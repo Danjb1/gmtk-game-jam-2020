@@ -1,17 +1,22 @@
 import { Component } from '../component';
 import { Game } from '../game';
+import { Entity } from '../entity';
 import { Vector } from '../vector';
+
+export interface HitboxListener {
+
+  hitboxCollided: (other: Entity) => void;
+
+}
 
 export class HitboxComponent extends Component {
   public static readonly KEY = Symbol();
 
-  public onCollisionStayHandler?: (other: any) => void;
-  // public onCollisionEnterHandler?: (other: any) => void;
-  // public onCollisionExitHandler?: (other: any) => void;
-
   // Speed, in units per second
   public speedX = 0;
   public speedY = 0;
+
+  private listeners: HitboxListener[] = [];
 
   constructor(
       public x: number,
@@ -21,17 +26,17 @@ export class HitboxComponent extends Component {
     super(HitboxComponent.KEY);
   }
 
+  public destroy(): void {
+    // Clear listeners to prevent any dangling references
+    this.listeners = [];
+  }
+
   get right(): number {
     return this.x + this.width;
   }
 
   get bottom(): number {
     return this.y + this.height;
-  }
-
-  setSpeed(speed: Vector): void {
-    this.speedX = speed.x;
-    this.speedY = speed.y;
   }
 
   public update(delta: number): void {
@@ -50,25 +55,42 @@ export class HitboxComponent extends Component {
     }
   }
 
-  public collidedWith(other: HitboxComponent) {
-    if (this.onCollisionStayHandler)
-      this.onCollisionStayHandler(other);
+  public addListener(listener: HitboxListener): void {
+    this.listeners.push(listener);
+  }
+
+  public removeListener(listener: HitboxListener): void {
+    this.listeners = this.listeners.filter(l => l !== listener);
   }
 
   public get halfWidth(): number {
     return this.width / 2;
   }
 
-  public get halfHeight(): number {
+  get halfHeight(): number {
     return this.height / 2;
   }
 
-  public get centerX(): number {
+  get centerX(): number {
     return this.x + this.halfWidth;
   }
 
-  public get centerY(): number {
+  get centerY(): number {
     return this.y + this.halfHeight;
+  }
+
+  setSpeed(speed: Vector): void {
+    this.speedX = speed.x;
+    this.speedY = speed.y;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Collisions
+  //////////////////////////////////////////////////////////////////////////////
+
+  public collidedWith(other: HitboxComponent) {
+    if (this.onCollisionStayHandler)
+      this.onCollisionStayHandler(other);
   }
 
   // https://github.com/kittykatattack/learningPixi#the-hittestrectangle-function
@@ -114,7 +136,7 @@ export class HitboxComponent extends Component {
     if (this.x <= 0) {
       this.speedX = 0;
       this.x = 0;
-    } else if ((this.x + this.width) >= Game.WORLD_WIDTH) {
+    } else if (this.right >= Game.WORLD_WIDTH) {
       this.speedX = 0;
       this.x = Game.WORLD_WIDTH - this.width;
     }
@@ -122,10 +144,14 @@ export class HitboxComponent extends Component {
     if (this.y <= 0) {
       this.speedY = 0;
       this.y = 0;
-    } else if ((this.y + this.height) >= Game.WORLD_HEIGHT) {
+    } else if (this.bottom >= Game.WORLD_HEIGHT) {
       this.speedY = 0;
       this.y = Game.WORLD_HEIGHT - this.height;
     }
+  }
+
+  public collidedWith(other: Entity): void {
+    this.listeners.forEach(l => l.hitboxCollided(other));
   }
 
 }
