@@ -3,6 +3,7 @@ import { HitboxComponent } from './hitbox.component';
 
 // Utils
 import { getHitboxFrom, intBetween, randomSign } from '../utils';
+import { Vector } from '../vector';
 
 export class WanderComponent extends Component {
 
@@ -82,8 +83,7 @@ export class WanderComponent extends Component {
    */
   private stopWandering(): void {
     this.wanderTimeRemaining = 0;
-    this.hitbox.speedX = 0;
-    this.hitbox.speedY = 0;
+    this.hitbox.setSpeed(new Vector(0, 0));
   }
 
   /**
@@ -99,10 +99,10 @@ export class WanderComponent extends Component {
   private startWandering(): void {
 
     // Random speed
-    this.hitbox.speedX = randomSign() *
-        intBetween(this.minWanderSpeed, this.maxWanderSpeed);
-    this.hitbox.speedY = randomSign() *
-        intBetween(this.minWanderSpeed, this.maxWanderSpeed);
+    this.hitbox.setSpeed(new Vector(
+      randomSign() * intBetween(this.minWanderSpeed, this.maxWanderSpeed),
+      randomSign() * intBetween(this.minWanderSpeed, this.maxWanderSpeed)
+    ));
 
     // Random time
     this.wanderTimeRemaining = intBetween(

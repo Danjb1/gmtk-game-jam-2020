@@ -7,6 +7,7 @@ import { Input } from '../input';
 
 // Utils
 import { getHitboxFrom } from '../utils';
+import { Vector } from '../vector';
 
 export class ControllerComponent extends Component {
 
@@ -23,8 +24,10 @@ export class ControllerComponent extends Component {
   }
 
   update(delta: number): void {
-    this.hitbox.speedX = this.getAxisSpeed(Input.LEFT, Input.RIGHT);
-    this.hitbox.speedY = this.getAxisSpeed(Input.UP, Input.DOWN);
+    this.hitbox.setSpeed(new Vector(
+      this.getAxisSpeed(Input.LEFT, Input.RIGHT),
+      this.getAxisSpeed(Input.UP, Input.DOWN)
+    ));
   }
 
   private getAxisSpeed(positiveName: String, negativeName: String): number {

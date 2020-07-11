@@ -1,5 +1,6 @@
 import { Component } from '../component';
 import { Game } from '../game';
+import { Vector } from '../vector';
 
 export class HitboxComponent extends Component {
   public static readonly KEY = Symbol();
@@ -22,6 +23,11 @@ export class HitboxComponent extends Component {
 
   get bottom(): number {
     return this.y + this.height;
+  }
+
+  setSpeed(speed: Vector): void {
+    this.speedX = speed.x;
+    this.speedY = speed.y;
   }
 
   public update(delta: number): void {

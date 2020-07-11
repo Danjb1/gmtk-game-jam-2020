@@ -7,6 +7,7 @@ import { HitboxComponent } from './hitbox.component';
 
 // Utils
 import { getDistanceBetween, getHitboxFrom } from '../utils';
+import { Vector } from '../vector';
 
 /**
  * Will cause the holding Entity to flee from other Entities which have a
@@ -41,8 +42,10 @@ export class ScaredComponent extends Component {
 
       // Invert and scale distance vector to scarer
       // (to go in opposite direction at correct overall speed)
-      this.hitbox.speedX = factor * (scarerHitbox.centerX - this.hitbox.centerX);
-      this.hitbox.speedY = factor * (scarerHitbox.centerY - this.hitbox.centerY);
+      this.hitbox.setSpeed(new Vector(
+        factor * (scarerHitbox.centerX - this.hitbox.centerX),
+        factor * (scarerHitbox.centerY - this.hitbox.centerY)
+      ));
     }
   }
 
