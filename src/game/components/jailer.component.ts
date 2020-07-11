@@ -1,10 +1,10 @@
 import { Component } from '../component';
 import { getHitboxFrom } from '../utils';
-import { HitboxComponent } from './hitbox.component';
+import { HitboxComponent, HitboxListener } from './hitbox.component';
 import { Entity } from '../entity';
 import { JailableComponent } from './jailable.component';
 
-export class JailerComponent extends Component {
+export class JailerComponent extends Component implements HitboxListener {
 
   public static readonly KEY = Symbol();
 
@@ -16,14 +16,25 @@ export class JailerComponent extends Component {
 
   public onSpawn(): void {
     this.hitbox = getHitboxFrom(this.entity);
-    // TODO: add listener to hitbox
+    this.hitbox.addListener(this);
   }
 
-  private onCollision(e: Entity): void {
-    const jailable = <JailableComponent> e.getComponent(JailableComponent.KEY);
+  public onDestroy(): void {
+    this.hitbox.removeListener(this);
+  }
+
+  public hitboxCollided(other: Entity): void {
+    const jailable = <JailableComponent>
+        other.getComponent(JailableComponent.KEY);
+
     if (jailable) {
-      // TODO: put entity in jail!
+      this.jailEntity(other);
     }
+  }
+
+  private jailEntity(e: Entity): void {
+    // TMP
+    e.deleted = true;
   }
 
 }
