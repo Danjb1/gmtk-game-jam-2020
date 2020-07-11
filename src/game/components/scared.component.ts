@@ -6,7 +6,7 @@ import { ScarerComponent } from './scarer.component';
 import { HitboxComponent } from './hitbox.component';
 
 // Utils
-import { getDistanceBetween } from '../utils/geometry';
+import { getDistanceBetween, getHitboxFrom } from '../utils';
 
 /**
  * Will cause the holding Entity to flee from other Entities which have a
@@ -25,7 +25,7 @@ export class ScaredComponent extends Component {
   }
 
   onSpawn(): void {
-    this.hitbox = this.extractHitbox(this.entity);
+    this.hitbox = getHitboxFrom(this.entity);
   }
 
   update(): void {
@@ -54,7 +54,7 @@ export class ScaredComponent extends Component {
 
     // If there is one, plot a course away from it
     if (actualScarers.length > 0) {
-      const scarerHitbox = this.extractHitbox(actualScarers[0]);
+      const scarerHitbox = getHitboxFrom(actualScarers[0]);
       console.log('AAAAAH!!');
       // TODO: move away from it
     }
@@ -66,14 +66,7 @@ export class ScaredComponent extends Component {
   private getRangeTo(otherEntity: Entity): number {
     return getDistanceBetween(
       this.hitbox,
-      this.extractHitbox(otherEntity)
+      getHitboxFrom(otherEntity)
     );
-  }
-
-  /**
-   * Gets the HitboxComponent from an Entity, if it has one.
-   */
-  private extractHitbox(entity: Entity): HitboxComponent {
-    return <HitboxComponent> entity.getComponent(HitboxComponent.KEY);
   }
 }
