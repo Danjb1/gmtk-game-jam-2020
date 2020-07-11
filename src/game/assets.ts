@@ -1,6 +1,6 @@
 export class Assets {
-
-  public static readonly IMAGE_DIR = '../assets/images';
+  // public static readonly IMAGE_DIR = "../assets/images";
+  public static readonly SPRITES_SRC = "../images/sprites.json";
 
   public static loader: PIXI.Loader;
 
@@ -8,7 +8,6 @@ export class Assets {
    * Preloads all the Textures required by the game.
    */
   public static loadTextures(loader: PIXI.Loader, callbackFn: any): void {
-
     // Save this loader for later, as it is needed to retrieve Textures
     Assets.loader = loader;
 
@@ -18,18 +17,15 @@ export class Assets {
     });
 
     // Load our Textures
-    loader
-      .add([
-        `${Assets.IMAGE_DIR}/player.png`
-      ])
-      .load(callbackFn);
+    loader.add(Assets.SPRITES_SRC).load(() => {
+      callbackFn();
+    });
   }
 
   /**
    * Retrieves a previously-loaded Texture.
    */
   static texture(filename: string): PIXI.Texture {
-    return Assets.loader.resources[`${Assets.IMAGE_DIR}/${filename}`].texture;
+    return Assets.loader.resources[Assets.SPRITES_SRC].textures[filename];
   }
-
 }
