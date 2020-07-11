@@ -17,6 +17,14 @@ export class HitboxComponent extends Component {
     super(HitboxComponent.KEY);
   }
 
+  get right(): number {
+    return this.x + this.width;
+  }
+
+  get bottom(): number {
+    return this.y + this.height;
+  }
+
   public update(delta: number): void {
 
     // Calculate change in position for this frame
@@ -50,4 +58,5 @@ export class HitboxComponent extends Component {
       this.y = Game.WORLD_HEIGHT - this.height;
     }
   }
+
 }

@@ -16,7 +16,9 @@ import {
   SpriteComponent,
   HitboxComponent,
   ControllerComponent,
+  SpawnerComponent
 } from './components';
+import { createCat } from './factory/cat.factory';
 
 export class Game implements EntityContext {
 
@@ -80,6 +82,10 @@ export class Game implements EntityContext {
       .attach(new HitboxComponent(64, 64, 100, 100))
       .attach(new SpriteComponent('player.png', this.viewport))
       .attach(new ControllerComponent(this.input, 250)));
+
+    // Cat Spawner
+    this.addEntity(new Entity()
+      .attach(new SpawnerComponent(createCat)));
   }
 
   /**
