@@ -5,6 +5,9 @@ import { Component } from '../component';
 import { HitboxComponent } from '../components';
 import { Input } from '../input';
 
+// Utils
+import { getHitboxFrom } from '../utils';
+
 export class ControllerComponent extends Component {
 
   public static readonly KEY = Symbol();
@@ -37,6 +40,6 @@ export class ControllerComponent extends Component {
   }
 
   onSpawn(): void {
-    this.hitbox = <HitboxComponent> this.entity.getComponent(HitboxComponent.KEY);
+    this.hitbox = getHitboxFrom(this.entity);
   }
 }
