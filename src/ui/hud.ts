@@ -29,9 +29,9 @@ export class Hud {
     }
 
     this.pickup.update(this.game);
-    
+
     const {score, lives } = this.game.getState();
-    
+
     this.scoreElement.update({ score });
     this.livesElement.update({ lives });
   }

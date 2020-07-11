@@ -21,7 +21,8 @@ import {
   SpawnerComponent,
   JailerComponent,
   WanderComponent,
-  DifficultyCurveComponent
+  DifficultyCurveComponent,
+  CatMetaComponent
 } from './components';
 
 // Factories
@@ -84,6 +85,7 @@ export class Game implements EntityContext {
    * Called when our Textures have finished loading.
    */
   private setup(): void {
+    CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
     this.initEntities();
   }
@@ -161,8 +163,7 @@ export class Game implements EntityContext {
           cfg.leftTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.leftTable.sprite))
-      );
+        .attach(new SpriteComponent(cfg.leftTable.sprite)));
     }
 
     // Right Table
@@ -175,8 +176,7 @@ export class Game implements EntityContext {
           cfg.rightTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.rightTable.sprite))
-      );
+        .attach(new SpriteComponent(cfg.rightTable.sprite)));
     }
   }
 
@@ -206,6 +206,21 @@ export class Game implements EntityContext {
   public update(): void {
 
     if (this.isGameOver()) {
+      
+      let breakCircuit = false;
+
+      document.addEventListener('keyup', event => {
+        if (event.code === 'Space' && !breakCircuit) {
+          this.entities.forEach(entity => {
+            entity.destroy()
+          });
+          this.entities = [];
+          this.state = new GameState();
+          this.initEntities();
+          breakCircuit = true;
+        }
+      });
+
       return;
     }
 

@@ -3,11 +3,19 @@
         "startX": 128,
         "startY": 128,
         "speed": 350,
-        "sprite": "player.png"
+        "sprite": "player.png",
+        "lives": 3
+    },
+    "catMetadata": {
+        "minValue": 30,
+        "maxValue": 200,
+        "minDuration": 15000,
+        "maxDuration": 70000,
+        "canBePickedUpThreshold": 0.9
     },
     "catSpawner": {
-        "positionX": 128,
-        "positionY": 128
+        "positionX": 0,
+        "positionY": 0
     },
     "catSpawnerConfig": {
         "attemptsPerInterval": {

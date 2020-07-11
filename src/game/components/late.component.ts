@@ -1,6 +1,6 @@
-import { Component } from "../component";
-import { CatMetaComponent } from ".";
-import { Entity } from "../entity";
+import { Component } from '../component';
+import { CatMetaComponent } from '.';
+import { Entity } from '../entity';
 
 export class LateComponent extends Component {
   static readonly KEY = Symbol();
@@ -23,7 +23,7 @@ export class LateComponent extends Component {
 
     // Remove this component (only remove one life per cat)
     this.deleted = true;
-    
+
     this.entity.context
       .getState()
       .loseLife();
