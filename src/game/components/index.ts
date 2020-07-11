@@ -1,3 +1,4 @@
+export * from './animated-sprite.component';
 export * from './cat-meta.component';
 export * from './controller.component';
 export * from './hitbox.component';

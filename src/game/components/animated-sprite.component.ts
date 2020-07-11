@@ -6,7 +6,7 @@ import { Entity } from '../entity';
 import { Assets } from '../assets';
 import { HitboxComponent } from './hitbox.component';
 
-export class SpriteComponent extends Component {
+export class AnimatedSpriteComponent extends Component {
 
   public static readonly KEY = Symbol();
 
@@ -17,10 +17,10 @@ export class SpriteComponent extends Component {
     filename: string,
     private viewport: Viewport
   ) {
-    super(SpriteComponent.KEY);
+    super(AnimatedSpriteComponent.KEY);
 
-    const texture = Assets.texture(filename);
-    this.sprite = new PIXI.Sprite(texture);
+    const spritesheet = Assets.spritesheet();
+    this.sprite = new PIXI.AnimatedSprite(spritesheet.animations[filename]);
   }
 
   public onAttach(e: Entity): void {

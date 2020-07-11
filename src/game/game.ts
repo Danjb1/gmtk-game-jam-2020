@@ -16,6 +16,7 @@ import {
   SpriteComponent,
   HitboxComponent,
   ControllerComponent,
+  ScarerComponent,
   SpawnerComponent
 } from './components';
 import { createCat } from './factory/cat.factory';
@@ -81,11 +82,13 @@ export class Game implements EntityContext {
     this.addEntity(new Entity()
       .attach(new HitboxComponent(64, 64, 100, 100))
       .attach(new SpriteComponent('player.png', this.viewport))
-      .attach(new ControllerComponent(this.input, 250)));
+      .attach(new ControllerComponent(this.input, 250))
+      .attach(new ScarerComponent()));
 
     // Cat Spawner
     this.addEntity(new Entity()
-      .attach(new SpawnerComponent(createCat)));
+      .attach(new HitboxComponent(0, 0, 100, 100))
+      .attach(new SpawnerComponent(createCat, this.viewport)));
   }
 
   /**
@@ -124,6 +127,22 @@ export class Game implements EntityContext {
 
     // Remove deleted Entities
     this.entities = this.entities.filter(e => !e.deleted);
+
+    this.detectCollisions();
+  }
+
+  private detectCollisions(): void {
+    [...this.entities].forEach(e => {
+      const eHitBox = <HitboxComponent>e.getComponent(HitboxComponent.KEY);
+      [...this.entities].forEach(eOther => {
+        if (eOther !== eOther) {
+          const eOtherHitBox = <HitboxComponent>eOther.getComponent(HitboxComponent.KEY);
+          if (eHitBox.intersects(eOtherHitBox)) {
+            eHitBox.collidedWith(eOtherHitBox);
+          }
+        }
+      });
+    });
   }
 
 }

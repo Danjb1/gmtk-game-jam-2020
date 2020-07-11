@@ -1,3 +1,5 @@
+import { Viewport } from 'pixi-viewport';
+
 import { Component } from '../component';
 import { HitboxComponent } from './hitbox.component';
 import { RandomUtils } from '../random.utils';
@@ -15,7 +17,7 @@ export class SpawnerComponent extends Component {
    */
   private spawnChance = 0.01;
 
-  constructor(private createFn: any) {
+  constructor(private createFn: any, private viewport: Viewport) {
     super(SpawnerComponent.KEY);
   }
 
@@ -41,7 +43,8 @@ export class SpawnerComponent extends Component {
     const y = RandomUtils.intBetween(this.hitbox.y, this.hitbox.bottom);
 
     // Create our Entity
-    this.createFn(x, y);
+    const spawned = this.createFn(x, y, this.viewport);
+    this.entityContext.addEntity(spawned);
   }
 
 }
