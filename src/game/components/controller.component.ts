@@ -40,7 +40,7 @@ export class ControllerComponent extends Component {
     if (left && !right) {
       speedX = -1 * this.speed;
     } else if (!left && right) {
-      speedX = 1 * this.speed;
+      speedX = this.speed;
     }
 
     // Apply speeds to hitbox
