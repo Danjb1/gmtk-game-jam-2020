@@ -5,9 +5,9 @@ export class MeowComponent extends Component {
 
   public static readonly KEY = Symbol();
 
-  private interval = 1000;
+  private interval = 3000;
   private timeUntilSound: number;
-  private meowChance: number = 0.25;
+  private meowChance: number = 0.1;
 
   constructor() {
     super(MeowComponent.KEY);
