@@ -19,10 +19,6 @@ import { PickupComponent } from './ui/pickup.component';
     backgroundColor: 0x0c8b30
   });
 
-  // Load the pickup bar
-  let pickup = new PickupComponent();
-  document.body.appendChild(pickup.create());
-
   // Add Pixi canvas to the DOM
   app.view.id = 'game-canvas';
   document.body.appendChild(app.view);
@@ -34,4 +30,8 @@ import { PickupComponent } from './ui/pickup.component';
     app.ticker.add(delta => game.update());
   });
 
+  // Load the pickup bar
+  let pickup = new PickupComponent(game);
+  document.body.appendChild(pickup.create());
+  
 })();
