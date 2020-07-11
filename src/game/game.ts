@@ -57,7 +57,7 @@ export class Game {
   initEntities(): void {
     const player = new Entity()
         .attach(new HitboxComponent(64, 64, 100, 100))
-        .attach(new SpriteComponent('player.png', this.app.stage))
+        .attach(new SpriteComponent('player.png', this.viewport))
         .attach(new InputComponent([
           {name: 'Up', value: 'w'},
           {name: 'Down', value: 's'},
