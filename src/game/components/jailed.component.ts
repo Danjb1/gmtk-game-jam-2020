@@ -8,6 +8,8 @@ export class JailedComponent extends Component {
 
   public static readonly KEY = Symbol();
 
+  public jailedTime: number;
+
   private hitbox: HitboxComponent;
   private jailerHitbox: HitboxComponent;
 
@@ -28,24 +30,22 @@ export class JailedComponent extends Component {
     this.hitbox.speedY = 0;
   }
 
-  public update(): void {
+  public update(delta: number): void {
+    this.jailedTime += delta;
+
     this.keepInJail();
   }
 
   private keepInJail(): void {
     if (this.hitbox.x < this.jailerHitbox.x) {
       this.hitbox.x = this.jailerHitbox.x;
-      console.log('1');
     } else if (this.hitbox.right > this.jailerHitbox.right) {
       this.hitbox.x = this.jailerHitbox.right - this.hitbox.width;
-      console.log('2');
     }
     if (this.hitbox.y < this.jailerHitbox.y) {
       this.hitbox.y = this.jailerHitbox.y;
-      console.log('3');
     } else if (this.hitbox.bottom > this.jailerHitbox.bottom) {
       this.hitbox.y = this.jailerHitbox.bottom - this.hitbox.height;
-      console.log('4');
     }
   }
 
