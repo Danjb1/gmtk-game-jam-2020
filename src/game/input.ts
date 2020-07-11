@@ -1,5 +1,5 @@
 interface KeyHandler {
-  value: String;
+  values: String[];
   isDown: boolean;
   isUp: boolean;
   press?: Function;
@@ -11,7 +11,7 @@ interface KeyHandler {
 
 interface KeyBinding {
   name: String;
-  value: String;
+  values: String[];
 }
 
 export class Input {
@@ -24,10 +24,10 @@ export class Input {
 
   // Key bindings
   public static readonly BINDINGS: KeyBinding[] = [
-    { name: Input.UP, value: 'w' },
-    { name: Input.DOWN, value: 's' },
-    { name: Input.LEFT, value: 'a' },
-    { name: Input.RIGHT, value: 'd' },
+    { name: Input.UP,    values: ['W', 'w', 'ArrowUp'] },
+    { name: Input.DOWN,  values: ['S', 's', 'ArrowDown'] },
+    { name: Input.LEFT,  values: ['A', 'a', 'ArrowLeft'] },
+    { name: Input.RIGHT, values: ['D', 'd', 'ArrowRight'] }
   ];
 
   // State of currently-pressed keys
@@ -36,7 +36,7 @@ export class Input {
   constructor() {
     Input.BINDINGS.forEach((binding: KeyBinding) => {
       // Create handler
-      const handler = this.registerKeyHandler(binding.value);
+      const handler = this.registerKeyHandler(binding.values);
 
       // Add entry to keymap
       this.pressedKeys.set(binding.name, false);
@@ -57,15 +57,15 @@ export class Input {
    *
    * Adapted from https://github.com/kittykatattack/learningPixi#keyboard.
    */
-  private registerKeyHandler(value: String): KeyHandler {
+  private registerKeyHandler(values: String[]): KeyHandler {
     let keyHandler: KeyHandler = {
-      value: value,
+      values: values,
       isDown: false,
       isUp: true
     };
 
     keyHandler.downHandler = (event: any) => {
-      if (event.key === keyHandler.value) {
+      if (keyHandler.values.includes(event.key)) {
         if (keyHandler.isUp && keyHandler.press) {
           keyHandler.press();
         }
@@ -76,7 +76,7 @@ export class Input {
     };
 
     keyHandler.upHandler = (event: any) => {
-      if (event.key === keyHandler.value) {
+      if (keyHandler.values.includes(event.key)) {
         if (keyHandler.isDown && keyHandler.release) {
           keyHandler.release();
         }
