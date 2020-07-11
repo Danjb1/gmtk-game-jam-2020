@@ -11,3 +11,4 @@ export * from './spawner.component';
 export * from './sprite.component';
 export * from './wander.component';
 export * from './rescue.component';
+export * from './escape.component';
