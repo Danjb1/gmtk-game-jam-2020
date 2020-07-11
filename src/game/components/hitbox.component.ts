@@ -1,4 +1,5 @@
 import { Component } from '../component';
+import { Game } from '../game';
 
 export class HitboxComponent extends Component {
 
@@ -18,6 +19,20 @@ export class HitboxComponent extends Component {
   public update(delta: number): void {
     this.x += this.speedX;
     this.y += this.speedY;
+
+    if (this.speedX !== 0 || this.speedY !== 0) {
+      this.gameBoundaryCollision();
+    }
   }
 
+
+  private gameBoundaryCollision() {
+    if (this.x <= 0 || (this.x + this.width) >= Game.WORLD_WIDTH) {
+      this.speedX = 0;
+    }
+
+    if (this.y <= 0 || (this.y + this.height) >= Game.WORLD_HEIGHT) {
+      this.speedY = 0;
+    }
+  }
 }
