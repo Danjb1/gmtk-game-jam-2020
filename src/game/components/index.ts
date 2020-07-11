@@ -9,3 +9,4 @@ export * from './scared.component';
 export * from './spawner.component';
 export * from './sprite.component';
 export * from './wander.component';
+export * from './rescue.component';
