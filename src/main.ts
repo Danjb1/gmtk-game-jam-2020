@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { Game } from './game/game';
-import { PickupComponent } from './ui/pickup.component';
+import { PickupElement } from './ui/pickup.component';
 
 /**
  * Entry point for the application.
@@ -27,7 +27,7 @@ import { PickupComponent } from './ui/pickup.component';
   const game = new Game(app);
 
   // Load the pickup bar
-  let pickup = new PickupComponent(game);
+  let pickup = new PickupElement(game);
   let div = document.getElementById('ui');
   div.appendChild(pickup.create());
 

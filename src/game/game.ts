@@ -41,6 +41,7 @@ export class Game implements EntityContext {
   private viewport: Viewport;
   private entities: Entity[] = [];
   private input: Input = new Input();
+  private count: number = 1;
 
   state: GameState = new GameState();
 
@@ -93,6 +94,7 @@ export class Game implements EntityContext {
       .attach(new SpriteComponent('player.png'))
       .attach(new ControllerComponent(this.input, 300))
       .attach(new ScarerComponent()));
+      
 
     // Cat Spawner
     this.addEntity(new Entity()
@@ -122,6 +124,8 @@ export class Game implements EntityContext {
    */
   public addEntity(e: Entity): void {
     e.spawn(this);
+    e.entityId = this.count;
+    this.count++;
     this.entities.push(e);
   }
 
