@@ -12,9 +12,9 @@ export class CatMetaComponent extends Component {
   // Max value for the cat
   private static readonly MAX_VALUE = 200;
   // Possible personalities for the cat
-  private static readonly PERSONALITIES: CatPersonality[] = ['normal']
+  private static readonly PERSONALITIES: CatPersonality[] = ['normal'];
   // Possible Breeds
-  private static readonly BREEDS: CatBreed[] = ['british-shorthair', 'persian']
+  private static readonly BREEDS: CatBreed[] = ['british-shorthair', 'persian'];
 
   constructor() {
     super(CatMetaComponent.KEY);
@@ -38,14 +38,14 @@ export class CatMetaComponent extends Component {
   get value(): number {
     return this._value;
   }
-  
+
   /**
    * Generates the value of the cat
    * Uses a bell curve distribution for the value
    */
   private _generateValue(): number {
     return boundedGaussianRandom(
-      CatMetaComponent.MIN_VALUE, 
+      CatMetaComponent.MIN_VALUE,
       CatMetaComponent.MAX_VALUE
     );
   }
@@ -58,7 +58,7 @@ export class CatMetaComponent extends Component {
       Math.floor(Math.random() * CatMetaComponent.PERSONALITIES.length)
     ];
   }
-  
+
   /**
    * Personality of the cat
    */

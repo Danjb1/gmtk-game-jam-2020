@@ -16,6 +16,7 @@ import {
   HitboxComponent,
   ControllerComponent
 } from './components';
+import { createCat } from './factory/cat.factory';
 
 export class Game {
 
@@ -79,6 +80,8 @@ export class Game {
       .attach(new HitboxComponent(64, 64, 100, 100))
       .attach(new SpriteComponent('player.png', this.viewport))
       .attach(new ControllerComponent(this.input, 8)));
+
+    this.addEntity(createCat(this.viewport));
   }
 
   /**

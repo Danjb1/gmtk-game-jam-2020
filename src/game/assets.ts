@@ -1,6 +1,6 @@
 export class Assets {
   // public static readonly IMAGE_DIR = "../assets/images";
-  public static readonly SPRITES_SRC = "../images/sprites.json";
+  public static readonly SPRITES_SRC = '../images/sprites.json';
 
   public static loader: PIXI.Loader;
 
@@ -27,5 +27,12 @@ export class Assets {
    */
   static texture(filename: string): PIXI.Texture {
     return Assets.loader.resources[Assets.SPRITES_SRC].textures[filename];
+  }
+
+  /**
+   * Retrieves a previously-loaded Texture.
+   */
+  static spritesheet(): PIXI.Spritesheet {
+    return Assets.loader.resources[Assets.SPRITES_SRC].spritesheet;
   }
 }
