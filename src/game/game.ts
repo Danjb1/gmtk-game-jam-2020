@@ -116,10 +116,10 @@ export class Game implements EntityContext {
     // Dog
     this.addEntity(new Entity()
       .attach(new HitboxComponent(300, 100, 32, 32,
-        { tags: ['player'] }))
+        { tags: ['dog'] }))
       .attach(new SpriteComponent('player.png'))
       .attach(new ScarerComponent())
-      .attach(new WanderComponent(100, 400)));
+      .attach(new WanderComponent(50, 100)));
 
     // Cat Spawner
     this.addEntity(new Entity()
@@ -138,11 +138,12 @@ export class Game implements EntityContext {
         (Game.WORLD_WIDTH / 2) - 50,
         (Game.WORLD_HEIGHT) - 100,
         100, 100,
-        { blocks: ['player'] }
+        { blocks: ['player, dog'] }
       ))
       .attach(new SpriteComponent('player.png'))
       .attach(new JailerComponent()));
 
+    // Left Table
     this.addEntity(new Entity()
       .attach(new HitboxComponent(
         (Game.WORLD_WIDTH / 4) - 20,
@@ -153,6 +154,7 @@ export class Game implements EntityContext {
       .attach(new SpriteComponent('player.png'))
     );
 
+    // Right Table
     this.addEntity(new Entity()
       .attach(new HitboxComponent(
         ((Game.WORLD_WIDTH / 4) * 3) - 20,
