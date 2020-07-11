@@ -14,8 +14,9 @@ export class SpriteComponent extends Component {
   private hitbox: HitboxComponent;
 
   constructor(
-      filename: string,
-      private viewport: Viewport) {
+    filename: string,
+    private viewport: Viewport
+  ) {
     super(SpriteComponent.KEY);
 
     const texture = Assets.texture(filename);
@@ -33,7 +34,7 @@ export class SpriteComponent extends Component {
 
     // Retrieve the Hitbox from the Entity
     this.hitbox = <HitboxComponent>
-        this.entity.getComponent(HitboxComponent.KEY);
+      this.entity.getComponent(HitboxComponent.KEY);
 
     this.snapToEntity();
   }
