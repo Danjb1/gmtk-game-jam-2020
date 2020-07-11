@@ -192,15 +192,22 @@ export class Game implements EntityContext {
   public update(): void {
 
     if (this.isGameOver()) {
-      return;
-    }
+      
+      let breakCircuit = false;
 
-    if (this.entities[0].context.getState().lives <= 0) {
-      this.load(() => {
-        this.entities = [];
-        this.count = 1;
-        return;
-      })
+      document.addEventListener('keyup', event => {
+        if (event.code === 'Space' && !breakCircuit) {
+          this.entities.forEach(entity => {
+            entity.destroy()
+          });
+          this.entities = [];
+          this.state = new GameState();
+          this.initEntities();
+          breakCircuit = true;
+        }
+      });
+
+      return;
     }
 
     // Update our Entities.
