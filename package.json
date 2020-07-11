@@ -18,8 +18,8 @@
     "webpack4",
     "typescript"
   ],
-  "author": "Juri Strumpflohner",
-  "license": "ISC",
+  "author": "Team Cat Herders",
+  "license": "None",
   "devDependencies": {
     "@types/jasmine": "2.8.7",
     "@types/node": "7.0.0",
