@@ -140,10 +140,18 @@ export const getCollisionEdge = (
         new Vector(h1.x, h1.y + h1.height)
   ];
 
+  // Only allow collisions with an edge if the incoming Hitbox was in a position
+  // to collide with that edge. For example, a Hitbox that started below the top
+  // edge of this Hitbox, will never hit that edge.
+  const canCollideWithTop    = h1.prevY + h1.height <= h2.y;
+  const canCollideWithLeft   = h1.prevX + h1.width <= h2.x;
+  const canCollideWithBottom = h1.prevY >= h2.bottom;
+  const canCollideWithRight  = h1.prevX >= h2.right;
+
   // Check if any corner of h1 intersected with any edge of h2
   for (let i = 0; i < cornersBefore.length; i++) {
 
-    if (doLinesIntersect(
+    if (canCollideWithTop && doLinesIntersect(
             cornersBefore[i].x, cornersBefore[i].y,
             cornersAfter[i].x, cornersAfter[i].y,
             h2.x, h2.y,
@@ -151,7 +159,7 @@ export const getCollisionEdge = (
         return Edge.TOP;
     }
 
-    if (doLinesIntersect(
+    if (canCollideWithLeft && doLinesIntersect(
             cornersBefore[i].x, cornersBefore[i].y,
             cornersAfter[i].x, cornersAfter[i].y,
             h2.x, h2.y,
@@ -159,7 +167,7 @@ export const getCollisionEdge = (
         return Edge.LEFT;
     }
 
-    if (doLinesIntersect(
+    if (canCollideWithBottom && doLinesIntersect(
             cornersBefore[i].x, cornersBefore[i].y,
             cornersAfter[i].x, cornersAfter[i].y,
             h2.x, h2.bottom,
@@ -167,7 +175,7 @@ export const getCollisionEdge = (
         return Edge.BOTTOM;
     }
 
-    if (doLinesIntersect(
+    if (canCollideWithRight && doLinesIntersect(
             cornersBefore[i].x, cornersBefore[i].y,
             cornersAfter[i].x, cornersAfter[i].y,
             h2.right, h2.y,
