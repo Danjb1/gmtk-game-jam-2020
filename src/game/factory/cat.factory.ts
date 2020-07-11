@@ -1,12 +1,12 @@
-import { Entity } from '../entity';
+import { Entity } from "../entity";
 
 // Components
 import {
   CatMetaComponent,
   HitboxComponent,
   WanderComponent,
-  AnimatedSpriteComponent
-} from '../components';
+  AnimatedSpriteComponent,
+} from "../components";
 
 /**
  * Generates a cat entity
@@ -14,7 +14,7 @@ import {
 export const createCat = (x: number, y: number): Entity => {
   // Generate the meta before anything else;
   const catMeta = new CatMetaComponent();
-  const animatedSprite = new AnimatedSpriteComponent(`ash_down`);
+  const animatedSprite = new AnimatedSpriteComponent(`ash_right`);
 
   const catEntity = new Entity()
     .attach(catMeta)
