@@ -161,8 +161,8 @@ export class Game implements EntityContext {
    */
   public update(): void {
 
-    if (Math.random() < 0.01) {
-      new Audio(`${Assets.SOUNDS_BASEPATH}/meow1.ogg`).play();
+    if (this.isGameOver()) {
+      return;
     }
 
     // Update our Entities.
@@ -185,6 +185,10 @@ export class Game implements EntityContext {
     [...this.entities].forEach(e => {
       e.lateUpdate(this.app.ticker.deltaMS);
     });
+  }
+
+  private isGameOver(): boolean {
+    return this.state.lives <= 0;
   }
 
   private detectCollisions(): void {
