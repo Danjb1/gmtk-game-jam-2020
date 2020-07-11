@@ -30,6 +30,28 @@ export class ScaredComponent extends Component {
 
   update(delta: number): void {
 
+    // Locate closest scarer, if there is one
+    const scarer = this.getScarer();
+
+    if (scarer) {
+      const scarerHitbox = getHitboxFrom(scarer);
+
+      // Calculate proper scale for new vector
+      const factor = this.speed / getDistanceBetween(this.hitbox, scarerHitbox);
+
+      // Invert and scale distance vector to scarer
+      // (to go in opposite direction at correct overall speed)
+      this.hitbox.speedX = -1 * (scarerHitbox.x - this.hitbox.x) * factor;
+      this.hitbox.speedY = -1 * (scarerHitbox.y - this.hitbox.y) * factor;
+    }
+  }
+
+  /**
+   * Gets the closest Entity which is a Scarer, provided there is one within the
+   * frightDistance.
+   */
+  private getScarer(): Entity {
+
     // Locate Entities in the world which are Scarers
     const scarers = this.entity.context
       .getEntities()
@@ -52,18 +74,7 @@ export class ScaredComponent extends Component {
         }
       });
 
-    // If there is one, plot a course away from it
-    if (actualScarers.length > 0) {
-      const scarerHitbox = getHitboxFrom(actualScarers[0]);
-
-      // Calculate proper scale for new vector
-      const factor = this.speed / getDistanceBetween(this.hitbox, scarerHitbox);
-
-      // Invert and scale distance vector to scarer
-      // (to go in opposite direction at correct overall speed)
-      this.hitbox.speedX = -1 * (scarerHitbox.x - this.hitbox.x) * factor;
-      this.hitbox.speedY = -1 * (scarerHitbox.y - this.hitbox.y) * factor;
-    }
+    return actualScarers.length > 0 ? actualScarers[0] : null;
   }
 
   /**
