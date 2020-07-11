@@ -14,7 +14,7 @@ export abstract class Component {
   /**
    * Callback for when this Component is attached to an Entity.
    */
-  onAttach(e: Entity): void {
+  public onAttach(e: Entity): void {
     this.entity = e;
   }
 
@@ -23,14 +23,14 @@ export abstract class Component {
    *
    * Use this if you need access to the EntityContext, or any other Components.
    */
-  onSpawn(): void {
+  public onSpawn(): void {
     // Do nothing by default
   }
 
   /**
    * Cleans up this Component.
    */
-  destroy(): void {
+  public destroy(): void {
     // Do nothing by default
   }
 
@@ -39,7 +39,7 @@ export abstract class Component {
    *
    * @param delta Milliseconds passed since last frame.
    */
-  update(delta: number): void {
+  public update(delta: number): void {
     // Do nothing by default
   }
 

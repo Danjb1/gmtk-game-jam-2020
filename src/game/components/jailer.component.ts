@@ -3,6 +3,7 @@ import { getHitboxFrom } from '../utils';
 import { HitboxComponent, HitboxListener } from './hitbox.component';
 import { Entity } from '../entity';
 import { JailableComponent } from './jailable.component';
+import { JailedComponent } from './jailed.component';
 
 export class JailerComponent extends Component implements HitboxListener {
 
@@ -33,8 +34,7 @@ export class JailerComponent extends Component implements HitboxListener {
   }
 
   private jailEntity(e: Entity): void {
-    // TMP
-    e.deleted = true;
+    e.attach(new JailedComponent(this));
   }
 
 }
