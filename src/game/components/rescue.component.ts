@@ -28,10 +28,13 @@ export class RescueComponent extends Component {
     if (!this._catMeta.canBePickedUp || !this._isInJail()) {
       return;
     }
-    // Add the cats score to the game state
-    this.entity.context
-      .getState()
-      .increaseScore(this._catMeta.value);
+
+    if (!this._catMeta.late) {
+      // Add the cats score to the game state
+      this.entity.context
+        .getState()
+        .increaseScore(this._catMeta.value);
+    }
 
     // Delete the cat
     this.entity.deleted = true;

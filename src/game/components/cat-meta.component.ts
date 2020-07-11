@@ -126,4 +126,17 @@ export class CatMetaComponent extends Component {
       CatMetaComponent.MAX_DURATION
     );
   }
+
+  // If the cat is late being picked up
+  private _late = false;
+  public get late() {
+    return this._late;
+  }
+
+  update() {
+    if (!this.late && this.howCloseToPickup === 1) {
+      this._late = true;
+    }
+  }
+
 }
