@@ -138,7 +138,7 @@ export class Game implements EntityContext {
         (Game.WORLD_WIDTH / 2) - 50,
         (Game.WORLD_HEIGHT) - 100,
         100, 100,
-        { blocks: ['player, dog'] }
+        { blocks: ['player', 'dog'] }
       ))
       .attach(new SpriteComponent('player.png'))
       .attach(new JailerComponent()));
