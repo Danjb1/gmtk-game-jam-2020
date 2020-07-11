@@ -48,18 +48,28 @@ export class PickupElement {
         context.beginPath();
 
         [...this.catMetaDataComponents].forEach(cat => {
-            this.moveCatAlongProgressBar(cat, context);
+
+            let height: number;
+
+            if (![...this.catHeights.keys()].includes(cat.entity.entityId)) {
+                height = this.getRandomHeight();
+                this.catHeights.set(cat.entity.entityId, height)
+            } else {
+                height = this.catHeights.get(cat.entity.entityId);
+            }
+
+            this.moveCatAlongProgressBar(cat, context, height);
         });
 
         context.stroke();
     }
     
-    moveCatAlongProgressBar(cat: CatMetaComponent, context: CanvasRenderingContext2D) {
+    moveCatAlongProgressBar(cat: CatMetaComponent, context: CanvasRenderingContext2D, height: number) {
         let width = 800 * cat.howCloseToPickup;
-        context.drawImage(this.image, width, cat.value / 4);
+        context.drawImage(this.image, width, height);
     }
 
     getRandomHeight() {
-        return Math.random() * (51 - 1) + 1;
+        return Math.random() * (35 - 0);
     }
 }
