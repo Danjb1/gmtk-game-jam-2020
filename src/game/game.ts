@@ -35,8 +35,8 @@ export class Game implements EntityContext {
    * Entities positioned should be defined in "world units" instead of pixels.
    * The viewport will adjust the display accordingly.
    */
-  public static readonly WORLD_WIDTH = 800;
-  public static readonly WORLD_HEIGHT = 600;
+  public static readonly WORLD_WIDTH = 640;
+  public static readonly WORLD_HEIGHT = 480;
 
   private viewport: Viewport;
   private entities: Entity[] = [];

@@ -13,7 +13,7 @@ export class ScoreComponent {
   }
 
   public update(): void {
-    this.elem.innerText = this.state.score.toString();
+    this.elem.innerText = `$${this.state.score}`;
   }
 
 }
