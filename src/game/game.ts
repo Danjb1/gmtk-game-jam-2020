@@ -109,7 +109,7 @@ export class Game implements EntityContext {
       .attach(new HitboxComponent(128, 128, 32, 32,
         { tags: ['player'] }))
       .attach(new SpriteComponent('player.png'))
-      .attach(new ControllerComponent(this.input, 300))
+      .attach(new ControllerComponent(this.input, 350))
       .attach(new ScarerComponent()));
       
 
