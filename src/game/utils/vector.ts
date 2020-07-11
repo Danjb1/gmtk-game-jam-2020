@@ -21,10 +21,10 @@ export class Vector {
   }
 
   minus(other: Vector): Vector {
-    return new Vector(this.x - other.y, this.y - other.y);
+    return new Vector(this.x - other.x, this.y - other.y);
   }
 
-  multiply(scalar: number): Vector {
+  times(scalar: number): Vector {
     return new Vector(this.x * scalar, this.y * scalar);
   }
 
