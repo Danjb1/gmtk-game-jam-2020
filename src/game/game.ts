@@ -81,14 +81,14 @@ export class Game implements EntityContext {
     // Player
     this.addEntity(new Entity()
       .attach(new HitboxComponent(64, 64, 100, 100))
-      .attach(new SpriteComponent('player.png', this.viewport))
+      .attach(new SpriteComponent('player.png'))
       .attach(new ControllerComponent(this.input, 250))
       .attach(new ScarerComponent()));
 
     // Cat Spawner
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, 100, 100))
-      .attach(new SpawnerComponent(createCat, this.viewport)));
+      .attach(new SpawnerComponent(createCat)));
   }
 
   /**
@@ -143,6 +143,10 @@ export class Game implements EntityContext {
         }
       });
     });
+  }
+
+  public getViewport(): Viewport {
+    return this.viewport;
   }
 
 }

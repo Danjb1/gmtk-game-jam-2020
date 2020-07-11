@@ -1,8 +1,6 @@
 import * as PIXI from 'pixi.js';
-import { Viewport } from 'pixi-viewport';
 
 import { Component } from '../component';
-import { Entity } from '../entity';
 import { Assets } from '../assets';
 import { HitboxComponent } from './hitbox.component';
 
@@ -15,7 +13,6 @@ export class AnimatedSpriteComponent extends Component {
 
   constructor(
     filename: string,
-    private viewport: Viewport
   ) {
     super(AnimatedSpriteComponent.KEY);
 
@@ -23,14 +20,10 @@ export class AnimatedSpriteComponent extends Component {
     this.sprite = new PIXI.AnimatedSprite(spritesheet.animations[filename]);
   }
 
-  public onAttach(e: Entity): void {
-    super.onAttach(e);
+  public onSpawn(): void {
 
     // Register this Sprite with Pixi
-    this.viewport.addChild(this.sprite);
-  }
-
-  public onSpawn(): void {
+    this.entity.context.getViewport().addChild(this.sprite);
 
     // Retrieve the Hitbox from the Entity
     this.hitbox = <HitboxComponent>
