@@ -32,7 +32,7 @@ export class RescuerComponent extends Component {
       }
 
       const catMeta = <CatMetaComponent> e.getComponent(CatMetaComponent.KEY);
-      if (catMeta.howCloseToPickup >= 1) {
+      if (catMeta.canBePickedUp) {
         catsDueForPickup.push(e);
       }
     });
