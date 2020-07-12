@@ -5,40 +5,38 @@ import { Component } from '../component';
 // Components
 import { CatMetaComponent } from './cat-meta.component';
 import { JailedComponent } from './jailed.component';
-import { HitboxComponent } from './hitbox.component';
+
+// Utils
+import { getHitboxFrom } from '../utils';
 
 
 export class EscapeComponent extends Component {
 
-  // fraction: 1 = always escape, 0 = never escape
-  private chanceOfEscape = 0.005;
-
-  // Minimum time in prison, in milliseconds
-  private minCaptureTime = 500;
-
   private _jailedAt: number;
   private _catMeta: CatMetaComponent;
+  private lastCheck: number;
 
   public static readonly KEY = Symbol();
 
-  constructor(chanceOfEscape: number, minCaptureTime: number) {
+  constructor(
+    private chanceOfEscape = 0.005,
+    private minCaptureTime = 500,
+    private escapeAttemptFrequency = 20
+    ) {
     super(EscapeComponent.KEY);
-    this.chanceOfEscape = chanceOfEscape;
-    this.minCaptureTime = minCaptureTime;
   }
 
   public onAttach(entity: Entity) {
     super.onAttach(entity);
 
     this._jailedAt = Date.now();
-    this._catMeta = <CatMetaComponent>
-        entity.getComponent(CatMetaComponent.KEY);
+    this._catMeta = entity.getComponent<CatMetaComponent>(CatMetaComponent.KEY);
   }
 
   public update(delta: number) {
+    const now = Date.now();
     // Enforce remaining in prison for a specific amount of time
-    // TODO: This should use the delta value (game time) instead of real time
-    if (Date.now() < this._jailedAt + this.minCaptureTime) {
+    if (now < this._jailedAt + this.minCaptureTime) {
       return;
     }
 
@@ -47,8 +45,14 @@ export class EscapeComponent extends Component {
       return;
     }
 
-    // Cat has tried and failed
+    // Only check every "tryEscapeEvery" ms
+    if(this.lastCheck + this.escapeAttemptFrequency > now){
+      return;
+    }
+
+    // Cat has tried and failed to escape
     if (Math.random() > this.chanceOfEscape) {
+      this.lastCheck = now;
       return;
     }
 
@@ -62,7 +66,7 @@ export class EscapeComponent extends Component {
     this.entity.getComponent(EscapeComponent.KEY).deleted = true;
 
     // Move this entity outside the jailer entityhitBox
-    const hitBox = (this.entity.getComponent(HitboxComponent.KEY) as HitboxComponent);
+    const hitBox = getHitboxFrom(this.entity);
 
     hitBox.x = (Math.random() >= .5 ? (Game.WORLD_WIDTH / 2) - 100 : (Game.WORLD_WIDTH / 2) + 100);
     hitBox.y = (Game.WORLD_HEIGHT) - 50;

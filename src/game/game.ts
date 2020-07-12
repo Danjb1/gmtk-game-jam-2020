@@ -45,20 +45,22 @@ export class Game implements EntityContext {
    */
   public static readonly WORLD_WIDTH = 640;
   public static readonly WORLD_HEIGHT = 480;
+  public static readonly CANVAS_WIDTH = 800;
+  public static readonly CANVAS_HEIGHT = 600;
 
   private viewport: Viewport;
   private entities: Entity[] = [];
   private input: Input = Input.instance;
   private count: number = 1;
   private catFactory: CatFactory;
-  private gameStarted: boolean = false;
   private restartPixiText: PIXI.Text;
+  private gameStarted: boolean = false;
 
   state: GameState = new GameState(cfg.player.lives);
 
   constructor(private app: PIXI.Application) {
     this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
-    this.restartPixiText.anchor.set(-1.2 , -10);
+    this.restartPixiText.position.set((Game.CANVAS_WIDTH - this.restartPixiText.width) / 2, (Game.CANVAS_HEIGHT - this.restartPixiText.height) / 2);
   }
 
   /**
@@ -127,7 +129,7 @@ export class Game implements EntityContext {
         Game.WORLD_WIDTH / 2 - 16,
         Game.WORLD_HEIGHT / 2 - 16,
         32, 32,
-        { tags: ['player'] }))
+        { tags: ['player'], blocks: ['dog'] }))
       .attach(new SpriteComponent(cfg.player.sprite))
       .attach(new ControllerComponent(this.input, cfg.player.speed))
       .attach(new ScarerComponent()));
@@ -136,7 +138,7 @@ export class Game implements EntityContext {
     if (cfg.dog.enabled) {
       this.addEntity(new Entity()
         .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 32, 32,
-          { tags: ['dog'] }))
+          { tags: ['dog'], blocks: ['player'] }))
         .attach(new SpriteComponent(cfg.dog.sprite))
         .attach(new ScarerComponent())
         .attach(new WanderComponent(cfg.dog.wandering)));
@@ -170,7 +172,7 @@ export class Game implements EntityContext {
         { blocks: ['player', 'dog'] }
       ))
       .attach(new SpriteComponent(cfg.pen.sprite))
-      .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime)));
+      .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime, cfg.pen.escapeAttemptFrequency)));
 
     // Left Table
     if (cfg.leftTable.enabled) {
@@ -197,6 +199,11 @@ export class Game implements EntityContext {
         ))
         .attach(new SpriteComponent(cfg.rightTable.sprite, { zIndex: 1 })));
     }
+
+    // Background
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(0, 0, Game.WORLD_WIDTH, Game.WORLD_HEIGHT))
+      .attach(new SpriteComponent(cfg.background.sprite, { zIndex: -1 }, true)));
   }
 
   /**
@@ -233,7 +240,7 @@ export class Game implements EntityContext {
 
     if (this.isGameOver()) {
       this.app.stage.addChild(this.restartPixiText);
-      if (this.input.isPressed(Input.SPACE)) { 
+      if (this.input.isPressed(Input.SPACE)) {
         this.resetGame();
         this.app.stage.removeChild(this.restartPixiText);
       }

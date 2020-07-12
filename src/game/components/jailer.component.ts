@@ -9,13 +9,13 @@ export class JailerComponent extends Component implements HitboxListener {
 
   private hitbox: HitboxComponent;
   private prisoners: Entity[] = [];
-  private chanceOfEscape: number;
-  private minCaptureTime: number;
 
-  constructor(chanceOfEscape: number, minCaptureTime: number) {
+  constructor(
+    private chanceOfEscape: number,
+    private minCaptureTime: number,
+    private escapeAttemptFrequency: number
+  ) {
     super(JailerComponent.KEY);
-    this.chanceOfEscape = chanceOfEscape;
-    this.minCaptureTime = minCaptureTime;
   }
 
   public destroy(): void {
@@ -46,8 +46,8 @@ export class JailerComponent extends Component implements HitboxListener {
   }
 
   public hitboxCollided(other: HitboxComponent): void {
-    const jailable = <JailableComponent>
-      other.entity.getComponent(JailableComponent.KEY);
+    const jailable =
+      other.entity.getComponent<JailableComponent>(JailableComponent.KEY);
 
     if (jailable && !this.prisoners.includes(other.entity)) {
       this.jailEntity(other.entity);
@@ -58,7 +58,11 @@ export class JailerComponent extends Component implements HitboxListener {
     this.prisoners.push(entity);
     entity
       .attach(new JailedComponent(this))
-      .attach(new EscapeComponent(this.chanceOfEscape, this.minCaptureTime));
+      .attach(new EscapeComponent(
+        this.chanceOfEscape,
+        this.minCaptureTime,
+        this.escapeAttemptFrequency
+      ));
   }
 
 }

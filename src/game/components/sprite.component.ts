@@ -16,12 +16,15 @@ export class SpriteComponent extends Component {
 
   constructor(
     filename: string,
-    spriteSettings?: any
+    spriteSettings?: any,
+    tiled?: boolean,
   ) {
     super(SpriteComponent.KEY);
 
     const texture = Assets.texture(filename);
-    this.sprite = new PIXI.Sprite(texture);
+    this.sprite = tiled
+      ? new PIXI.TilingSprite(texture)
+      : new PIXI.Sprite(texture);
 
     if (spriteSettings) {
       this.sprite = Object.assign(this.sprite, spriteSettings);

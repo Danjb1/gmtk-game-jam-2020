@@ -89,8 +89,8 @@ export class Entity {
   /**
    * Retrieves the first Component with the given key.
    */
-  public getComponent(key: Symbol): Component {
-    return this.components.find(c => c.key === key);
+  public getComponent<T extends Component>(key: Symbol): T {
+    return this.components.find(c => c.key === key) as T;
   }
 
   /**
