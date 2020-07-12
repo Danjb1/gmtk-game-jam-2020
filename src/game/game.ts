@@ -45,20 +45,22 @@ export class Game implements EntityContext {
    */
   public static readonly WORLD_WIDTH = 640;
   public static readonly WORLD_HEIGHT = 480;
+  public static readonly CANVAS_WIDTH = 800;
+  public static readonly CANVAS_HEIGHT = 600;
 
   private viewport: Viewport;
   private entities: Entity[] = [];
   private input: Input = Input.instance;
   private count: number = 1;
   private catFactory: CatFactory;
-  private gameStarted: boolean = false;
   private restartPixiText: PIXI.Text;
+  private gameStarted: boolean = false;
 
   state: GameState = new GameState(cfg.player.lives);
 
   constructor(private app: PIXI.Application) {
     this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
-    this.restartPixiText.anchor.set(-1.2 , -10);
+    this.restartPixiText.pivot.set(-(Game.CANVAS_WIDTH / 2) + (this.restartPixiText.width / 2), -(Game.CANVAS_HEIGHT / 2) + (this.restartPixiText.height / 2));
   }
 
   /**

@@ -75,7 +75,7 @@
     "width": 100,
     "height": 100,
     "sprite": "pen.png",
-    "chanceOfEscape": 0.01,
+    "chanceOfEscape": 0.05,
     "minCaptureTime": 1000,
     "escapeAttemptFrequency": 200
   },

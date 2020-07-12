@@ -126,6 +126,7 @@ p{
   margin: var(--key-gap);
   text-transform: uppercase;
   display: block;
+  user-select: none;
   background-color: var(--primary-light);
   box-shadow: 0 8px 6px -6px rgba(0,0,0,.6), 0 8px 6px -8px rgba(0, 0, 0, .4) inset;
 }
@@ -134,7 +135,6 @@ p{
   width: 120px;
   margin: 0 auto;
 }
-
 
 .controls{
   display: flex;
