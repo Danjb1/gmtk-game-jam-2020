@@ -1,0 +1,69 @@
+{
+    "player": {
+        "speed": 350,
+        "sprite": "player.png",
+        "lives": 3
+    },
+    "catMetadata": {
+        "minValue": 30,
+        "maxValue": 200,
+        "minDuration": 15000,
+        "maxDuration": 70000,
+        "canBePickedUpThreshold": 0.9
+    },
+    "catSpawner": {
+        "positionX": 0,
+        "positionY": 0
+    },
+    "catSpawnerConfig": {
+        "attemptsPerInterval": {
+            "min": 1,
+            "max": 2
+        },
+        "chanceToSpawn": {
+            "min": 0.3,
+            "max": 0.4
+        },
+        "interval": {
+            "min": 1000,
+            "max": 1000
+        },
+        "maxChildren": {
+            "max": 20,
+            "min": 60
+        }
+    },
+    "dog": {
+        "enabled": true,
+        "startX": 300,
+        "startY": 100,
+        "minSpeed": 50,
+        "maxSpeed": 100,
+        "sprite": "player.png"
+    },
+    "pen": {
+        "positionX": 270,
+        "positionY": 380,
+        "width": 100,
+        "height": 100,
+        "sprite": "pen.png",
+        "chanceOfEscape": 0.005,
+        "minCaptureTime": 500
+    },
+    "leftTable": {
+        "enabled": true,
+        "positionX": 140,
+        "positionY": 150,
+        "width": 40,
+        "height": 180,
+        "sprite": "table.png"
+    },
+    "rightTable": {
+        "enabled": true,
+        "positionX": 460,
+        "positionY": 150,
+        "width": 40,
+        "height": 180,
+        "sprite": "table.png"
+    }
+}

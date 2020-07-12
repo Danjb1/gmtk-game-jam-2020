@@ -2,25 +2,37 @@ import { Component } from '../component';
 import { boundedGaussianRandom, easeOutSine } from '../utils';
 
 export type CatPersonality = 'normal' | 'lazy' | 'hyper';
-export type CatVariety = 'ash' | 'black' | 'brown' | 'ginger' | 'grey' | 'greywhite' | 'tan' | 'white';
+export type CatVariety = 'newgrey';
+// TO-DO add more cat varieties with the new sprites
+// export type CatVariety = 'ash' | 'black' | 'brown' | 'ginger' | 'grey' | 'greywhite' | 'tan' | 'white';
 
 export class CatMetaComponent extends Component {
   // Component symbol
   public static readonly KEY = Symbol();
   // Min value for the cat
-  private static readonly MIN_VALUE = 30;
+  private static minValue = 30;
   // Max value for the cat
-  private static readonly MAX_VALUE = 200;
+  private static maxValue = 200;
   // Possible personalities for the cat
   private static readonly PERSONALITIES: CatPersonality[] = ['normal'];
   // Possible Breeds
-  private static readonly VARIETIES: CatVariety[] = ['ash', 'black', 'brown', 'ginger', 'grey', 'greywhite', 'tan', 'white'];
+  // TO-DO add more varieties with the new sprites
+  // private static readonly VARIETIES: CatVariety[] = ['ash', 'black', 'brown', 'ginger', 'grey', 'greywhite', 'tan', 'white'];
+  private static readonly VARIETIES: CatVariety[] = ['newgrey'];
 
   // min max for duration
-  private static readonly MIN_DURATION = 15000;
-  private static readonly MAX_DURATION = 70000;
+  private static minDuration = 15000;
+  private static maxDuration = 70000;
 
-  private static readonly CAN_BE_PICKED_UP_THRESHOLD = .9;
+  private static canBePickedUpThreshold = .9;
+
+  public static configure(cfg: any) {
+    this.minValue = cfg.minValue;
+    this.maxValue = cfg.maxValue;
+    this.minDuration = cfg.minDuration;
+    this.maxDuration = cfg.maxDuration;
+    this.canBePickedUpThreshold = cfg.canBePickedUpThreshold;
+  }
 
   constructor() {
     super(CatMetaComponent.KEY);
@@ -52,8 +64,8 @@ export class CatMetaComponent extends Component {
    */
   private _generateValue(): number {
     return boundedGaussianRandom(
-      CatMetaComponent.MIN_VALUE,
-      CatMetaComponent.MAX_VALUE
+      CatMetaComponent.minValue,
+      CatMetaComponent.maxValue
     );
   }
 
@@ -118,7 +130,7 @@ export class CatMetaComponent extends Component {
    */
   get canBePickedUp(): boolean {
     const howCloseToPickupNow = this.howCloseToPickup;
-    return howCloseToPickupNow > CatMetaComponent.CAN_BE_PICKED_UP_THRESHOLD;
+    return howCloseToPickupNow > CatMetaComponent.canBePickedUpThreshold;
   }
 
   // Duration in ms
@@ -126,8 +138,8 @@ export class CatMetaComponent extends Component {
 
   private _generateDuration(): number {
     return boundedGaussianRandom(
-      CatMetaComponent.MIN_DURATION,
-      CatMetaComponent.MAX_DURATION
+      CatMetaComponent.minDuration,
+      CatMetaComponent.maxDuration
     );
   }
 

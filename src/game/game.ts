@@ -1,6 +1,7 @@
 // Libs
 import * as createjs from 'createjs-module';
 import { Viewport } from 'pixi-viewport';
+import * as PIXI from 'pixi.js';
 
 // Global Stuff
 import { Input } from './input';
@@ -21,7 +22,9 @@ import {
   SpawnerComponent,
   JailerComponent,
   WanderComponent,
-  RescuerComponent
+  RescuerComponent,
+  DifficultyCurveComponent,
+  CatMetaComponent
 } from './components';
 
 // Factories
@@ -29,6 +32,8 @@ import { createCat } from './factory/cat.factory';
 import { getHitboxFrom } from './utils';
 
 import { GameState } from './store';
+
+import cfg from './config.json';
 
 export class Game implements EntityContext {
 
@@ -45,10 +50,13 @@ export class Game implements EntityContext {
   private entities: Entity[] = [];
   private input: Input = new Input();
   private count: number = 1;
+  private restartText: PIXI.Text;
 
   state: GameState = new GameState();
 
-  constructor(private app: PIXI.Application) { }
+  constructor(private app: PIXI.Application) {
+    this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
+   }
 
   /**
    * Initialises the game.
@@ -56,6 +64,8 @@ export class Game implements EntityContext {
    * @param callbackFn Function to call when the game is loaded.
    */
   public load(callbackFn: any): void {
+
+    this.app.stage.sortableChildren = true;
 
     // Load textures
     const p1 = new Promise<void>((resolve, reject) => {
@@ -82,6 +92,7 @@ export class Game implements EntityContext {
    * Called when our Textures have finished loading.
    */
   private setup(): void {
+    CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
     this.initEntities();
   }
@@ -108,30 +119,38 @@ export class Game implements EntityContext {
 
     // Player
     this.addEntity(new Entity()
-      .attach(new HitboxComponent(128, 128, 32, 32,
+      .attach(new HitboxComponent(
+        Game.WORLD_WIDTH / 2 - 16,
+        Game.WORLD_HEIGHT / 2 - 16,
+        32, 32,
         { tags: ['player'] }))
-      .attach(new SpriteComponent('player.png'))
-      .attach(new ControllerComponent(this.input, 350))
+      .attach(new SpriteComponent(cfg.player.sprite))
+      .attach(new ControllerComponent(this.input, cfg.player.speed))
       .attach(new ScarerComponent()));
 
     // Dog
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(300, 100, 32, 32,
-        { tags: ['dog'] }))
-      .attach(new SpriteComponent('player.png'))
-      .attach(new ScarerComponent())
-      .attach(new WanderComponent(50, 100)));
+    if (cfg.dog.enabled) {
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 32, 32,
+          { tags: ['dog'] }))
+        .attach(new SpriteComponent(cfg.dog.sprite))
+        .attach(new ScarerComponent())
+        .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
+    }
 
     // Cat Spawner
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, 100, 100))
-      .attach(new SpawnerComponent({
-        attemptsPerInterval: 2,
-        chanceToSpawn: 0.5,
-        createFn: createCat,
-        interval: 1000,
-        maxChildren: 50
-      })));
+      .attach(new SpawnerComponent(
+        createCat,
+        {
+          attemptsPerInterval: cfg.catSpawnerConfig.attemptsPerInterval.min,
+          chanceToSpawn: cfg.catSpawnerConfig.chanceToSpawn.min,
+          interval: cfg.catSpawnerConfig.interval.min,
+          maxChildren: cfg.catSpawnerConfig.maxChildren.min
+        }
+      ))
+      .attach(new DifficultyCurveComponent()));
 
     // Cat Rescuer
     this.addEntity(new Entity()
@@ -141,35 +160,39 @@ export class Game implements EntityContext {
     // Pen
     this.addEntity(new Entity()
       .attach(new HitboxComponent(
-        (Game.WORLD_WIDTH / 2) - 50,
-        (Game.WORLD_HEIGHT) - 100,
-        100, 100,
+        cfg.pen.positionX,
+        cfg.pen.positionY,
+        cfg.pen.width, cfg.pen.height,
         { blocks: ['player', 'dog'] }
       ))
-      .attach(new SpriteComponent('player.png'))
-      .attach(new JailerComponent()));
+      .attach(new SpriteComponent(cfg.pen.sprite))
+      .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime)));
 
     // Left Table
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(
-        (Game.WORLD_WIDTH / 4) - 20,
-        (Game.WORLD_HEIGHT / 2) - 90,
-        40, 180,
-        { blocks: ['player'] }
-      ))
-      .attach(new SpriteComponent('player.png'))
-    );
+    if (cfg.leftTable.enabled) {
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(
+          cfg.leftTable.positionX,
+          cfg.leftTable.positionY,
+          cfg.leftTable.width,
+          cfg.leftTable.height,
+          { blocks: ['player'] }
+        ))
+        .attach(new SpriteComponent(cfg.leftTable.sprite, { zIndex: 1 })));
+    }
 
     // Right Table
-    this.addEntity(new Entity()
-      .attach(new HitboxComponent(
-        ((Game.WORLD_WIDTH / 4) * 3) - 20,
-        (Game.WORLD_HEIGHT / 2) - 90,
-        40, 180,
-        { blocks: ['player'] }
-      ))
-      .attach(new SpriteComponent('player.png'))
-    );
+    if (cfg.rightTable.enabled) {
+      this.addEntity(new Entity()
+        .attach(new HitboxComponent(
+          cfg.rightTable.positionX,
+          cfg.rightTable.positionY,
+          cfg.rightTable.width,
+          cfg.rightTable.height,
+          { blocks: ['player'] }
+        ))
+        .attach(new SpriteComponent(cfg.rightTable.sprite, { zIndex: 1 })));
+    }
   }
 
   /**
@@ -198,7 +221,24 @@ export class Game implements EntityContext {
   public update(): void {
 
     if (this.isGameOver()) {
-      return;
+      let breakCircuit = false;
+
+      this.app.stage.addChild(this.restartText);
+
+      document.addEventListener('keyup', event => {
+        if (event.code === 'Space' && !breakCircuit) {
+          this.entities.forEach(entity => {
+            entity.destroy()
+          });
+          this.entities = [];
+          this.state = new GameState();
+          this.initEntities();
+          breakCircuit = true;
+          this.app.stage.removeChild(this.restartText);
+        }
+      });
+
+      return;      
     }
 
     // Update our Entities.

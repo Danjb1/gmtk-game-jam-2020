@@ -1,11 +1,11 @@
-import { Game } from "../../game/game";
-import { CatMetaComponent } from "../../game/components";
-import { UiElement } from "./element";
+import { Game } from '../../game/game';
+import { CatMetaComponent } from '../../game/components';
+import { UiElement } from './element';
 
 export class PickupElement extends UiElement {
 
   elem: HTMLCanvasElement;
-  
+
   private context: CanvasRenderingContext2D;
 
   private static readonly HEIGHT = 50;
@@ -26,8 +26,9 @@ export class PickupElement extends UiElement {
   }
 
   private loadImage() {
+    // TODO: We shouldn't be loading this again as Pixi has already loaded it!
     this.image = new Image();
-    this.image.src = '../assets/images/player.png';
+    this.image.src = '../images/original/player.png';
     this.image.onload = () => {
       this.loaded = true;
     };
@@ -37,7 +38,7 @@ export class PickupElement extends UiElement {
     this.elem = document.createElement('canvas');
     this.elem.setAttribute('height', `${PickupElement.HEIGHT}`);
     this.elem.setAttribute('width', `${PickupElement.WIDTH}`);
-    this.context = this.elem.getContext("2d");
+    this.context = this.elem.getContext('2d');
   }
 
   public update(game: Game) {
@@ -54,9 +55,9 @@ export class PickupElement extends UiElement {
 
     // Prevents unnessary updating
     this.skip = true;
-    requestAnimationFrame(()=>{
-      this.skip = false
-    })
+    requestAnimationFrame(() => {
+      this.skip = false;
+    });
   }
 
   progress() {
@@ -69,7 +70,7 @@ export class PickupElement extends UiElement {
 
       if (![...this.catHeights.keys()].includes(cat.entity.entityId)) {
         height = this.getRandomHeight();
-        this.catHeights.set(cat.entity.entityId, height)
+        this.catHeights.set(cat.entity.entityId, height);
       } else {
         height = this.catHeights.get(cat.entity.entityId);
       }

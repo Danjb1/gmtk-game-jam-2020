@@ -8,7 +8,7 @@ import { HitboxComponent } from './hitbox.component';
 // Utils
 import { getHitboxFrom } from '../utils';
 
-type Direction = 'up' | 'down' | 'left' | 'right';
+type Direction = 'up' | 'down' | 'left' | 'right' | 'right_down' | 'right_up' | 'left_down' | 'left_up' | 'left_sit' | 'right_sit' | 'left_sleep' | 'right_sleep';
 
 export class AnimatedSpriteComponent extends Component {
   public static readonly KEY = Symbol();
@@ -16,28 +16,44 @@ export class AnimatedSpriteComponent extends Component {
   private sprite: PIXI.AnimatedSprite;
   private hitbox: HitboxComponent;
   private spritesheet: PIXI.Spritesheet;
+  private direction: Direction = 'down';
 
   constructor(
-    private filename: string
+    private filename: string,
+    private spriteSettings?: any
   ) {
     super(AnimatedSpriteComponent.KEY);
     this.spritesheet = Assets.spritesheet();
-    this.sprite = new PIXI.AnimatedSprite(this.spritesheet.animations[`${filename}_down`]);
   }
 
   public onSpawn(): void {
-    this.sprite.animationSpeed = 0.2;
-    this.sprite.play();
 
-    // Register this Sprite with Pixi
-    this.entity.context
-      .getViewport()
-      .addChild(this.sprite);
+    this.createSprite();
 
     // Retrieve the Hitbox from the Entity
     this.hitbox = getHitboxFrom(this.entity);
 
     this.snapToEntity();
+  }
+
+  private createSprite(): void {
+
+    this.sprite = new PIXI.AnimatedSprite(
+      this.spritesheet.animations[`${this.filename}_${this.direction}`]
+    );
+
+    this.sprite.animationSpeed = 2;
+
+    if (this.spriteSettings) {
+      this.sprite = Object.assign(this.sprite, this.spriteSettings);
+    }
+
+    this.sprite.play();
+
+    // Register this Sprite with Pixi
+    const viewport = this.entity.context.getViewport();
+    viewport.addChild(this.sprite);
+    viewport.sortChildren();
   }
 
   public destroy(): void {
@@ -46,11 +62,7 @@ export class AnimatedSpriteComponent extends Component {
 
   public update(delta: number): void {
     this.updateDirection();
-    if (this.hitbox.speedX === 0 && this.hitbox.speedY === 0) {
-      this.sprite.stop();
-    } else {
-      this.sprite.play();
-    }
+    this.sprite.play();
   }
 
   public lateUpdate(delta: number): void {
@@ -67,10 +79,28 @@ export class AnimatedSpriteComponent extends Component {
 
   private updateDirection() {
     let newDirection: Direction;
-    if (this.sprite.x > this.hitbox.x) {
-      newDirection = 'left';
+    if (this.sprite.x == this.hitbox.x && this.sprite.y == this.hitbox.y) {
+      if (this.direction.indexOf('left') > -1) {
+        newDirection = 'left_sit'
+      } else {
+        newDirection = 'right_sit'
+      }
+    } else if (this.sprite.x > this.hitbox.x) {
+      if (this.sprite.y < this.hitbox.y) {
+        newDirection = 'left_down'
+      } else if (this.sprite.y > this.hitbox.y) {
+        newDirection = 'left_up'
+      } else {
+        newDirection = 'left';
+      }
     } else if (this.sprite.x < this.hitbox.x) {
-      newDirection = 'right';
+      if (this.sprite.y < this.hitbox.y) {
+        newDirection = 'right_down'
+      } else if (this.sprite.y > this.hitbox.y) {
+        newDirection = 'right_up'
+      } else {
+        newDirection = 'right';
+      }
     } else if (this.sprite.y > this.hitbox.y) {
       newDirection = 'up';
     } else if (this.sprite.y < this.hitbox.y) {
@@ -79,14 +109,12 @@ export class AnimatedSpriteComponent extends Component {
       return;
     }
 
-    // Update the texture
-    this.sprite.destroy();
-    this.sprite = new PIXI.AnimatedSprite(
-      this.spritesheet.animations[`${this.filename}_${newDirection}`]
-    );
-    this.entity.context
-      .getViewport()
-      .addChild(this.sprite);
+    if (newDirection !== this.direction) {
+      this.direction = newDirection;
+      // Update the texture
+      this.sprite.destroy();
+      this.createSprite();
+    }
   }
 
 }

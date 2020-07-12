@@ -18,7 +18,7 @@ import {
 export const createCat = (x: number, y: number): Entity => {
   // Generate the meta before anything else;
   const catMeta = new CatMetaComponent();
-  const animatedSprite = new AnimatedSpriteComponent(catMeta.variety);
+  const animatedSprite = new AnimatedSpriteComponent(`cats/${catMeta.variety}`);
 
   const catEntity = new Entity()
     .attach(catMeta)

@@ -6,9 +6,9 @@ export class MeowComponent extends Component {
 
   public static readonly KEY = Symbol();
 
-  private static readonly NUM_SOUNDS = 9;
+  private static readonly NUM_SOUNDS = 14;
 
-  private interval = 3000;
+  private interval = 2500;
   private timeUntilSound: number;
   private meowChance: number = 0.1;
 
@@ -41,8 +41,17 @@ export class MeowComponent extends Component {
   }
 
   private playSound(): void {
-    const soundId = intBetween(1, MeowComponent.NUM_SOUNDS);
-    new Audio(`${Assets.SOUNDS_BASEPATH}/meow${soundId}.ogg`).play();
+    let soundId = intBetween(1, MeowComponent.NUM_SOUNDS).toString();
+    if (soundId.length < 2) {
+      soundId = '0' + soundId;
+    }
+
+    const audio = new Audio(`${Assets.SOUNDS_BASEPATH}/meow${soundId}.ogg`);
+
+    // Wait until the audio is playable
+    audio.addEventListener('canplaythrough', event => {
+      audio.play();
+    });
   }
 
   private resetSoundTimer(): void {

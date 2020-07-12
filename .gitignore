@@ -14,6 +14,6 @@ ts-out
 coverage
 npm-debug.log
 debug.log
-.DS_Store
 .gradle
 build
+src/**/.DS_Store
