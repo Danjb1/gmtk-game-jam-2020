@@ -16,6 +16,7 @@ import { Entity } from './entity';
 // Components
 import {
   SpriteComponent,
+  AnimatedSpriteComponent,
   HitboxComponent,
   ControllerComponent,
   ScarerComponent,
@@ -24,7 +25,8 @@ import {
   WanderComponent,
   RescuerComponent,
   DifficultyCurveComponent,
-  CatMetaComponent
+  CatMetaComponent,
+  WoofComponent
 } from './components';
 
 // Factories
@@ -130,7 +132,7 @@ export class Game implements EntityContext {
         Game.WORLD_HEIGHT / 2 - 16,
         32, 32,
         { tags: ['player'], blocks: ['dog'] }))
-      .attach(new SpriteComponent(cfg.player.sprite))
+      .attach(new AnimatedSpriteComponent(cfg.player.sprite, { animationSpeed: 0.3 }))
       .attach(new ControllerComponent(this.input, cfg.player.speed))
       .attach(new ScarerComponent()));
 
@@ -139,9 +141,10 @@ export class Game implements EntityContext {
       this.addEntity(new Entity()
         .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 32, 32,
           { tags: ['dog'], blocks: ['player'] }))
-        .attach(new SpriteComponent(cfg.dog.sprite))
+        .attach(new AnimatedSpriteComponent(cfg.dog.sprite, { animationSpeed: 0.5 }))
         .attach(new ScarerComponent())
-        .attach(new WanderComponent(cfg.dog.wandering)));
+        .attach(new WanderComponent(cfg.dog.wandering))
+        .attach(new WoofComponent(cfg.dog.woof.interval, cfg.dog.woof.chance)));
     }
 
     // Cat Spawner

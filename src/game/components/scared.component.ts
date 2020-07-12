@@ -7,7 +7,12 @@ import { ScarerComponent } from './scarer.component';
 import { HitboxComponent } from './hitbox.component';
 
 // Utils
-import { getDistanceBetween, getHitboxFrom, Vector } from '../utils';
+import {
+  getHitboxFrom,
+  getRangeBetweenEntities,
+  Vector,
+  isJailed
+} from '../utils';
 
 /**
  * Will cause the holding Entity to flee from other Entities which have a
@@ -30,6 +35,12 @@ export class ScaredComponent extends Component {
   }
 
   update(delta: number): void {
+
+    // Do not be scared, if we are in jail
+    if (isJailed(this.entity)) {
+      return;
+    }
+
     const scarers = this.getScarers();
 
     if (scarers.length > 0) {
@@ -64,7 +75,7 @@ export class ScaredComponent extends Component {
     return this.entity.context
       .getEntities()
       .filter(entity => entity.getComponent(ScarerComponent.KEY) !== undefined)
-      .filter(scarer => this.getRangeTo(scarer) < this.flightDistance);
+      .filter(scarer => getRangeBetweenEntities(this.entity, scarer) < this.flightDistance);
   }
 
   /**
@@ -74,15 +85,5 @@ export class ScaredComponent extends Component {
   private getCentreScreenVector(): Vector {
     const centreScreen = new Vector(Game.WORLD_WIDTH / 2, Game.WORLD_HEIGHT / 2);
     return centreScreen.minus(this.hitbox.centrePosition);
-  }
-
-  /**
-   * Gets the distance from the parent Entity to another Entity.
-   */
-  private getRangeTo(otherEntity: Entity): number {
-    return getDistanceBetween(
-      this.hitbox,
-      getHitboxFrom(otherEntity)
-    );
   }
 }

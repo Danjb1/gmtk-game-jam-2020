@@ -1,7 +1,7 @@
 {
   "player": {
     "speed": 350,
-    "sprite": "player.png",
+    "sprite": "player/player",
     "lives": 3
   },
   "catMetadata": {
@@ -12,10 +12,6 @@
     "canBePickedUpThreshold": 0.9
   },
   "catBehavior": {
-    "meowing": {
-      "interval": 2500,
-      "chance": 0.1
-    },
     "scared": {
       "flightDistance": 100,
       "flightSpeed": 330
@@ -25,7 +21,8 @@
       "minSpeed": 100,
       "maxSpeed": 200,
       "minTime": 200,
-      "maxTime": 500
+      "maxTime": 500,
+      "avoidJailerDistance": 150
     }
   },
   "difficulty": {
@@ -60,13 +57,18 @@
     "startY": 100,
     "minSpeed": 50,
     "maxSpeed": 100,
-    "sprite": "player.png",
+    "sprite": "dog/dog",
     "wandering": {
       "chance": 0.05,
       "minSpeed": 50,
       "maxSpeed": 100,
       "minTime": 200,
-      "maxTime": 500
+      "maxTime": 500,
+      "avoidJailerDistance": 0
+    },
+    "woof": {
+      "interval": 1000,
+      "chance": 0.2
     }
   },
   "pen": {

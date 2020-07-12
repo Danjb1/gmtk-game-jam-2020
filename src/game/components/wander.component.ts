@@ -1,8 +1,17 @@
 import { Component } from '../component';
+import { Entity } from '../entity';
 import { HitboxComponent } from './hitbox.component';
+import { JailerComponent } from './jailer.component';
+import { isJailed } from '../utils/entity-utils';
 
 // Utils
-import { getHitboxFrom, intBetween, randomSign, Vector } from '../utils';
+import {
+  getRangeBetweenEntities,
+  getHitboxFrom,
+  intBetween,
+  randomSign,
+  Vector
+} from '../utils';
 
 export class WanderComponent extends Component {
 
@@ -42,6 +51,11 @@ export class WanderComponent extends Component {
    */
   private wanderTimeRemaining = 0;
 
+  /**
+   * The closest we can approach a Jailer without avoiding it.
+   */
+  private avoidJailerDistance = 150;
+
   constructor(wanderingBehavior: any) {
     super(WanderComponent.KEY);
     this.chanceToWander = wanderingBehavior.chance;
@@ -49,6 +63,7 @@ export class WanderComponent extends Component {
     this.maxWanderSpeed = wanderingBehavior.maxSpeed;
     this.minWanderTime = wanderingBehavior.minTime;
     this.maxWanderTime = wanderingBehavior.maxTime;
+    this.avoidJailerDistance = wanderingBehavior.avoidJailerDistance;
   }
 
   public onSpawn(): void {
@@ -98,20 +113,68 @@ export class WanderComponent extends Component {
   }
 
   /**
-   * Starts a random wander.
+   * Starts a random wander, avoiding nearby Jailers. Note that we only avoid
+   * Jailers if we are not already in jail.
    */
   private startWandering(): void {
 
-    // Random speed
-    this.hitbox.setSpeed(new Vector(
-      randomSign() * intBetween(this.minWanderSpeed, this.maxWanderSpeed),
-      randomSign() * intBetween(this.minWanderSpeed, this.maxWanderSpeed)
-    ));
+    // Set random wander time
+    this.wanderTimeRemaining = intBetween(this.minWanderTime, this.maxWanderTime);
 
-    // Random time
-    this.wanderTimeRemaining = intBetween(
-      this.minWanderTime,
-      this.maxWanderTime
+    if (!isJailed(this.entity)) {
+
+      // Check for nearby Jailers
+      const jailers = this.entity.context
+        .getEntities()
+        .filter(entity => entity.getComponent<JailerComponent>(JailerComponent.KEY))
+        .filter(entity => this.isWithinAvoidDistance(entity))
+        .sort((a, b) => this.sortNearest(a, b));
+
+      if (jailers.length > 0) {
+
+        // Figure out where nearest jailer is
+        const jailerPosition = getHitboxFrom(jailers[0]).centrePosition;
+        const xSign = jailerPosition.x < this.hitbox.centerX ? 1 : -1;
+        const ySign = jailerPosition.y < this.hitbox.centerY ? 1 : -1;
+
+        // Wander away from jailer, at random speed
+        this.hitbox.setSpeed(this.getWanderVector(xSign, ySign));
+        return;
+      }
+    }
+
+    // If we are in jail or far away from it, set random wander vector
+    this.hitbox.setSpeed(this.getRandomWanderVector());
+  }
+
+  private isWithinAvoidDistance(entity: Entity): boolean {
+    return getRangeBetweenEntities(this.entity, entity) < this.avoidJailerDistance;
+  }
+
+  /**
+   * Comparator to sort two entities by which is closest to our one.
+   */
+  private sortNearest(a: Entity, b: Entity): number {
+    const aDistance = getRangeBetweenEntities(this.entity, a);
+    const bDistance = getRangeBetweenEntities(this.entity, b);
+
+    if (aDistance < bDistance) {
+      return -1;
+    } else if (bDistance < aDistance) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  private getRandomWanderVector(): Vector {
+    return this.getWanderVector(randomSign(), randomSign());
+  }
+
+  private getWanderVector(xSign: number, ySign: number): Vector {
+    return new Vector(
+      xSign * intBetween(this.minWanderSpeed, this.maxWanderSpeed),
+      ySign * intBetween(this.minWanderSpeed, this.maxWanderSpeed)
     );
   }
 

@@ -41,12 +41,17 @@ export class CatFactory {
       .attach(new ScaredComponent(
         this.catBehavior.scared.flightDistance,
         this.catBehavior.scared.flightSpeed))
+<<<<<<< HEAD
       .attach(new MeowComponent(
         this.catBehavior.meowing.interval,
         this.catBehavior.meowing.chance))
       .attach(new LateComponent())
       .attach(new RescueComponent())
       .attach(new CatWarning());
+=======
+      .attach(new MeowComponent())
+      .attach(new LateComponent());
+>>>>>>> f6ec434c1aedd507579b690d35b75efbd6ea819a
 
     return catEntity;
   }

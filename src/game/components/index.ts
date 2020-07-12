@@ -17,3 +17,4 @@ export * from './meow.component';
 export * from './difficulty-curve.component';
 export * from './cat-warning.component';
 export * from './rescue.component';
+export * from './woof.component';
