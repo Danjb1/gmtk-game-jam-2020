@@ -58,7 +58,8 @@ export class Game implements EntityContext {
   private restartPixiText: PIXI.Text;
   private gameStarted: boolean = false;
 
-  state: GameState = new GameState(cfg.player.lives);
+  private _state: GameState = new GameState(cfg.player.lives);
+  public get state() { return this._state };
 
   constructor(private app: PIXI.Application) {
     this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, { fontFamily: 'Do Hyeon', fontSize: 24, fill: 0x8B4513, align: 'center' });
@@ -273,13 +274,13 @@ export class Game implements EntityContext {
   }
 
   public isGameOver(): boolean {
-    return this.state.lives <= 0;
+    return this._state.lives <= 0;
   }
 
   private resetGame(): void {
     this.entities.forEach(entity => entity.destroy());
     this.entities = [];
-    this.state = new GameState(cfg.player.lives);
+    this._state = new GameState(cfg.player.lives);
     this.initEntities();
   }
 
@@ -320,7 +321,7 @@ export class Game implements EntityContext {
   }
 
   public getState(): GameState {
-    return this.state;
+    return this._state;
   }
 
 }
