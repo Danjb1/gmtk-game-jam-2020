@@ -25,7 +25,8 @@
       "minSpeed": 100,
       "maxSpeed": 200,
       "minTime": 200,
-      "maxTime": 500
+      "maxTime": 500,
+      "avoidJailerDistance": 150
     }
   },
   "difficulty": {
@@ -66,7 +67,8 @@
       "minSpeed": 50,
       "maxSpeed": 100,
       "minTime": 200,
-      "maxTime": 500
+      "maxTime": 500,
+      "avoidJailerDistance": 0
     },
     "woof": {
       "interval": 1000,
