@@ -14,17 +14,20 @@ interface KeyBinding {
   values: String[];
 }
 
+/**
+ * Singleton for receiving player input.
+ */
 export class Input {
 
   // Game keys
-  public static readonly UP = 'Up';
-  public static readonly DOWN = 'Down';
-  public static readonly LEFT = 'Left';
-  public static readonly RIGHT = 'Right';
-  public static readonly SPACE = 'Space';
+  static readonly UP = 'Up';
+  static readonly DOWN = 'Down';
+  static readonly LEFT = 'Left';
+  static readonly RIGHT = 'Right';
+  static readonly SPACE = 'Space';
 
   // Key bindings
-  public static readonly BINDINGS: KeyBinding[] = [
+  static readonly BINDINGS: KeyBinding[] = [
     { name: Input.UP,    values: ['W', 'w', 'ArrowUp'] },
     { name: Input.DOWN,  values: ['S', 's', 'ArrowDown'] },
     { name: Input.LEFT,  values: ['A', 'a', 'ArrowLeft'] },
@@ -32,10 +35,13 @@ export class Input {
     { name: Input.SPACE, values: [' '] }
   ];
 
+  // The singleton instance
+  static instance: Input = new Input();
+
   // State of currently-pressed keys
   private pressedKeys: Map<String, boolean> = new Map();
 
-  constructor() {
+  private constructor() {
     Input.BINDINGS.forEach((binding: KeyBinding) => {
       // Create handler
       const handler = this.registerKeyHandler(binding.values);
