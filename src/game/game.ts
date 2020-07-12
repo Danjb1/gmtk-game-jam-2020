@@ -256,7 +256,7 @@ export class Game implements EntityContext {
   private resetGame(): void {
     this.entities.forEach(entity => entity.destroy());
     this.entities = [];
-    this.state = new GameState();
+    this.state = new GameState(cfg.player.lives);
     this.initEntities();
     this.app.stage.removeChild(this.restartText);
   }
