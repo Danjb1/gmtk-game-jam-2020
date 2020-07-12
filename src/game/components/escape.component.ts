@@ -15,6 +15,9 @@ export class EscapeComponent extends Component {
 
   // Minimum time in prison, in milliseconds
   private minCaptureTime = 500;
+  
+  // How often to check (ms)
+  private checkEvery = 10;
 
   private _jailedAt: number;
   private _catMeta: CatMetaComponent;

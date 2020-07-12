@@ -151,6 +151,10 @@ p{
   justify-content: center;
 }
 
+.controls__group--arrows{
+  font-size: 22px;
+}
+
 .controls__group .key:first-child {
   margin: 0 80px var(--key-gap);
 }
