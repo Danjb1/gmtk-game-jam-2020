@@ -40,12 +40,12 @@ export class ScaredComponent extends Component {
       scarerHitboxes.forEach(scarerHitbox => {
         fleeVector = fleeVector.plus(
           Vector.between(
-            scarerHitbox.centrePosition, this.hitbox.centrePosition
+            this.hitbox.centrePosition, scarerHitbox.centrePosition
         ));
       });
 
       // Scale flee vector to speed and point away from scarers on average
-      fleeVector = fleeVector.capMagnitude(this.flightSpeed);
+      fleeVector = fleeVector.scaleToMagnitude(-1 * this.flightSpeed);
 
       // Correct flee vector towards centre of screen
       // (this is to prevent us getting stuck on a wall or in a corner)
