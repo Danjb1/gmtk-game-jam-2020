@@ -175,7 +175,8 @@ export class Game implements EntityContext {
         cfg.pen.width, cfg.pen.height,
         { blocks: ['player', 'dog'] }
       ))
-      .attach(new SpriteComponent(cfg.pen.sprite))
+      .attach(new SpriteComponent(cfg.pen.sprite1))
+      .attach(new SpriteComponent(cfg.pen.sprite2, { zIndex: 1 }))
       .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime, cfg.pen.escapeAttemptFrequency)));
 
     // Left Table
