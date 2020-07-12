@@ -25,7 +25,7 @@ export class CatFactory {
   public create(x: number, y: number): Entity {
     // Generate the meta before anything else;
     const catMeta = new CatMetaComponent();
-    const animatedSprite = new AnimatedSpriteComponent(`cats/${catMeta.variety}`);
+    const animatedSprite = new AnimatedSpriteComponent(`cats/${catMeta.variety}/${catMeta.variety}`);
 
     const catEntity = new Entity()
       .attach(catMeta)
@@ -34,9 +34,9 @@ export class CatFactory {
       .attach(new WanderComponent(this.catBehavior.wandering))
       .attach(new JailableComponent())
       .attach(new ScaredComponent(this.catBehavior.scared.flightDistance,
-                                  this.catBehavior.scared.flightSpeed))
+        this.catBehavior.scared.flightSpeed))
       .attach(new MeowComponent(this.catBehavior.meowing.interval,
-                                this.catBehavior.meowing.chance))
+        this.catBehavior.meowing.chance))
       .attach(new LateComponent());
 
     return catEntity;
