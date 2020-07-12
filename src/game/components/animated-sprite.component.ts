@@ -79,7 +79,7 @@ export class AnimatedSpriteComponent extends Component {
 
   private updateDirection() {
     let newDirection: Direction;
-    if (this.sprite.x == this.hitbox.x && this.sprite.y == this.hitbox.y) {
+    if (this.sprite.x === this.hitbox.x && this.sprite.y === this.hitbox.y) {
       if (this.direction.indexOf('left') > -1) {
         newDirection = 'left_sit'
       } else {
