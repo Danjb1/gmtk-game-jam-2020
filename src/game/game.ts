@@ -17,6 +17,7 @@ import { Entity } from './entity';
 import {
   SpriteComponent,
   AnimatedSpriteComponent,
+  GraphicsComponent,
   HitboxComponent,
   ControllerComponent,
   ScarerComponent,
@@ -127,6 +128,8 @@ export class Game implements EntityContext {
    */
   private initEntities(): void {
 
+
+
     // Player
     this.addEntity(new Entity()
       .attach(new HitboxComponent(
@@ -216,6 +219,29 @@ export class Game implements EntityContext {
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, Game.WORLD_WIDTH, Game.WORLD_HEIGHT))
       .attach(new SpriteComponent(cfg.background.sprite, { zIndex: -1 }, true)));
+
+    // Door
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(
+        cfg.door.positionX,
+        cfg.door.positionY,
+        cfg.door.width, cfg.door.height
+      ))
+      .attach(new SpriteComponent(cfg.door.sprite, { zIndex: 0 })));
+
+    // Wall
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(0, 0, Game.WORLD_WIDTH, 40))
+      .attach(new GraphicsComponent(0, 0, Game.WORLD_WIDTH, 40, { shape: 'rectangle', fillColor: 0x5e503d, }, { zIndex: -1 })));
+
+    // Mat
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(
+        cfg.mat.positionX,
+        cfg.mat.positionY,
+        cfg.mat.width, cfg.mat.height
+      ))
+      .attach(new SpriteComponent(cfg.mat.sprite, { zIndex: -1 })));
   }
 
   /**
