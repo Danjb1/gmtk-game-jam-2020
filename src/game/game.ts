@@ -201,7 +201,7 @@ export class Game implements EntityContext {
     // Background
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, Game.WORLD_WIDTH, Game.WORLD_HEIGHT))
-      .attach(new SpriteComponent(cfg.background.sprite, { zIndex: -1 })));
+      .attach(new SpriteComponent(cfg.background.sprite, { zIndex: -1 }, true)));
   }
 
   /**
