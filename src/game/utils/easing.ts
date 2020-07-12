@@ -22,4 +22,4 @@ export const easeOutBounce = (x: number): number => {
   } else {
     return n1 * (x -= 2.625 / d1) * x + 0.984375;
   }
-}
+};

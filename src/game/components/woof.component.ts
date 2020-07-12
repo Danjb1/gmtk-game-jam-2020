@@ -47,12 +47,7 @@ export class WoofComponent extends Component {
       soundId = '0' + soundId;
     }
 
-    const audio = new Audio(`${Assets.SOUNDS_BASEPATH}/woof${soundId}.ogg`);
-
-    // Wait until the audio is playable
-    audio.addEventListener('canplaythrough', event => {
-      audio.play();
-    });
+    Assets.playSound(`woof${soundId}.ogg`);
   }
 
   private resetSoundTimer(): void {
