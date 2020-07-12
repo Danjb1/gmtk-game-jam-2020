@@ -9,7 +9,9 @@ import {
   ScaredComponent,
   JailableComponent,
   MeowComponent,
-  LateComponent
+  LateComponent,
+  CatWarning,
+  RescueComponent
 } from '../components';
 
 /**
@@ -42,7 +44,9 @@ export class CatFactory {
       .attach(new MeowComponent(
         this.catBehavior.meowing.interval,
         this.catBehavior.meowing.chance))
-      .attach(new LateComponent());
+      .attach(new LateComponent())
+      .attach(new RescueComponent())
+      .attach(new CatWarning());
 
     return catEntity;
   }

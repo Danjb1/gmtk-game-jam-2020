@@ -15,3 +15,5 @@ export * from './escape.component';
 export * from './late.component';
 export * from './meow.component';
 export * from './difficulty-curve.component';
+export * from './cat-warning.component';
+export * from './rescue.component';

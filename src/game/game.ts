@@ -158,10 +158,10 @@ export class Game implements EntityContext {
       ))
       .attach(new DifficultyCurveComponent(cfg)));
 
-    // Cat Rescuer
-    this.addEntity(new Entity()
-      .attach(new RescuerComponent())
-    );
+    // // Cat Rescuer
+    // this.addEntity(new Entity()
+    //   .attach(new RescuerComponent())
+    // );
 
     // Pen
     this.addEntity(new Entity()
