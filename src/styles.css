@@ -28,10 +28,6 @@ body {
   background-color: #949494;
 }
 
-#ui{
-  background: linear-gradient(to right, transparent 0%, transparent 85%, #926060 85%, #987b7b 100%);
-}
-
 #game-canvas {
   display: block;
   margin: auto;

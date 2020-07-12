@@ -25,7 +25,9 @@ import {
   WanderComponent,
   DifficultyCurveComponent,
   CatMetaComponent,
-  WoofComponent
+  WoofComponent,
+  WhistlerComponent,
+  WhistleListenerComponent
 } from './components';
 
 // Factories
@@ -140,7 +142,8 @@ export class Game implements EntityContext {
           zIndex: 1  // Behind the Pen!
         }))
       .attach(new ControllerComponent(this.input, cfg.player.speed))
-      .attach(new ScarerComponent()));
+      .attach(new ScarerComponent())
+      .attach(new WhistlerComponent(this.input)));
 
     // Dog
     if (cfg.dog.enabled) {
@@ -153,7 +156,8 @@ export class Game implements EntityContext {
         }))
         .attach(new ScarerComponent())
         .attach(new WanderComponent(cfg.dog.wandering))
-        .attach(new WoofComponent(cfg.dog.woof.interval, cfg.dog.woof.chance)));
+        .attach(new WoofComponent(cfg.dog.woof.interval, cfg.dog.woof.chance))
+        .attach(new WhistleListenerComponent(cfg.dog.maxSpeed)));
     }
 
     // Cat Spawner
