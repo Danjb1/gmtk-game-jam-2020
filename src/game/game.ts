@@ -64,6 +64,8 @@ export class Game implements EntityContext {
    */
   public load(callbackFn: any): void {
 
+    this.app.stage.sortableChildren = true;
+
     // Load textures
     const p1 = new Promise<void>((resolve, reject) => {
       Assets.loadTextures(this.app.loader, () => {
@@ -170,7 +172,7 @@ export class Game implements EntityContext {
           cfg.leftTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.leftTable.sprite)));
+        .attach(new SpriteComponent(cfg.leftTable.sprite, { zIndex: 1 })));
     }
 
     // Right Table
@@ -183,7 +185,7 @@ export class Game implements EntityContext {
           cfg.rightTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.rightTable.sprite)));
+        .attach(new SpriteComponent(cfg.rightTable.sprite, { zIndex: 1 })));
     }
   }
 
