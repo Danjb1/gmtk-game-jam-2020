@@ -1,8 +1,7 @@
 import { UiElement } from "./element";
 
-
 interface Props {
-
+  show: boolean
 }
 
 export class SplashScreenElement extends UiElement {
@@ -11,10 +10,14 @@ export class SplashScreenElement extends UiElement {
   }
 
   create() {
-    this.elem = (document.getElementById('splash') as HTMLTemplateElement).content.cloneNode(true) as HTMLElement;
+    this.elem = (document.getElementById('splash') as HTMLTemplateElement).content.firstElementChild.cloneNode(true) as HTMLElement;
   }
 
-  update(props: Props) {
-
+  update() {
+    // intentionally blank
   }
-}
+
+  remove() {
+    this.elem.remove();
+  }
+} 

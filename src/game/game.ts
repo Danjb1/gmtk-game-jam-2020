@@ -55,8 +55,8 @@ export class Game implements EntityContext {
   state: GameState = new GameState(cfg.player.lives);
 
   constructor(private app: PIXI.Application) {
-    this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
-   }
+    this.restartText = new PIXI.Text('Press SPACE to restart', { fontFamily: 'Do Hyeon', fontSize: 24, fill: 0x8B4513, align: 'center' });
+  }
 
   /**
    * Initialises the game.
@@ -262,6 +262,7 @@ export class Game implements EntityContext {
     this.state = new GameState(cfg.player.lives);
     this.initEntities();
     this.app.stage.removeChild(this.restartText);
+    this.state.startGame();
   }
 
   private detectCollisions(): void {

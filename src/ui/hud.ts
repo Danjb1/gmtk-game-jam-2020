@@ -21,21 +21,18 @@ export class Hud {
     // Score
     this.scoreElement = new ScoreElement(this.overlayElement);
     this.livesElement = new LivesElement(this.overlayElement);
-    
-    this.splashScreen = new SplashScreenElement(document.getElementById('container'));
   }
 
   update() {
 
-    if (this.game.isGameOver()) {
+    if (!this.game.state.gameRunning) {
       this.pickup.stop();
       return;
     }
 
     this.pickup.update(this.game);
 
-    const {score, lives } = this.game.getState();
-
+    const {score, lives, gameRunning} = this.game.getState();
     this.scoreElement.update({ score });
     this.livesElement.update({ lives });
   }

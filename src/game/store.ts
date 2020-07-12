@@ -3,7 +3,7 @@ export class GameState {
     this._lives = lives;
   }
 
-  _gameRunning: boolean;
+  _gameRunning = false;
   _lives = 3;
   _score = 0;
 

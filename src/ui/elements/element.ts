@@ -16,6 +16,7 @@ export abstract class UiElement {
 
   // Mount the component to the parent container
   mount(container: HTMLElement) {
+    console.log(this.elem, container)
     container.appendChild(this.elem);
   }
 }
