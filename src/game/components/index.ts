@@ -1,5 +1,6 @@
 export * from './animated-sprite.component';
 export * from './cat-meta.component';
+export * from './cat-warning.component';
 export * from './controller.component';
 export * from './difficulty-curve.component';
 export * from './escape.component';

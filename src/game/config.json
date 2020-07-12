@@ -7,9 +7,10 @@
   "catMetadata": {
     "minValue": 30,
     "maxValue": 200,
-    "minDuration": 15000,
-    "maxDuration": 70000,
-    "canBePickedUpThreshold": 0.9
+    "minDuration": 20000,
+    "maxDuration": 75000,
+    "warnPlayerThreshold": 0.6,
+    "canBePickedUpThreshold": 0.8
   },
   "catBehavior": {
     "scared": {
@@ -76,10 +77,11 @@
     "positionY": 380,
     "width": 100,
     "height": 100,
-    "sprite": "pen.png",
-    "chanceOfEscape": 0.05,
+    "sprite1": "pen_top.png",
+    "sprite2": "pen_bottom.png",
+    "chanceOfEscape": 0.1,
     "minCaptureTime": 1000,
-    "escapeAttemptFrequency": 200
+    "escapeAttemptFrequency": 1000
   },
   "leftTable": {
     "enabled": true,

@@ -26,7 +26,7 @@ export class Hud {
   update() {
 
     const {score, lives} = this.game.getState();
-    
+
     if (this.game.isGameOver()) {
       // We still need to update the lives to show the last one disappearing!
       this.livesElement.update({ lives });
@@ -34,10 +34,9 @@ export class Hud {
     }
 
     this.pickup.update(this.game);
-    
+
     this.scoreElement.update({ score });
     this.livesElement.update({ lives });
   }
-  
 
 }

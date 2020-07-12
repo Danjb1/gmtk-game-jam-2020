@@ -60,10 +60,11 @@ export class Game implements EntityContext {
   private restartPixiText: PIXI.Text;
   private gameStarted: boolean = false;
 
-  state: GameState = new GameState(cfg.player.lives);
+  private _state: GameState;
+  public get state() { return this._state };
 
   constructor(private app: PIXI.Application) {
-    this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, { fontFamily: 'Do Hyeon', fontSize: 24, fill: 0x8B4513, align: 'center' });
+    this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, { fontFamily: 'Do Hyeon', fontSize: 24, fill: 0xffffff, opacity: .75, align: 'center' });
     this.restartPixiText.position.set((Game.CANVAS_WIDTH - this.restartPixiText.width) / 2, (Game.CANVAS_HEIGHT - this.restartPixiText.height) / 2);
   }
 
@@ -104,7 +105,7 @@ export class Game implements EntityContext {
     this.catFactory = new CatFactory(cfg.catBehavior);
     CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
-    this.initEntities();
+    this.resetGame()
   }
 
   /**
@@ -165,10 +166,10 @@ export class Game implements EntityContext {
       ))
       .attach(new DifficultyCurveComponent(cfg)));
 
-    // Cat Rescuer
-    this.addEntity(new Entity()
-      .attach(new RescuerComponent())
-    );
+    // // Cat Rescuer
+    // this.addEntity(new Entity()
+    //   .attach(new RescuerComponent())
+    // );
 
     // Pen
     this.addEntity(new Entity()
@@ -178,7 +179,8 @@ export class Game implements EntityContext {
         cfg.pen.width, cfg.pen.height,
         { blocks: ['player', 'dog'] }
       ))
-      .attach(new SpriteComponent(cfg.pen.sprite))
+      .attach(new SpriteComponent(cfg.pen.sprite1))
+      .attach(new SpriteComponent(cfg.pen.sprite2, { zIndex: 1 }))
       .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime, cfg.pen.escapeAttemptFrequency)));
 
     // Left Table
@@ -277,13 +279,16 @@ export class Game implements EntityContext {
   }
 
   public isGameOver(): boolean {
-    return this.state.lives <= 0;
+    return this._state.lives <= 0;
   }
 
   private resetGame(): void {
     this.entities.forEach(entity => entity.destroy());
     this.entities = [];
-    this.state = new GameState(cfg.player.lives);
+    this._state = new GameState(cfg.player.lives);
+    this._state.onScoreInc = () => { Assets.playSound("kerching.ogg") };
+    this._state.onLifeGained = () => { Assets.playSound("tada-fanfare-f.ogg") };
+    this._state.onLifeLost = () => { Assets.playSound("life-lost-game-over.ogg") };
     this.initEntities();
   }
 
@@ -324,7 +329,7 @@ export class Game implements EntityContext {
   }
 
   public getState(): GameState {
-    return this.state;
+    return this._state;
   }
 
 }

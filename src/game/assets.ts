@@ -44,4 +44,13 @@ export class Assets {
   static spritesheet(): PIXI.Spritesheet {
     return Assets.loader.resources[Assets.SPRITES_SRC].spritesheet;
   }
+
+  static playSound(filename: string): void {
+    const audio = new Audio(`${Assets.SOUNDS_BASEPATH}/${filename}`);
+
+    // Wait until the audio is playable
+    audio.addEventListener('canplaythrough', event => {
+      audio.play();
+    });
+  }
 }

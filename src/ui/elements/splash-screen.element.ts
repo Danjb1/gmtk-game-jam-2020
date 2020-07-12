@@ -1,7 +1,7 @@
-import { UiElement } from "./element";
+import { UiElement } from './element';
 
 interface Props {
-  show: boolean
+  show: boolean;
 }
 
 export class SplashScreenElement extends UiElement {
@@ -20,4 +20,4 @@ export class SplashScreenElement extends UiElement {
   remove() {
     this.elem.remove();
   }
-} 
+}

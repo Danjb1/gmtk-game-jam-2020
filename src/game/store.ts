@@ -10,6 +10,10 @@ export class GameState {
 
   _catsReturnedinARow = 0;
 
+  public onLifeLost: (sender: GameState) => void;
+  public onLifeGained: (sender: GameState) => void;
+  public onScoreInc: (sender: GameState) => void;
+
   get catsReturnedinARow() {
     return this._catsReturnedinARow;
   }
@@ -48,11 +52,13 @@ export class GameState {
     // Reset cats returned
     this.catsReturnedinARow = 0;
     this._lives--;
+    if (this.onLifeLost) this.onLifeLost(this);
   }
 
   gainLife() {
     if (this._lives < this._maxLives) {
       this._lives++;
+      if (this.onLifeGained) this.onLifeGained(this);
     }
   }
 
@@ -60,6 +66,7 @@ export class GameState {
     // Increase cats returned
     this.catsReturnedinARow++;
     this._score += amount;
+    if (this.onScoreInc) this.onScoreInc(this);
   }
 
 }

@@ -81,27 +81,27 @@ export class AnimatedSpriteComponent extends Component {
     let newDirection: Direction;
     if (this.sprite.x === this.hitbox.x && this.sprite.y === this.hitbox.y) {
       if (this.direction.indexOf('left') > -1) {
-        newDirection = 'left_stop'
+        newDirection = 'left_stop';
       } else if (this.direction.indexOf('right') > -1) {
-        newDirection = 'right_stop'
+        newDirection = 'right_stop';
       } else if (this.direction.indexOf('down') > -1) {
-        newDirection = 'down_stop'
+        newDirection = 'down_stop';
       } else if (this.direction.indexOf('up') > -1) {
-        newDirection = 'up_stop'
+        newDirection = 'up_stop';
       }
     } else if (this.sprite.x > this.hitbox.x) {
       if (this.sprite.y < this.hitbox.y) {
-        newDirection = 'left_down'
+        newDirection = 'left_down';
       } else if (this.sprite.y > this.hitbox.y) {
-        newDirection = 'left_up'
+        newDirection = 'left_up';
       } else {
         newDirection = 'left';
       }
     } else if (this.sprite.x < this.hitbox.x) {
       if (this.sprite.y < this.hitbox.y) {
-        newDirection = 'right_down'
+        newDirection = 'right_down';
       } else if (this.sprite.y > this.hitbox.y) {
-        newDirection = 'right_up'
+        newDirection = 'right_up';
       } else {
         newDirection = 'right';
       }

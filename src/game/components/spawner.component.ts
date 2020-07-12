@@ -21,7 +21,7 @@ export class SpawnerComponent extends Component {
   private timeUntilSpawn: number;
 
   constructor(
-    private createFn: (a: any, b: any) => any, 
+    private createFn: (a: any, b: any) => any,
     public cfg: SpawnOptions
   ) {
     super(SpawnerComponent.KEY);
