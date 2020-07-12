@@ -46,7 +46,9 @@
         "positionY": 380,
         "width": 100,
         "height": 100,
-        "sprite": "pen.png"
+        "sprite": "pen.png",
+        "chanceOfEscape": 0.005,
+        "minCaptureTime": 500
     },
     "leftTable": {
         "enabled": true,
