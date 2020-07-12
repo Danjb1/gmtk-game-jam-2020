@@ -8,7 +8,7 @@ import { HitboxComponent } from './hitbox.component';
 // Utils
 import { getHitboxFrom } from '../utils';
 
-type Direction = 'up' | 'down' | 'left' | 'right' | 'right_down' | 'right_up' | 'left_down' | 'left_up' | 'left_sit' | 'right_sit' | 'left_sleep' | 'right_sleep';
+type Direction = 'up' | 'down' | 'left' | 'right' | 'right_down' | 'right_up' | 'left_down' | 'left_up' | 'left_stop' | 'right_stop' | 'up_stop' | 'down_stop' | 'left_sleep' | 'right_sleep';
 
 export class AnimatedSpriteComponent extends Component {
   public static readonly KEY = Symbol();
@@ -81,9 +81,13 @@ export class AnimatedSpriteComponent extends Component {
     let newDirection: Direction;
     if (this.sprite.x === this.hitbox.x && this.sprite.y === this.hitbox.y) {
       if (this.direction.indexOf('left') > -1) {
-        newDirection = 'left_sit'
-      } else {
-        newDirection = 'right_sit'
+        newDirection = 'left_stop'
+      } else if (this.direction.indexOf('right') > -1) {
+        newDirection = 'right_stop'
+      } else if (this.direction.indexOf('down') > -1) {
+        newDirection = 'down_stop'
+      } else if (this.direction.indexOf('up') > -1) {
+        newDirection = 'up_stop'
       }
     } else if (this.sprite.x > this.hitbox.x) {
       if (this.sprite.y < this.hitbox.y) {
