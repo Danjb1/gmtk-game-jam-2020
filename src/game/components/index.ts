@@ -20,3 +20,5 @@ export * from './wander.component';
 export * from './whistle-listener.component';
 export * from './whistler.component';
 export * from './woof.component';
+export * from './graphics.component';
+
