@@ -129,7 +129,7 @@ export class Game implements EntityContext {
         Game.WORLD_WIDTH / 2 - 16,
         Game.WORLD_HEIGHT / 2 - 16,
         32, 32,
-        { tags: ['player'] }))
+        { tags: ['player'], blocks: ['dog'] }))
       .attach(new SpriteComponent(cfg.player.sprite))
       .attach(new ControllerComponent(this.input, cfg.player.speed))
       .attach(new ScarerComponent()));
@@ -138,7 +138,7 @@ export class Game implements EntityContext {
     if (cfg.dog.enabled) {
       this.addEntity(new Entity()
         .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 32, 32,
-          { tags: ['dog'] }))
+          { tags: ['dog'], blocks: ['player'] }))
         .attach(new SpriteComponent(cfg.dog.sprite))
         .attach(new ScarerComponent())
         .attach(new WanderComponent(cfg.dog.wandering)));
@@ -172,7 +172,7 @@ export class Game implements EntityContext {
         { blocks: ['player', 'dog'] }
       ))
       .attach(new SpriteComponent(cfg.pen.sprite))
-      .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime)));
+      .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime, cfg.pen.escapeAttemptFrequency)));
 
     // Left Table
     if (cfg.leftTable.enabled) {
