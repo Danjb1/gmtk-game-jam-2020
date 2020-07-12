@@ -1,6 +1,7 @@
 // Libs
 import * as createjs from 'createjs-module';
 import { Viewport } from 'pixi-viewport';
+import * as PIXI from 'pixi.js';
 
 // Global Stuff
 import { Input } from './input';
@@ -48,10 +49,13 @@ export class Game implements EntityContext {
   private entities: Entity[] = [];
   private input: Input = new Input();
   private count: number = 1;
+  private restartText: PIXI.Text;
 
   state: GameState = new GameState();
 
-  constructor(private app: PIXI.Application) { }
+  constructor(private app: PIXI.Application) {
+    this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
+   }
 
   /**
    * Initialises the game.
@@ -206,8 +210,9 @@ export class Game implements EntityContext {
   public update(): void {
 
     if (this.isGameOver()) {
-      
       let breakCircuit = false;
+
+      this.app.stage.addChild(this.restartText);
 
       document.addEventListener('keyup', event => {
         if (event.code === 'Space' && !breakCircuit) {
@@ -218,10 +223,11 @@ export class Game implements EntityContext {
           this.state = new GameState();
           this.initEntities();
           breakCircuit = true;
+          this.app.stage.removeChild(this.restartText);
         }
       });
 
-      return;
+      return;      
     }
 
     // Update our Entities.
