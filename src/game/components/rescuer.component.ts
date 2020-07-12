@@ -63,13 +63,17 @@ export class RescuerComponent extends Component {
 
   private pickUp(catDueForPickup: Entity, catInPen: Entity) {
 
-    // Swap the 2 cats so that the one being picked up is in the pen!
-    // This disguises the fact that we are picking up any matching cat, not
-    // necessarily the exact cat that was due.
     if (catDueForPickup !== catInPen) {
+
+      // Swap the 2 cats so that the one being picked up is in the pen!
+      // This disguises the fact that we are picking up any matching cat, not
+      // necessarily the exact cat that was due.
       const h1: HitboxComponent = getHitboxFrom(catDueForPickup);
       const h2: HitboxComponent = getHitboxFrom(catInPen);
       this.swapHitboxes(h1, h2);
+
+      // TODO: The cat that was in the pen should no longer be Jailed
+      // TODO: The cat that is now in the pen should be Jailed
     }
 
     const catPickedUpMeta =
