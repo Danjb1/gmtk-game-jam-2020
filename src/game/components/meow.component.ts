@@ -6,7 +6,7 @@ export class MeowComponent extends Component {
 
   public static readonly KEY = Symbol();
 
-  private static readonly NUM_SOUNDS = 14;
+  private static readonly NUM_SOUNDS = 13;
 
   private interval = 2500;
   private timeUntilSound: number;
