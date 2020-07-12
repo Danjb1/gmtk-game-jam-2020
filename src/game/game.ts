@@ -128,9 +128,9 @@ export class Game implements EntityContext {
     // Player
     this.addEntity(new Entity()
       .attach(new HitboxComponent(
-        Game.WORLD_WIDTH / 2 - 16,
-        Game.WORLD_HEIGHT / 2 - 16,
-        32, 32,
+        Game.WORLD_WIDTH / 2 - 24,
+        Game.WORLD_HEIGHT / 2 - 24,
+        48, 48,
         { tags: ['player'], blocks: ['dog'] }))
       .attach(new AnimatedSpriteComponent(cfg.player.sprite, { animationSpeed: 0.3 }))
       .attach(new ControllerComponent(this.input, cfg.player.speed))
@@ -139,7 +139,7 @@ export class Game implements EntityContext {
     // Dog
     if (cfg.dog.enabled) {
       this.addEntity(new Entity()
-        .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 32, 32,
+        .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 48, 48,
           { tags: ['dog'], blocks: ['player'] }))
         .attach(new AnimatedSpriteComponent(cfg.dog.sprite, { animationSpeed: 0.5 }))
         .attach(new ScarerComponent())

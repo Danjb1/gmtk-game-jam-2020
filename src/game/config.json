@@ -68,7 +68,7 @@
     },
     "woof": {
       "interval": 1000,
-      "chance": 0.2
+      "chance": 0.25
     }
   },
   "pen": {

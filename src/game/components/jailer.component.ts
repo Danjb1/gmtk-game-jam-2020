@@ -65,6 +65,4 @@ export class JailerComponent extends Component implements HitboxListener {
       ));
   }
 
-  
-
 }
