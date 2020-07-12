@@ -14,11 +14,16 @@ export class CatWarningComponent extends Component {
   private text: PIXI.Text;
   private hitbox: HitboxComponent;
 
-  private static textStyles: Partial<PIXI.TextStyle> = { 
-    fontFamily: 'Do Hyeon', 
-    fontSize: 18, 
-    fill: 0xc62602, 
-    align: 'center', 
+  private static COLOURS = {
+    WARN: 0xFF9800,
+    PICKUP: 0xF44336
+  }
+
+  private static textStyles: Partial<PIXI.TextStyle> = {
+    fontFamily: 'Do Hyeon',
+    fontSize: 18,
+    fill: 0xc62602,
+    align: 'center',
     fontWeight: 'bold'
   }
 
@@ -47,7 +52,7 @@ export class CatWarningComponent extends Component {
 
   update() {
     this.text.visible = (!this.entity.getComponent(JailedComponent.KEY)) && this._catMeta.warnPlayer;
-    this.text.style.fill = this._catMeta.canBePickedUp ? 0xc62602 : 0xd46a09;
+    this.text.style.fill = this._catMeta.canBePickedUp ? CatWarningComponent.COLOURS.WARN : CatWarningComponent.COLOURS.PICKUP;
     this.snapToEntity();
   }
 
