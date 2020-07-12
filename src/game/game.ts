@@ -242,6 +242,15 @@ export class Game implements EntityContext {
         cfg.mat.width, cfg.mat.height
       ))
       .attach(new SpriteComponent(cfg.mat.sprite, { zIndex: -1 })));
+
+    // Cat pen sign
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(
+        cfg.sign.positionX,
+        cfg.sign.positionY,
+        cfg.sign.width, cfg.sign.height
+      ))
+      .attach(new SpriteComponent(cfg.sign.sprite, { zIndex: -1 })));
   }
 
   /**
