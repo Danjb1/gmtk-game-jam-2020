@@ -11,26 +11,30 @@ export class PickupElement extends UiElement {
   private static readonly HEIGHT = 50;
   private static readonly WIDTH = 800;
   private static readonly IMAGE_WIDTH = 16;
+  private static readonly NUM_IMAGES = 2;
 
   public catMetaDataComponents = new Array<CatMetaComponent>();
   public catHeights = new Map<number, number>();
 
-  private image: HTMLImageElement;
-  private loaded = false;
+  private images: any = {};
+  private imagesLoaded = 0;
 
   private skip = false;
 
   constructor(parent: HTMLElement) {
     super(parent);
-    this.loadImage();
+
+    // TODO: We shouldn't load these again as Pixi has already loaded them!
+    this.loadImage('grey', '../images/original/cats/grey/grey_face.png');
+    this.loadImage('white', '../images/original/cats/white/white_face.png');
   }
 
-  private loadImage() {
-    // TODO: We shouldn't be loading this again as Pixi has already loaded it!
-    this.image = new Image();
-    this.image.src = '../images/original/player.png';
-    this.image.onload = () => {
-      this.loaded = true;
+  private loadImage(id: string, src: string) {
+    const image = new Image();
+    image.src = src;
+    image.onload = () => {
+      this.imagesLoaded++;
+      this.images[id] = image;
     };
   }
 
@@ -42,7 +46,7 @@ export class PickupElement extends UiElement {
   }
 
   public update(game: Game) {
-    if (!this.loaded || this.skip) {
+    if (this.imagesLoaded < PickupElement.NUM_IMAGES || this.skip) {
       return;
     }
 
@@ -60,7 +64,7 @@ export class PickupElement extends UiElement {
     });
   }
 
-  progress() {
+  private progress() {
     this.context.clearRect(0, 0, PickupElement.WIDTH, PickupElement.HEIGHT);
     this.context.beginPath();
 
@@ -81,12 +85,17 @@ export class PickupElement extends UiElement {
     this.context.stroke();
   }
 
-  moveCatAlongProgressBar(cat: CatMetaComponent, context: CanvasRenderingContext2D, height: number) {
+  private moveCatAlongProgressBar(cat: CatMetaComponent, context: CanvasRenderingContext2D, height: number) {
     let width = (PickupElement.WIDTH * cat.howCloseToPickup) - PickupElement.IMAGE_WIDTH;
-    context.drawImage(this.image, width, height);
+    const image = this.getImageForCat(cat);
+    context.drawImage(image, width, height);
   }
 
-  getRandomHeight() {
+  private getImageForCat(catMeta: CatMetaComponent): CanvasImageSource {
+    return this.images[catMeta.variety];
+  }
+
+  private getRandomHeight() {
     return Math.random() * (35 - 0);
   }
 }
