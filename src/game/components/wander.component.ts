@@ -30,7 +30,7 @@ export class WanderComponent extends Component {
   /**
    * Minimum time to wander, in ms.
    */
-  private minWanderTime: number;
+  private minWanderTime = 200;
 
   /**
    * Maximum time to wander, in ms.

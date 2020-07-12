@@ -16,6 +16,7 @@ export class AnimatedSpriteComponent extends Component {
   private sprite: PIXI.AnimatedSprite;
   private hitbox: HitboxComponent;
   private spritesheet: PIXI.Spritesheet;
+  private direction: Direction = 'down';
 
   constructor(
     private filename: string
@@ -26,7 +27,7 @@ export class AnimatedSpriteComponent extends Component {
   }
 
   public onSpawn(): void {
-    this.sprite.animationSpeed = 0.01;
+    this.sprite.animationSpeed = 2;
     this.sprite.play();
 
     // Register this Sprite with Pixi
@@ -48,7 +49,7 @@ export class AnimatedSpriteComponent extends Component {
     this.updateDirection();
     if (this.hitbox.speedX === 0 && this.hitbox.speedY === 0) {
       this.sprite.stop();
-    } else {
+    } else if (!this.sprite.playing) {
       this.sprite.play();
     }
   }
@@ -91,14 +92,18 @@ export class AnimatedSpriteComponent extends Component {
       return;
     }
 
-    // Update the texture
-    this.sprite.destroy();
-    this.sprite = new PIXI.AnimatedSprite(
-      this.spritesheet.animations[`${this.filename}_${newDirection}`]
-    );
-    this.entity.context
-      .getViewport()
-      .addChild(this.sprite);
+    if (newDirection !== this.direction) {
+      this.direction = newDirection;
+
+      // Update the texture
+      this.sprite.destroy();
+      this.sprite = new PIXI.AnimatedSprite(
+        this.spritesheet.animations[`${this.filename}_${newDirection}`]
+      );
+      this.entity.context
+        .getViewport()
+        .addChild(this.sprite);
+    }
   }
 
 }
