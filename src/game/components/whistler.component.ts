@@ -39,7 +39,7 @@ export class WhistlerComponent extends Component {
   blastWhistle(): void {
     if (this.timeSinceWhistle > WhistlerComponent.cooldownTime) {
       this.timeSinceWhistle = 0;
-      Assets.playSound(WhistlerComponent.SOUND);
+      Assets.playSound(WhistlerComponent.SOUND, true);
       this.listeners.forEach(l => l.whistleHeard(this.hitbox.centrePosition));
     }
   }

@@ -30,6 +30,6 @@ export class MeowComponent extends Component {
   }
 
   private hiss(): void {
-    Assets.playSound("hiss01.ogg");
+    Assets.playSound("hiss01.ogg", true);
   }
 }

@@ -31,6 +31,6 @@ export class WhistleListenerComponent extends Component implements WhistleListen
     }
 
     // Attach a new journey towards the new location
-    this.entity.attach(new JourneyComponent(this.maxSpeed, location));
+    this.entity.attach(new JourneyComponent(2 * this.maxSpeed, location));
   }
 }

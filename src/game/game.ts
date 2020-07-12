@@ -251,10 +251,9 @@ export class Game implements EntityContext {
     }
 
     if (this.isGameOver()) {
-      this.app.stage.addChild(this.restartPixiText);
+      this.stopGame();
       if (this.input.isPressed(Input.SPACE)) {
         this.resetGame();
-        this.app.stage.removeChild(this.restartPixiText);
       }
       return;
     }
@@ -285,14 +284,28 @@ export class Game implements EntityContext {
     return this._state.lives <= 0;
   }
 
+  // Used to prevent running stopGame multiple times
+  private _gameStopped: boolean;
+
+  private stopGame(): void {
+    if (this._gameStopped) {
+      return
+    }
+    this._gameStopped = true;
+    [...this.entities].forEach(entity => entity.broadcast('stop'));
+    this.app.stage.addChild(this.restartPixiText);
+  }
+
   private resetGame(): void {
     this.entities.forEach(entity => entity.destroy());
     this.entities = [];
     this._state = new GameState(cfg.player.lives);
-    this._state.onScoreInc = () => { Assets.playSound("kerching.ogg") };
-    this._state.onLifeGained = () => { Assets.playSound("tada-fanfare-f.ogg") };
-    this._state.onLifeLost = () => { Assets.playSound("life-lost-game-over.ogg") };
+    this._state.onScoreInc = () => { Assets.playSound("kerching.ogg", true) };
+    this._state.onLifeGained = () => { Assets.playSound("tada-fanfare-f.ogg", true) };
+    this._state.onLifeLost = () => { Assets.playSound("life-lost-game-over.ogg", true) };
     this.initEntities();
+    this.app.stage.removeChild(this.restartPixiText);
+    this._gameStopped = false;
   }
 
   private detectCollisions(): void {
