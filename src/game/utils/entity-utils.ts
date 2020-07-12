@@ -21,8 +21,18 @@ export const isJailed = (entity: Entity): boolean => {
 /**
  * Checks whether an Entity has a destination.
  */
-export const hasDestination = (entity: Entity): boolean => {
+export const hasJourney = (entity: Entity): boolean => {
   return entity.getComponent<JourneyComponent>(JourneyComponent.KEY) !== undefined;
+};
+
+/**
+ * Aborts an Entity's Journey, if it has one.
+ */
+export const abortJourney = (entity: Entity): void => {
+  const journey = entity.getComponent<JourneyComponent>(JourneyComponent.KEY);
+  if (journey) {
+    journey.cease();
+  }
 };
 
 /**

@@ -1,6 +1,7 @@
-import { Vector } from '../utils';
+import { Entity } from '../entity';
 import { Component } from '../component';
 import { HitboxComponent } from './hitbox.component';
+import { getHitboxFrom, Vector } from '../utils';
 
 /**
  * Component representing a journey to a destination.
@@ -13,23 +14,34 @@ export class JourneyComponent extends Component {
 
   private hitbox: HitboxComponent;
 
-  constructor(private maxSpeed: number, private destination: Vector) {
+  constructor(private speed: number, private destination: Vector) {
     super(JourneyComponent.KEY);
+  }
+
+  onAttach(e: Entity): void {
+    this.entity = e;
+    this.hitbox = getHitboxFrom(this.entity);
   }
 
   update(delta: number) {
 
     // Figure out how long is left
-    const rangeToDestination =
-      this.destination.hypotenuse(this.hitbox.centrePosition);
+    const position = this.hitbox.centrePosition;
+    const path = Vector.between(position, this.destination);
+    const rangeToDestination = path.magnitude;
 
     // If we are within a margin of error, stop here
     if (rangeToDestination < this.rangeThreshold) {
-      this.deleted = true;
+      this.cease();
       return;
     }
 
-    // If we will cover this distance in less than one frame, adjust speed
-    // TODO
+    // Move towards the destination
+    this.hitbox.setSpeed(path.scaleToMagnitude(this.speed));
+  }
+
+  cease(): void {
+    this.hitbox.setSpeed(Vector.zero());
+    this.deleted = true;
   }
 }

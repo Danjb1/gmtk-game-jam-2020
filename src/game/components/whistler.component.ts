@@ -4,6 +4,7 @@ import { HitboxComponent } from './hitbox.component';
 
 // Utils
 import { getHitboxFrom, Vector } from '../utils';
+import { Assets } from '../assets';
 
 export interface WhistleListener {
   whistleHeard(location: Vector): void;
@@ -31,6 +32,7 @@ export class WhistlerComponent extends Component {
   }
 
   blastWhistle(): void {
+    Assets.playSound('whistle.ogg');
     this.listeners.forEach(l => l.whistleHeard(this.hitbox.centrePosition));
   }
 

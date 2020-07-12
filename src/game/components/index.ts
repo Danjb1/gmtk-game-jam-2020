@@ -11,6 +11,7 @@ export * from './jailer.component';
 export * from './journey.component';
 export * from './late.component';
 export * from './meow.component';
+export * from './rescue.component';
 export * from './rescuer.component';
 export * from './scared.component';
 export * from './scarer.component';

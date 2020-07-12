@@ -22,6 +22,15 @@ export class WhistleListenerComponent extends Component implements WhistleListen
   }
 
   whistleHeard(location: Vector): void {
+
+    // Terminate existing journey, if there is one
+    const existingJourney =
+        this.entity.getComponent<JourneyComponent>(JourneyComponent.KEY);
+    if (existingJourney) {
+      existingJourney.cease();
+    }
+
+    // Attach a new journey towards the new location
     this.entity.attach(new JourneyComponent(this.maxSpeed, location));
   }
 }
