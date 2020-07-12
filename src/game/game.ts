@@ -38,6 +38,7 @@ import { getHitboxFrom } from './utils';
 import { GameState } from './store';
 
 import cfg from './config.json';
+import { FlashComponent } from './components/flash.component';
 
 export class Game implements EntityContext {
 

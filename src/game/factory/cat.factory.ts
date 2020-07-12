@@ -13,6 +13,7 @@ import {
   CatWarningComponent,
   RescueComponent
 } from '../components';
+import { FlashComponent } from '../components/flash.component';
 
 /**
  * Generates a cat entity
@@ -46,7 +47,8 @@ export class CatFactory {
       .attach(new RescueComponent())
       .attach(new CatWarningComponent())
       .attach(new MeowComponent())
-      .attach(new LateComponent());
+      .attach(new LateComponent())
+      .attach(new FlashComponent());
 
     return catEntity;
   }
