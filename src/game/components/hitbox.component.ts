@@ -168,9 +168,9 @@ export class HitboxComponent extends Component {
       this.x = Game.WORLD_WIDTH - this.width;
     }
 
-    if (this.y <= 20) {
+    if (this.y <= Game.WORLD_TOP) {
       this.speedY = 0;
-      this.y = 20;
+      this.y = Game.WORLD_TOP;
     } else if (this.bottom >= Game.WORLD_HEIGHT) {
       this.speedY = 0;
       this.y = Game.WORLD_HEIGHT - this.height;

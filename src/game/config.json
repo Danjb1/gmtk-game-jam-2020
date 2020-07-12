@@ -86,6 +86,13 @@
     "height": 20,
     "sprite": "mat.png"
   },
+  "sign": {
+    "positionX": 220,
+    "positionY": 420,
+    "width": 55,
+    "height": 80,
+    "sprite": "cat_pen_sign.png"
+  },
   "pen": {
     "positionX": 270,
     "positionY": 380,
