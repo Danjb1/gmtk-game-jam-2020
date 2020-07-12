@@ -17,7 +17,7 @@ export class SpriteComponent extends Component {
   constructor(
     filename: string,
     spriteSettings?: any,
-    tiled?: boolean,
+    tiled = false,
   ) {
     super(SpriteComponent.KEY);
 

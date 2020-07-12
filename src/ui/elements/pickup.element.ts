@@ -17,7 +17,7 @@ export class PickupElement extends UiElement {
   public catMetaDataComponents = new Array<CatMetaComponent>();
   public catHeights = new Map<number, number>();
 
-  private images: any = {};
+  private images: { [key: string]: CanvasImageSource } = {};
   private imagesLoaded = 0;
 
   private skip = false;
@@ -71,25 +71,25 @@ export class PickupElement extends UiElement {
 
     [...this.catMetaDataComponents].forEach(cat => {
 
-      let height: number;
+      let y: number;
 
       if (![...this.catHeights.keys()].includes(cat.entity.entityId)) {
-        height = this.getRandomHeight();
-        this.catHeights.set(cat.entity.entityId, height);
+        y = this.getRandomHeight();
+        this.catHeights.set(cat.entity.entityId, y);
       } else {
-        height = this.catHeights.get(cat.entity.entityId);
+        y = this.catHeights.get(cat.entity.entityId);
       }
 
-      this.moveCatAlongProgressBar(cat, this.context, height);
+      this.moveCatAlongProgressBar(cat, this.context, y);
     });
 
     this.context.stroke();
   }
 
-  private moveCatAlongProgressBar(cat: CatMetaComponent, context: CanvasRenderingContext2D, height: number) {
-    let width = (PickupElement.WIDTH * cat.howCloseToPickup) - PickupElement.IMAGE_WIDTH;
-    const image = this.getImageForCat(cat);
-    context.drawImage(image, width, height);
+  private moveCatAlongProgressBar(cat: CatMetaComponent, context: CanvasRenderingContext2D, y: number) {
+    let x = (PickupElement.WIDTH * cat.howCloseToPickup) - PickupElement.IMAGE_WIDTH;
+    const image: CanvasImageSource = this.getImageForCat(cat);
+    context.drawImage(image, x, y, 24, 24);
   }
 
   private getImageForCat(catMeta: CatMetaComponent): CanvasImageSource {

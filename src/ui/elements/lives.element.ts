@@ -18,7 +18,7 @@ export class LivesElement extends UiElement {
   }
 
   rating(lives: number): string {
-    return '★'.repeat(lives).padEnd(5, '☆');
+    return '★'.repeat(Math.max(0, lives)).padEnd(5, '☆');
   }
 
   update(props: Props): void {
