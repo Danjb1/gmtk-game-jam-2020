@@ -2,7 +2,9 @@ import { Component } from '../component';
 import { boundedGaussianRandom, easeOutSine } from '../utils';
 
 export type CatPersonality = 'normal' | 'lazy' | 'hyper';
-export type CatVariety = 'ash' | 'black' | 'brown' | 'ginger' | 'grey' | 'greywhite' | 'tan' | 'white';
+export type CatVariety = 'newgrey';
+// TO-DO add more cat varieties with the new sprites
+// export type CatVariety = 'ash' | 'black' | 'brown' | 'ginger' | 'grey' | 'greywhite' | 'tan' | 'white';
 
 export class CatMetaComponent extends Component {
   // Component symbol
@@ -14,7 +16,9 @@ export class CatMetaComponent extends Component {
   // Possible personalities for the cat
   private static readonly PERSONALITIES: CatPersonality[] = ['normal'];
   // Possible Breeds
-  private static readonly VARIETIES: CatVariety[] = ['ash', 'black', 'brown', 'ginger', 'grey', 'greywhite', 'tan', 'white'];
+  // TO-DO add more varieties with the new sprites
+  // private static readonly VARIETIES: CatVariety[] = ['ash', 'black', 'brown', 'ginger', 'grey', 'greywhite', 'tan', 'white'];
+  private static readonly VARIETIES: CatVariety[] = ['newgrey'];
 
   // min max for duration
   private static minDuration = 15000;

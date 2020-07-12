@@ -8,7 +8,7 @@ import { HitboxComponent } from './hitbox.component';
 // Utils
 import { getHitboxFrom } from '../utils';
 
-type Direction = 'up' | 'down' | 'left' | 'right';
+type Direction = 'up' | 'down' | 'left' | 'right' | 'right_down' | 'right_up' | 'left_down' | 'left_up';
 
 export class AnimatedSpriteComponent extends Component {
   public static readonly KEY = Symbol();
@@ -26,7 +26,7 @@ export class AnimatedSpriteComponent extends Component {
   }
 
   public onSpawn(): void {
-    this.sprite.animationSpeed = 0.2;
+    this.sprite.animationSpeed = 0.1;
     this.sprite.play();
 
     // Register this Sprite with Pixi
@@ -68,9 +68,21 @@ export class AnimatedSpriteComponent extends Component {
   private updateDirection() {
     let newDirection: Direction;
     if (this.sprite.x > this.hitbox.x) {
-      newDirection = 'left';
+      if (this.sprite.y < this.hitbox.y) {
+        newDirection = 'left_down'
+      } else if (this.sprite.y > this.hitbox.y) {
+        newDirection = 'left_up'
+      } else {
+        newDirection = 'left';
+      }
     } else if (this.sprite.x < this.hitbox.x) {
-      newDirection = 'right';
+      if (this.sprite.y < this.hitbox.y) {
+        newDirection = 'right_down'
+      } else if (this.sprite.y > this.hitbox.y) {
+        newDirection = 'right_up'
+      } else {
+        newDirection = 'right';
+      }
     } else if (this.sprite.y > this.hitbox.y) {
       newDirection = 'up';
     } else if (this.sprite.y < this.hitbox.y) {
