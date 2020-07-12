@@ -17,7 +17,7 @@ import { Entity } from './entity';
 import {
   SpriteComponent,
   AnimatedSpriteComponent,
-  GraphicsComponent,
+  // GraphicsComponent,
   HitboxComponent,
   ControllerComponent,
   ScarerComponent,
@@ -236,7 +236,7 @@ export class Game implements EntityContext {
     // Wall
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, Game.WORLD_WIDTH, 40))
-      .attach(new GraphicsComponent(0, 0, Game.WORLD_WIDTH, 40, { shape: 'rectangle', fillColor: 0x5e503d, }, { zIndex: -1 })));
+      .attach(new SpriteComponent(cfg.wall.sprite, { zIndex: -1 })));
 
     // Mat
     this.addEntity(new Entity()

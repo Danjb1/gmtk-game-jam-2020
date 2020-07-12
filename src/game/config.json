@@ -79,6 +79,13 @@
     "height": 40,
     "sprite": "door.png"
   },
+  "wall": {
+    "positionX": 0,
+    "positionY": 0,
+    "width": 600,
+    "height": 40,
+    "sprite": "wall.png"
+  },
   "mat": {
     "positionX": 20,
     "positionY": 40,
