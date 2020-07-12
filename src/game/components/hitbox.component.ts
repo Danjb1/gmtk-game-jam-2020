@@ -33,9 +33,9 @@ export interface HitboxProperties {
 export class HitboxComponent extends Component {
   public static readonly KEY = Symbol();
 
-    // Previous position
-    public prevX: number;
-    public prevY: number;
+  // Previous position
+  public prevX: number;
+  public prevY: number;
 
   // Speed, in units per second
   public speedX = 0;

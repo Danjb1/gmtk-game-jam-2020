@@ -8,7 +8,6 @@ import {
   AnimatedSpriteComponent,
   ScaredComponent,
   JailableComponent,
-  RescueComponent,
   MeowComponent,
   LateComponent
 } from '../components';
@@ -36,7 +35,6 @@ export class CatFactory {
       .attach(new JailableComponent())
       .attach(new ScaredComponent(this.catBehavior.scared.flightDistance,
                                   this.catBehavior.scared.flightSpeed))
-      .attach(new RescueComponent())
       .attach(new MeowComponent(this.catBehavior.meowing.interval,
                                 this.catBehavior.meowing.chance))
       .attach(new LateComponent());
