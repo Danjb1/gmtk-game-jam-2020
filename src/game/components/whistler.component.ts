@@ -32,7 +32,7 @@ export class WhistlerComponent extends Component {
   }
 
   blastWhistle(): void {
-    Assets.playSound('whistle.ogg');
+    Assets.playSound('whistle.ogg', true);
     this.listeners.forEach(l => l.whistleHeard(this.hitbox.centrePosition));
   }
 
