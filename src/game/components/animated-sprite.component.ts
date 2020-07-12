@@ -70,11 +70,32 @@ export class AnimatedSpriteComponent extends Component {
   }
 
   private snapToEntity(): void {
+
     // Update the position of the Sprite based on the Entity position
     this.sprite.x = this.hitbox.x;
     this.sprite.y = this.hitbox.y;
-    this.sprite.width = this.hitbox.width;
-    this.sprite.height = this.hitbox.height;
+
+    // Copy the entity's size
+    let width = this.hitbox.width;
+    let height = this.hitbox.height;
+
+    // Allow this size to be overridden
+    if (this.spriteSettings) {
+      if (this.spriteSettings.width) {
+        width = this.spriteSettings.width;
+      }
+      if (this.spriteSettings.height) {
+        height = this.spriteSettings.height;
+      }
+    }
+
+    // Set the sprite size
+    this.sprite.width = width;
+    this.sprite.height = height;
+
+    // Ensure the sprite is centred in the hitbox
+    this.sprite.x -= (width - this.hitbox.width) / 2;
+    this.sprite.y -= (height - this.hitbox.height) / 2;
   }
 
   private updateDirection() {
