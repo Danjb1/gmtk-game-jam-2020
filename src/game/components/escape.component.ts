@@ -27,14 +27,17 @@ export class EscapeComponent extends Component {
     this.minCaptureTime = minCaptureTime;
   }
 
-  onAttach(entity: Entity) {
+  public onAttach(entity: Entity) {
     super.onAttach(entity);
+
     this._jailedAt = Date.now();
-    this._catMeta = entity.getComponent(CatMetaComponent.KEY) as CatMetaComponent;
+    this._catMeta = <CatMetaComponent>
+        entity.getComponent(CatMetaComponent.KEY);
   }
 
-  update() {
+  public update(delta: number) {
     // Enforce remaining in prison for a specific amount of time
+    // TODO: This should use the delta value (game time) instead of real time
     if (Date.now() < this._jailedAt + this.minCaptureTime) {
       return;
     }
@@ -51,7 +54,6 @@ export class EscapeComponent extends Component {
 
     // Ninja cat has escaped!
     this._removeFromJail();
-
   }
 
   private _removeFromJail() {
