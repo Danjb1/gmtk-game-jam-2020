@@ -23,7 +23,9 @@ export class CatWarningComponent extends Component {
     fontFamily: 'Do Hyeon',
     fontSize: 18,
     fill: 0xc62602,
-    align: 'center'
+    align: 'center',
+    stroke: 'black',
+    strokeThickness: 1
   }
 
   constructor() {
@@ -61,8 +63,8 @@ export class CatWarningComponent extends Component {
 
   private snapToEntity(): void {
     // Update the position of the Sprite based on the Entity position
-    this.text.x = this.hitbox.x + 8;
-    this.text.y = this.hitbox.y - 3;
+    this.text.x = this.hitbox.x + 9;
+    this.text.y = this.hitbox.y - 4;
   }
 
   destroy() {
