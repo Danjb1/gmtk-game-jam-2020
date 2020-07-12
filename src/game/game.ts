@@ -58,7 +58,7 @@ export class Game implements EntityContext {
   private restartPixiText: PIXI.Text;
   private gameStarted: boolean = false;
 
-  private _state: GameState = new GameState(cfg.player.lives);
+  private _state: GameState;
   public get state() { return this._state };
 
   constructor(private app: PIXI.Application) {
@@ -103,7 +103,7 @@ export class Game implements EntityContext {
     this.catFactory = new CatFactory(cfg.catBehavior);
     CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
-    this.initEntities();
+    this.resetGame()
   }
 
   /**
@@ -281,6 +281,7 @@ export class Game implements EntityContext {
     this.entities.forEach(entity => entity.destroy());
     this.entities = [];
     this._state = new GameState(cfg.player.lives);
+    this._state.onScoreInc = () => { Assets.playSound("kerching.ogg") };
     this.initEntities();
   }
 
