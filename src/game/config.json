@@ -1,7 +1,7 @@
 {
   "player": {
     "speed": 350,
-    "sprite": "player.png",
+    "sprite": "player/player",
     "lives": 3
   },
   "catMetadata": {
@@ -57,7 +57,7 @@
     "startY": 100,
     "minSpeed": 50,
     "maxSpeed": 100,
-    "sprite": "player.png",
+    "sprite": "dog/dog",
     "wandering": {
       "chance": 0.05,
       "minSpeed": 50,
