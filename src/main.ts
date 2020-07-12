@@ -2,6 +2,9 @@ import * as PIXI from 'pixi.js';
 
 import { Game } from './game/game';
 import { Hud } from './ui/hud';
+import { SplashScreenElement } from './ui/elements';
+
+import { Input } from './game/input';
 
 /**
  * Entry point for the application.
@@ -29,11 +32,32 @@ import { Hud } from './ui/hud';
   // Load the HUD
   const hud = new Hud(game);
 
+  const splash = new SplashScreenElement();
+  splash.create();
+
+  // Call after loaded
+  const checkStartGameCheckLoop = () => {
+    // Check if space is pressed
+    if (Input.instance.isPressed(Input.SPACE)) {
+      splash.remove();
+      // Start the game loop    
+      app.ticker.add(delta => {
+        hud.update();
+        game.state.startGame();
+        game.update();
+      });
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      checkStartGameCheckLoop();
+    })
+  }
+
   game.load(() => {
-    // Start the game loop
-    app.ticker.add(delta => {
-      hud.update();
-      game.update();
-    });
+    requestAnimationFrame(()=>{
+      splash.mount(document.getElementById('container'));
+    })
+    checkStartGameCheckLoop()
   });
 })();

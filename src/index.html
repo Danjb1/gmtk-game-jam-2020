@@ -1,19 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cat Herding</title>
+  <meta name="description" content="A game made in 48 hours for GMTK Game Jam 2020.">
   <link href="styles.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <div class="container">
+  <div id="container" class="container">
     <div id="ui"></div>
     <div id="game-container">
       <div id="ui-overlay"></div>
     </div>
   </div>
+
+  <template id="splash">
+    <div class="overlay overlay--splash">
+      <h1>Herding Cats</h1>
+
+      <h2>Instructions</h2>
+
+      <p>Herd the cats into the pen.</p>
+      <p>Watch out, they can sneak out if you're not careful!</p>
+
+      <h2>Controls</h2>
+
+      <h3>Movement</h3>
+      <div class="controls">
+        <div class="controls__group">
+          <span class="key">w</span>
+          <span class="key">a</span>
+          <span class="key">s</span>
+          <span class="key">d</span>
+        </div>
+
+        <em>or</em>
+
+        <div class="controls__group">
+          <span class="key">🡡</span>
+          <span class="key">🡠</span>
+          <span class="key">🡣</span>
+          <span class="key">🡢</span>
+        </div>
+      </div>
+
+      <h3>Start Game</h3>
+
+      <span class="key key--wide">space</span>
+
+      <aside class="hi-score"></aside>
+    </div>
+  </template>
+
+  <template id="game-over">
+    <div class="overlay overlay--game_over"></div>
+  </template>
+
   <script src="/main.bundle.js"></script>
 </body>
+
 </html>

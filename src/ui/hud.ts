@@ -1,5 +1,5 @@
 import { Game } from '../game/game';
-import { ScoreElement, LivesElement, PickupElement } from './elements/';
+import { ScoreElement, LivesElement, PickupElement, SplashScreenElement } from './elements/';
 
 export class Hud {
 
@@ -7,6 +7,7 @@ export class Hud {
 
   private scoreElement: ScoreElement;
   private livesElement: LivesElement;
+  private splashScreen: SplashScreenElement;
 
   private overlayElement: HTMLElement = document.getElementById('ui-overlay');
 
@@ -24,7 +25,7 @@ export class Hud {
 
   update() {
 
-    const {score, lives } = this.game.getState();
+    const {score, lives} = this.game.getState();
     
     if (this.game.isGameOver()) {
       // We still need to update the lives to show the last one disappearing!
@@ -37,5 +38,6 @@ export class Hud {
     this.scoreElement.update({ score });
     this.livesElement.update({ lives });
   }
+  
 
 }

@@ -52,17 +52,13 @@ export class Game implements EntityContext {
   private count: number = 1;
   private catFactory: CatFactory;
   private gameStarted: boolean = false;
-  private startPixiText: PIXI.Text;
   private restartPixiText: PIXI.Text;
 
   state: GameState = new GameState(cfg.player.lives);
 
   constructor(private app: PIXI.Application) {
-    this.startPixiText = new PIXI.Text(`Press SPACE to START`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
-    this.startPixiText.anchor.set(-1.2 , -10);
     this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
     this.restartPixiText.anchor.set(-1.2 , -10);
-    this.app.stage.addChild(this.startPixiText);
   }
 
   /**
@@ -231,7 +227,6 @@ export class Game implements EntityContext {
     if(!this.gameStarted) {
       if (this.input.isPressed(Input.SPACE)) {
         this.gameStarted = true;
-        this.app.stage.removeChild(this.startPixiText);
       }
       return;
     }

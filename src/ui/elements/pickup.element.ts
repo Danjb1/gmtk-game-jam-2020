@@ -98,4 +98,8 @@ export class PickupElement extends UiElement {
   private getRandomHeight() {
     return Math.random() * (35 - 0);
   }
+
+  stop() {
+    this.context.clearRect(0, 0, PickupElement.WIDTH, PickupElement.HEIGHT);
+  }
 }
