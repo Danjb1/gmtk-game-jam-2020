@@ -5,7 +5,9 @@ import { Component } from '../component';
 // Components
 import { CatMetaComponent } from './cat-meta.component';
 import { JailedComponent } from './jailed.component';
-import { HitboxComponent } from './hitbox.component';
+
+// Utils
+import { getHitboxFrom } from '../utils';
 
 
 export class EscapeComponent extends Component {
@@ -17,7 +19,7 @@ export class EscapeComponent extends Component {
   public static readonly KEY = Symbol();
 
   constructor(
-    private chanceOfEscape = 0.005, 
+    private chanceOfEscape = 0.005,
     private minCaptureTime = 500,
     private escapeAttemptFrequency = 20
     ) {
@@ -28,8 +30,7 @@ export class EscapeComponent extends Component {
     super.onAttach(entity);
 
     this._jailedAt = Date.now();
-    this._catMeta = <CatMetaComponent>
-        entity.getComponent(CatMetaComponent.KEY);
+    this._catMeta = entity.getComponent<CatMetaComponent>(CatMetaComponent.KEY);
   }
 
   public update(delta: number) {
@@ -65,7 +66,7 @@ export class EscapeComponent extends Component {
     this.entity.getComponent(EscapeComponent.KEY).deleted = true;
 
     // Move this entity outside the jailer entityhitBox
-    const hitBox = (this.entity.getComponent(HitboxComponent.KEY) as HitboxComponent);
+    const hitBox = getHitboxFrom(this.entity);
 
     hitBox.x = (Math.random() >= .5 ? (Game.WORLD_WIDTH / 2) - 100 : (Game.WORLD_WIDTH / 2) + 100);
     hitBox.y = (Game.WORLD_HEIGHT) - 50;
