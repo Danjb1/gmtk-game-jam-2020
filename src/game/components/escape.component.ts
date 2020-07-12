@@ -10,24 +10,18 @@ import { HitboxComponent } from './hitbox.component';
 
 export class EscapeComponent extends Component {
 
-  // fraction: 1 = always escape, 0 = never escape
-  private chanceOfEscape = 0.005;
-
-  // Minimum time in prison, in milliseconds
-  private minCaptureTime = 500;
-  
-  // How often to check (ms)
-  private checkEvery = 10;
-
   private _jailedAt: number;
   private _catMeta: CatMetaComponent;
+  private lastCheck: number;
 
   public static readonly KEY = Symbol();
 
-  constructor(chanceOfEscape: number, minCaptureTime: number) {
+  constructor(
+    private chanceOfEscape = 0.005, 
+    private minCaptureTime = 500,
+    private escapeAttemptFrequency = 20
+    ) {
     super(EscapeComponent.KEY);
-    this.chanceOfEscape = chanceOfEscape;
-    this.minCaptureTime = minCaptureTime;
   }
 
   public onAttach(entity: Entity) {
@@ -39,9 +33,9 @@ export class EscapeComponent extends Component {
   }
 
   public update(delta: number) {
+    const now = Date.now();
     // Enforce remaining in prison for a specific amount of time
-    // TODO: This should use the delta value (game time) instead of real time
-    if (Date.now() < this._jailedAt + this.minCaptureTime) {
+    if (now < this._jailedAt + this.minCaptureTime) {
       return;
     }
 
@@ -50,8 +44,14 @@ export class EscapeComponent extends Component {
       return;
     }
 
-    // Cat has tried and failed
+    // Only check every "tryEscapeEvery" ms
+    if(this.lastCheck + this.escapeAttemptFrequency > now){
+      return;
+    }
+
+    // Cat has tried and failed to escape
     if (Math.random() > this.chanceOfEscape) {
+      this.lastCheck = now;
       return;
     }
 
