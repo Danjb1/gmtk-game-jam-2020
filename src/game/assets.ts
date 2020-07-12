@@ -45,12 +45,17 @@ export class Assets {
     return Assets.loader.resources[Assets.SPRITES_SRC].spritesheet;
   }
 
-  static playSound(filename: string): void {
+  static playSound(filename: string, important = false): void {
     const audio = new Audio(`${Assets.SOUNDS_BASEPATH}/${filename}`);
 
-    // Wait until the audio is playable
-    audio.addEventListener('canplaythrough', event => {
+    if (important) {
+      // Wait until the audio is playable
+      audio.addEventListener('canplaythrough', event => {
+        audio.play();
+      });
+    } else if (audio.HAVE_ENOUGH_DATA) {
+      // Play the sound if we can - otherwise, no worries
       audio.play();
-    });
+    }
   }
 }

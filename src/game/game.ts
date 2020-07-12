@@ -23,10 +23,11 @@ import {
   SpawnerComponent,
   JailerComponent,
   WanderComponent,
-  RescuerComponent,
   DifficultyCurveComponent,
   CatMetaComponent,
-  WoofComponent
+  WoofComponent,
+  WhistlerComponent,
+  WhistleListenerComponent
 } from './components';
 
 // Factories
@@ -131,21 +132,32 @@ export class Game implements EntityContext {
       .attach(new HitboxComponent(
         Game.WORLD_WIDTH / 2 - 24,
         Game.WORLD_HEIGHT / 2 - 24,
-        48, 48,
+        24, 24,
         { tags: ['player'] }))
-      .attach(new AnimatedSpriteComponent(cfg.player.sprite, { animationSpeed: 0.3 }))
+      .attach(new AnimatedSpriteComponent(cfg.player.sprite,
+        {
+          animationSpeed: 0.3,
+          width: 48,
+          height: 48,
+          zIndex: 1  // Behind the Pen!
+        }))
       .attach(new ControllerComponent(this.input, cfg.player.speed))
-      .attach(new ScarerComponent()));
+      .attach(new ScarerComponent())
+      .attach(new WhistlerComponent(this.input)));
 
     // Dog
     if (cfg.dog.enabled) {
       this.addEntity(new Entity()
         .attach(new HitboxComponent(cfg.dog.startX, cfg.dog.startY, 48, 48,
           { tags: ['dog'] }))
-        .attach(new AnimatedSpriteComponent(cfg.dog.sprite, { animationSpeed: 0.5 }))
+        .attach(new AnimatedSpriteComponent(cfg.dog.sprite, {
+          animationSpeed: 0.5,
+          zIndex: 0  // Behind the Player!
+        }))
         .attach(new ScarerComponent())
         .attach(new WanderComponent(cfg.dog.wandering))
-        .attach(new WoofComponent(cfg.dog.woof.interval, cfg.dog.woof.chance)));
+        .attach(new WoofComponent(cfg.dog.woof.interval, cfg.dog.woof.chance))
+        .attach(new WhistleListenerComponent(cfg.dog.maxSpeed)));
     }
 
     // Cat Spawner
@@ -171,7 +183,7 @@ export class Game implements EntityContext {
         { blocks: ['player', 'dog'] }
       ))
       .attach(new SpriteComponent(cfg.pen.sprite1))
-      .attach(new SpriteComponent(cfg.pen.sprite2, { zIndex: 1 }))
+      .attach(new SpriteComponent(cfg.pen.sprite2, { zIndex: 2 }))
       .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime, cfg.pen.escapeAttemptFrequency)));
 
     // Left Table
@@ -184,7 +196,7 @@ export class Game implements EntityContext {
           cfg.leftTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.leftTable.sprite, { zIndex: 1 })));
+        .attach(new SpriteComponent(cfg.leftTable.sprite, { zIndex: 2 })));
     }
 
     // Right Table
@@ -197,7 +209,7 @@ export class Game implements EntityContext {
           cfg.rightTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.rightTable.sprite, { zIndex: 1 })));
+        .attach(new SpriteComponent(cfg.rightTable.sprite, { zIndex: 2 })));
     }
 
     // Background
@@ -288,9 +300,9 @@ export class Game implements EntityContext {
     this.entities.forEach(entity => entity.destroy());
     this.entities = [];
     this._state = new GameState(cfg.player.lives);
-    this._state.onScoreInc = () => { Assets.playSound("kerching.ogg") };
-    this._state.onLifeGained = () => { Assets.playSound("tada-fanfare-f.ogg") };
-    this._state.onLifeLost = () => { Assets.playSound("life-lost-game-over.ogg") };
+    this._state.onScoreInc = () => { Assets.playSound("kerching.ogg", true) };
+    this._state.onLifeGained = () => { Assets.playSound("tada-fanfare-f.ogg", true) };
+    this._state.onLifeLost = () => { Assets.playSound("life-lost-game-over.ogg", true) };
     this.initEntities();
     this.app.stage.removeChild(this.restartPixiText);
     this._gameStopped = false;

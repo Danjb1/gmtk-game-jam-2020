@@ -1,7 +1,7 @@
 import { Component } from '../component';
 import { Game } from '../game';
 import { Vector } from '../utils';
-import { getCollisionEdge } from '../utils';
+import { abortJourney, getCollisionEdge } from '../utils';
 
 export enum Edge {
   TOP,
@@ -197,6 +197,9 @@ export class HitboxComponent extends Component {
    * based on which edge it collided with.
    */
   private block(other: HitboxComponent): void {
+
+    // If the Hitbox's owner was on a journey, stop it
+    abortJourney(other.entity);
 
     // Find the edge of THIS Hitbox that was collided with
     const collisionEdge: Edge = getCollisionEdge(other, this);
