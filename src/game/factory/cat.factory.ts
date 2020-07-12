@@ -16,21 +16,29 @@ import {
 /**
  * Generates a cat entity
  */
-export const createCat = (x: number, y: number): Entity => {
-  // Generate the meta before anything else;
-  const catMeta = new CatMetaComponent();
-  const animatedSprite = new AnimatedSpriteComponent(`cats/${catMeta.variety}`);
+export class CatFactory {
+  private cfg: any;
 
-  const catEntity = new Entity()
-    .attach(catMeta)
-    .attach(new HitboxComponent(x, y, 30, 30))
-    .attach(animatedSprite)
-    .attach(new WanderComponent(100, 200))
-    .attach(new JailableComponent())
-    .attach(new ScaredComponent())
-    .attach(new RescueComponent())
-    .attach(new MeowComponent())
-    .attach(new LateComponent());
+  constructor(config: any) {
+    this.cfg = config;
+  }
 
-  return catEntity;
-};
+  public create(x: number, y: number): Entity {
+    // Generate the meta before anything else;
+    const catMeta = new CatMetaComponent();
+    const animatedSprite = new AnimatedSpriteComponent(`cats/${catMeta.variety}`);
+
+    const catEntity = new Entity()
+      .attach(catMeta)
+      .attach(new HitboxComponent(x, y, 30, 30))
+      .attach(animatedSprite)
+      .attach(new WanderComponent(this.cfg.wanderComp.minSpeed, this.cfg.wanderComp.maxSpeed))
+      .attach(new JailableComponent())
+      .attach(new ScaredComponent())
+      .attach(new RescueComponent())
+      .attach(new MeowComponent(this.cfg.meowComp.interval, this.cfg.meowComp.chance))
+      .attach(new LateComponent());
+
+    return catEntity;
+  };
+}
