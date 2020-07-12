@@ -24,18 +24,8 @@ The Jam is a 48 hour game making marathon, focused on design, mechanics, and cle
 1. Run `npm run build`
 1. Copy `index.html` to `dist`
 1. Copy `styles.css` to `dist`
-1. Copy `images` to `dist`
+1. Copy `images/ui` to `dist`
+1. Copy `images/cat-bg.png` to `dist`
+1. Copy `images/sprites.json` to `dist`
+1. Copy `images/sprites.png` to `dist`
 1. Copy `sounds` to `dist`
-1. Delete `dist/images/original`
-1. Delete `dist/images/catsprite.psd`
-1. Delete `dist/images/sprite-guide.md`
-
-### Outstanding Problem
-
-Page is being loaded from:
-https://v6p9d9t4.ssl.hwcdn.net/html/2465024/index.html
-
-But images are being loaded from:
-https://v6p9d9t4.ssl.hwcdn.net/html/images/sprites.json
-
-This happens even when `SPRITES_SRC` in `assets.ts` is changed to './images/sprites.json'.

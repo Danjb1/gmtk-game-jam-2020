@@ -1,8 +1,10 @@
 export class Assets {
 
-  public static readonly SPRITES_BASEPATH = '../images';
-  public static readonly SPRITES_SRC = '../images/sprites.json';
-  public static readonly SOUNDS_BASEPATH = '../sounds';
+  public static readonly ASSETS_ROOT = '.';
+
+  public static readonly SPRITES_BASEPATH = `${Assets.ASSETS_ROOT}/images`;
+  public static readonly SPRITES_SRC = `${Assets.SPRITES_BASEPATH}/sprites.json`;
+  public static readonly SOUNDS_BASEPATH = `${Assets.ASSETS_ROOT}/sounds`;
 
   public static loader: PIXI.Loader;
 
