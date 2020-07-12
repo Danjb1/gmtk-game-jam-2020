@@ -16,6 +16,10 @@
             "interval": 2500,
             "chance": 0.1
         },
+        "scared": {
+            "flightDistance": 100,
+            "flightSpeed": 330
+        },
         "wandering": {
             "minSpeed": 100,
             "maxSpeed": 200

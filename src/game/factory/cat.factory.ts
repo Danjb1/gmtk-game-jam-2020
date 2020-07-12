@@ -35,7 +35,8 @@ export class CatFactory {
       .attach(new WanderComponent(this.catBehavior.wandering.minSpeed,
                                   this.catBehavior.wandering.maxSpeed))
       .attach(new JailableComponent())
-      .attach(new ScaredComponent())
+      .attach(new ScaredComponent(this.catBehavior.scared.flightDistance,
+                                  this.catBehavior.scared.flightSpeed))
       .attach(new RescueComponent())
       .attach(new MeowComponent(this.catBehavior.meowing.interval,
                                 this.catBehavior.meowing.chance))
