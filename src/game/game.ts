@@ -216,25 +216,15 @@ export class Game implements EntityContext {
    */
   public update(): void {
 
+    // If the game has ended, check if the player has restarted
     if (this.isGameOver()) {
-      let breakCircuit = false;
-
       this.app.stage.addChild(this.restartText);
 
-      document.addEventListener('keyup', event => {
-        if (event.code === 'Space' && !breakCircuit) {
-          this.entities.forEach(entity => {
-            entity.destroy()
-          });
-          this.entities = [];
-          this.state = new GameState();
-          this.initEntities();
-          breakCircuit = true;
-          this.app.stage.removeChild(this.restartText);
-        }
-      });
+      if (this.input.isPressed(Input.SPACE)) {
+        this.resetGame();
+      }
 
-      return;      
+      return;
     }
 
     // Update our Entities.
@@ -261,6 +251,14 @@ export class Game implements EntityContext {
 
   public isGameOver(): boolean {
     return this.state.lives <= 0;
+  }
+
+  private resetGame(): void {
+    this.entities.forEach(entity => entity.destroy());
+    this.entities = [];
+    this.state = new GameState();
+    this.initEntities();
+    this.app.stage.removeChild(this.restartText);
   }
 
   private detectCollisions(): void {
