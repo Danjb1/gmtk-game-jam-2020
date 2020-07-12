@@ -76,7 +76,7 @@ export const doLinesIntersect = (
  *
  * @return Point, or null if the lines do no intersect.
  */
- export const getLineIntersection = (
+export const getLineIntersection = (
   x1: number, y1: number,
   x2: number, y2: number,
   x3: number, y3: number,
@@ -124,7 +124,7 @@ export const doLinesIntersect = (
  * @return Edge of h2 with which h1 collided, or null if no edge collision
  * occurred.
  */
- export const getCollisionEdge = (
+export const getCollisionEdge = (
   h1: HitboxComponent,
   h2: HitboxComponent
 ): Edge => {
@@ -158,7 +158,10 @@ export const doLinesIntersect = (
       cornersBefore[i].x, cornersBefore[i].y,
       cornersAfter[i].x, cornersAfter[i].y,
       h2.x, h2.y,
-      h2.right, h2.y)
+      h2.right, h2.y,
+      // We extend the edge to infinity, in case h1 is wider than h2
+      // (in which case both its corners could be outside h2)
+      true)
     ) {
       return Edge.TOP;
     }
@@ -167,7 +170,8 @@ export const doLinesIntersect = (
       cornersBefore[i].x, cornersBefore[i].y,
       cornersAfter[i].x, cornersAfter[i].y,
       h2.x, h2.y,
-      h2.x, h2.bottom)
+      h2.x, h2.bottom,
+      true)
     ) {
       return Edge.LEFT;
     }
@@ -176,7 +180,8 @@ export const doLinesIntersect = (
       cornersBefore[i].x, cornersBefore[i].y,
       cornersAfter[i].x, cornersAfter[i].y,
       h2.x, h2.bottom,
-      h2.right, h2.bottom)
+      h2.right, h2.bottom,
+      true)
     ) {
       return Edge.BOTTOM;
     }
@@ -185,7 +190,8 @@ export const doLinesIntersect = (
       cornersBefore[i].x, cornersBefore[i].y,
       cornersAfter[i].x, cornersAfter[i].y,
       h2.right, h2.y,
-      h2.right, h2.bottom)
+      h2.right, h2.bottom,
+      true)
     ) {
       return Edge.RIGHT;
     }
