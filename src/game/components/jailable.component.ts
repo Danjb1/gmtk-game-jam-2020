@@ -8,4 +8,12 @@ export class JailableComponent extends Component {
     super(JailableComponent.KEY);
   }
 
+  public disabled = false
+  disable(duration = 500){
+    this.disabled = true;
+    setTimeout(() => {
+      this.disabled = false;
+    }, duration);
+  }
+
 }

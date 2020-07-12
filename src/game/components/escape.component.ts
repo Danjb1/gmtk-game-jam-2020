@@ -6,6 +6,8 @@ import { Component } from '../component';
 import { CatMetaComponent } from './cat-meta.component';
 import { JailedComponent } from './jailed.component';
 import { HitboxComponent } from './hitbox.component';
+import { Vector } from '../utils';
+import { JailableComponent } from '.';
 
 
 export class EscapeComponent extends Component {
@@ -17,10 +19,10 @@ export class EscapeComponent extends Component {
   public static readonly KEY = Symbol();
 
   constructor(
-    private chanceOfEscape = 0.005, 
+    private chanceOfEscape = 0.005,
     private minCaptureTime = 500,
     private escapeAttemptFrequency = 20
-    ) {
+  ) {
     super(EscapeComponent.KEY);
   }
 
@@ -29,7 +31,7 @@ export class EscapeComponent extends Component {
 
     this._jailedAt = Date.now();
     this._catMeta = <CatMetaComponent>
-        entity.getComponent(CatMetaComponent.KEY);
+      entity.getComponent(CatMetaComponent.KEY);
   }
 
   public update(delta: number) {
@@ -45,7 +47,7 @@ export class EscapeComponent extends Component {
     }
 
     // Only check every "tryEscapeEvery" ms
-    if(this.lastCheck + this.escapeAttemptFrequency > now){
+    if (this.lastCheck + this.escapeAttemptFrequency > now) {
       return;
     }
 
@@ -61,14 +63,17 @@ export class EscapeComponent extends Component {
 
   private _removeFromJail() {
     // Remove the jailed and escape component
+    (this.entity.getComponent(JailableComponent.KEY) as JailableComponent).disable();
     this.entity.getComponent(JailedComponent.KEY).deleted = true;
     this.entity.getComponent(EscapeComponent.KEY).deleted = true;
 
     // Move this entity outside the jailer entityhitBox
     const hitBox = (this.entity.getComponent(HitboxComponent.KEY) as HitboxComponent);
 
-    hitBox.x = (Math.random() >= .5 ? (Game.WORLD_WIDTH / 2) - 100 : (Game.WORLD_WIDTH / 2) + 100);
-    hitBox.y = (Game.WORLD_HEIGHT) - 50;
+    hitBox.setSpeed(new Vector(
+      (Math.random() >= .5 ? 300 : -300),
+      0
+    ));
 
     // Notify components
     this.entity.broadcast('escaped');

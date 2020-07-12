@@ -34,7 +34,6 @@ export class JailedComponent extends Component {
 
   public update(delta: number): void {
     this.jailedTime += delta;
-
     this.keepInJail();
   }
 

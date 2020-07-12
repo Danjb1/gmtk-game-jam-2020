@@ -49,7 +49,7 @@ export class JailerComponent extends Component implements HitboxListener {
     const jailable = <JailableComponent>
       other.entity.getComponent(JailableComponent.KEY);
 
-    if (jailable && !this.prisoners.includes(other.entity)) {
+    if (jailable && !jailable.disabled && !this.prisoners.includes(other.entity)) {
       this.jailEntity(other.entity);
     }
   }
@@ -64,5 +64,7 @@ export class JailerComponent extends Component implements HitboxListener {
         this.escapeAttemptFrequency
       ));
   }
+
+  
 
 }
