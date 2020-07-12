@@ -92,7 +92,7 @@ export class Game implements EntityContext {
    * Called when our Textures have finished loading.
    */
   private setup(): void {
-    this.catFactory = new CatFactory(cfg.catFactory);
+    this.catFactory = new CatFactory(cfg.catBehavior);
     CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
     this.initEntities();
