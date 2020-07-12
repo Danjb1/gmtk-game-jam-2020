@@ -6,50 +6,21 @@ export class MeowComponent extends Component {
 
   public static readonly KEY = Symbol();
 
-  private static readonly NUM_SOUNDS = 13;
+  private static readonly NUM_SOUNDS = 12;
 
-  private interval = 2500;
-  private timeUntilSound: number;
-  private meowChance: number = 0.1;
-
-  constructor(interval: number, chance: number) {
+  constructor() {
     super(MeowComponent.KEY);
-
-    this.timeUntilSound = this.interval = interval;
-    this.meowChance = chance;
-  }
-
-  public update(delta: number) {
-    /*
-    if (this.isSoundReady(delta)) {
-      this.attemptSound();
-      this.resetSoundTimer();
-    }
-    */
   }
 
   public notify(event: any) {
-    if (event === 'jailed' || event === 'escaped') {
-      this.playSound();
+    if (event === 'jailed') {
+      this.meow();
+    } else if (event === 'escaped') {
+      this.hiss();
     }
   }
 
-  private isSoundReady(delta: number): boolean {
-    this.timeUntilSound -= delta;
-    return this.timeUntilSound <= 0;
-  }
-
-  private attemptSound(): void {
-    if (this.shouldPlaySound()) {
-      this.playSound();
-    }
-  }
-
-  private shouldPlaySound(): boolean {
-    return Math.random() < this.meowChance;
-  }
-
-  public playSound(): void {
+  private meow(): void {
     let soundId = intBetween(1, MeowComponent.NUM_SOUNDS).toString();
     if (soundId.length < 2) {
       soundId = '0' + soundId;
@@ -63,8 +34,14 @@ export class MeowComponent extends Component {
     });
   }
 
-  private resetSoundTimer(): void {
-    this.timeUntilSound = this.interval;
+  private hiss(): void {
+    
+    const audio = new Audio(`${Assets.SOUNDS_BASEPATH}/hiss01.ogg`);
+
+    // Wait until the audio is playable
+    audio.addEventListener('canplaythrough', event => {
+      audio.play();
+    });
   }
 
 }

@@ -12,10 +12,6 @@
     "canBePickedUpThreshold": 0.9
   },
   "catBehavior": {
-    "meowing": {
-      "interval": 2500,
-      "chance": 0.1
-    },
     "scared": {
       "flightDistance": 100,
       "flightSpeed": 330

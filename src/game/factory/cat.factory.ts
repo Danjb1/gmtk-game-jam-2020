@@ -39,9 +39,7 @@ export class CatFactory {
       .attach(new ScaredComponent(
         this.catBehavior.scared.flightDistance,
         this.catBehavior.scared.flightSpeed))
-      .attach(new MeowComponent(
-        this.catBehavior.meowing.interval,
-        this.catBehavior.meowing.chance))
+      .attach(new MeowComponent())
       .attach(new LateComponent());
 
     return catEntity;
