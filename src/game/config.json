@@ -11,6 +11,16 @@
         "maxDuration": 70000,
         "canBePickedUpThreshold": 0.9
     },
+    "catFactory": {
+        "meowComp": {
+            "interval": 2500,
+            "chance": 0.1
+        },
+        "wanderComp": {
+            "minSpeed": 100,
+            "maxSpeed": 200
+        }
+    },
     "catSpawner": {
         "positionX": 0,
         "positionY": 0
