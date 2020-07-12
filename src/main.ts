@@ -4,6 +4,8 @@ import { Game } from './game/game';
 import { Hud } from './ui/hud';
 import { SplashScreenElement } from './ui/elements';
 
+import { Input } from './game/input';
+
 /**
  * Entry point for the application.
  */
@@ -35,8 +37,8 @@ import { SplashScreenElement } from './ui/elements';
 
   // Call after loaded
   const checkStartGameCheckLoop = () => {
-
-    if ((window as any).start) {
+    // Check if space is pressed
+    if (Input.instance.isPressed(Input.SPACE)) {
       splash.remove();
       // Start the game loop    
       app.ticker.add(delta => {
