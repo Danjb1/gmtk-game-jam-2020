@@ -155,6 +155,10 @@ export class AnimatedSpriteComponent extends Component {
       // Stops the animation on it's current frame
       this.sprite.stop();
     }
+    if (event === 'resume') {
+      // Resumes animation
+      this.sprite.play();
+    }
   }
 
 }

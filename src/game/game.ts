@@ -289,8 +289,11 @@ export class Game implements EntityContext {
       return;
     }
 
+    if (this.input.isPressed(Input.PAUSE))
+      this.stopGame(false);
+
     if (this.isGameOver()) {
-      this.stopGame();
+      this.stopGame(true);
       if (this.input.isPressed(Input.SPACE)) {
         this.resetGame();
       }
@@ -326,13 +329,22 @@ export class Game implements EntityContext {
   // Used to prevent running stopGame multiple times
   private _gameStopped: boolean;
 
-  private stopGame(): void {
+  private stopGame(showRestartText: boolean = true): void {
     if (this._gameStopped) {
       return
     }
     this._gameStopped = true;
     [...this.entities].forEach(entity => entity.broadcast('stop'));
-    this.app.stage.addChild(this.restartPixiText);
+    if (showRestartText)
+      this.app.stage.addChild(this.restartPixiText);
+  }
+
+  private resumeGame(): void {
+    if (!this._gameStopped) {
+      return
+    }
+    this._gameStopped = false;
+    [...this.entities].forEach(entity => entity.broadcast('resume'));
   }
 
   private resetGame(): void {

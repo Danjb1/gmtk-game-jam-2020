@@ -26,6 +26,7 @@ export class Input {
   static readonly RIGHT = 'Right';
   static readonly SPACE = 'Space';
   static readonly WHISTLE = 'Whistle';
+  static readonly PAUSE = 'Pause'
 
   // Key bindings
   // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
@@ -35,7 +36,8 @@ export class Input {
     { name: Input.LEFT,    values: ['A', 'a', 'ArrowLeft'] },
     { name: Input.RIGHT,   values: ['D', 'd', 'ArrowRight'] },
     { name: Input.SPACE,   values: [' '] },
-    { name: Input.WHISTLE, values: ['Q', 'q', 'Shift'] }
+    { name: Input.WHISTLE, values: ['Q', 'q', 'Shift'] },
+    { name: Input.PAUSE,   values: ['Pause'] }
   ];
 
   // The singleton instance
