@@ -1,7 +1,7 @@
-import { Component } from "../component"
-import { SpawnerComponent } from "./spawner.component";
-import { Entity } from "../entity";
-import { easeInBounce } from "../utils";
+import { Component } from '../component';
+import { SpawnerComponent } from './spawner.component';
+import { Entity } from '../entity';
+import { easeInBounce } from '../utils';
 
 export class DifficultyCurveComponent extends Component {
 
