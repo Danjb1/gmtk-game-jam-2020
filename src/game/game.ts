@@ -24,7 +24,8 @@ import {
   WanderComponent,
   RescuerComponent,
   DifficultyCurveComponent,
-  CatMetaComponent
+  CatMetaComponent,
+  WoofComponent
 } from './components';
 
 // Factories
@@ -141,7 +142,8 @@ export class Game implements EntityContext {
           { tags: ['dog'], blocks: ['player'] }))
         .attach(new SpriteComponent(cfg.dog.sprite))
         .attach(new ScarerComponent())
-        .attach(new WanderComponent(cfg.dog.wandering)));
+        .attach(new WanderComponent(cfg.dog.wandering))
+        .attach(new WoofComponent(cfg.dog.woof.interval, cfg.dog.woof.chance)));
     }
 
     // Cat Spawner

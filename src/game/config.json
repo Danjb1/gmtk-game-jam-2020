@@ -67,6 +67,10 @@
       "maxSpeed": 100,
       "minTime": 200,
       "maxTime": 500
+    },
+    "woof": {
+      "interval": 1000,
+      "chance": 0.2
     }
   },
   "pen": {
