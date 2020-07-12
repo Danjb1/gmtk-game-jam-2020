@@ -40,7 +40,7 @@ import { Input } from './game/input';
     // Check if space is pressed
     if (Input.instance.isPressed(Input.SPACE)) {
       splash.remove();
-      // Start the game loop    
+      // Start the game loop
       app.ticker.add(delta => {
         hud.update();
         game.state.startGame();
@@ -51,13 +51,13 @@ import { Input } from './game/input';
 
     requestAnimationFrame(() => {
       checkStartGameCheckLoop();
-    })
-  }
+    });
+  };
 
   game.load(() => {
-    requestAnimationFrame(()=>{
+    requestAnimationFrame(() => {
       splash.mount(document.getElementById('container'));
-    })
-    checkStartGameCheckLoop()
+    });
+    checkStartGameCheckLoop();
   });
 })();

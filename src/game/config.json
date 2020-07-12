@@ -77,9 +77,9 @@
     "width": 100,
     "height": 100,
     "sprite": "pen.png",
-    "chanceOfEscape": 0.05,
+    "chanceOfEscape": 0.1,
     "minCaptureTime": 1000,
-    "escapeAttemptFrequency": 200
+    "escapeAttemptFrequency": 1000
   },
   "leftTable": {
     "enabled": true,

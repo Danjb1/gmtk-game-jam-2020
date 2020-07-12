@@ -1,5 +1,4 @@
 import { Entity } from '../entity';
-import { Game } from '../game';
 import { Component } from '../component';
 
 // Components
