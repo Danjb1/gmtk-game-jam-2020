@@ -26,22 +26,10 @@ export class MeowComponent extends Component {
       soundId = '0' + soundId;
     }
 
-    const audio = new Audio(`${Assets.SOUNDS_BASEPATH}/meow${soundId}.ogg`);
-
-    // Wait until the audio is playable
-    audio.addEventListener('canplaythrough', event => {
-      audio.play();
-    });
+    Assets.playSound(`meow${soundId}.ogg`);
   }
 
   private hiss(): void {
-    
-    const audio = new Audio(`${Assets.SOUNDS_BASEPATH}/hiss01.ogg`);
-
-    // Wait until the audio is playable
-    audio.addEventListener('canplaythrough', event => {
-      audio.play();
-    });
+    Assets.playSound("hiss01.ogg");
   }
-
 }
