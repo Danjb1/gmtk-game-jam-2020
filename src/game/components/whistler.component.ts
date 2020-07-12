@@ -13,7 +13,11 @@ export interface WhistleListener {
 export class WhistlerComponent extends Component {
 
   public static readonly KEY = Symbol();
+  private static readonly SOUND = 'whistle.ogg';
 
+  private static cooldownTime = 1500;
+
+  private timeSinceWhistle = 2000;
   private hitbox: HitboxComponent;
   private listeners: WhistleListener[] = [];
 
@@ -29,11 +33,15 @@ export class WhistlerComponent extends Component {
     if (this.input.isPressed(Input.WHISTLE)) {
       this.blastWhistle();
     }
+    this.timeSinceWhistle += delta;
   }
 
   blastWhistle(): void {
-    Assets.playSound('whistle.ogg', true);
-    this.listeners.forEach(l => l.whistleHeard(this.hitbox.centrePosition));
+    if (this.timeSinceWhistle > WhistlerComponent.cooldownTime) {
+      this.timeSinceWhistle = 0;
+      Assets.playSound(WhistlerComponent.SOUND, true);
+      this.listeners.forEach(l => l.whistleHeard(this.hitbox.centrePosition));
+    }
   }
 
   addListener(listener: WhistleListener): void {
