@@ -49,15 +49,12 @@ export class Game implements EntityContext {
   private entities: Entity[] = [];
   private input: Input = new Input();
   private count: number = 1;
-  private restartText: PIXI.Text;
   private catFactory: CatFactory;
+  private gameStarted: boolean = false;
 
   state: GameState = new GameState();
 
-  constructor(private app: PIXI.Application) {
-    this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center'  });
-    this.restartText.anchor.set(-1.2 , -10);
-  }
+  constructor(private app: PIXI.Application) {}
 
   /**
    * Initialises the game.
@@ -217,24 +214,13 @@ export class Game implements EntityContext {
    */
   public update(): void {
 
-    if (true) {
-      let breakCircuit = false;
+    if(!this.gameStarted) {
+      this.gameStarter('START');
+      return;
+    }
 
-      this.app.stage.addChild(this.restartText);
-
-      document.addEventListener('keyup', event => {
-        if (event.code === 'Space' && !breakCircuit) {
-          this.entities.forEach(entity => {
-            entity.destroy()
-          });
-          this.entities = [];
-          this.state = new GameState();
-          this.initEntities();
-          breakCircuit = true;
-          this.app.stage.removeChild(this.restartText);
-        }
-      });
-
+    if (this.isGameOver()) {
+      this.gameStarter('RESTART');
       return;      
     }
 
@@ -257,6 +243,29 @@ export class Game implements EntityContext {
     // Update our Entities again!
     [...this.entities].forEach(e => {
       e.lateUpdate(this.app.ticker.deltaMS);
+    });
+  }
+
+  private gameStarter(key: string) {
+    let breakCircuit = false;
+    let pixiText = new PIXI.Text(`Press SPACE to ${key}`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
+    pixiText.anchor.set(-1.2 , -10);
+    this.app.stage.addChild(pixiText);
+
+    document.addEventListener('keyup', event => {
+      if (event.code === 'Space' && !breakCircuit) {
+        this.entities.forEach(entity => {
+          entity.destroy()
+        });
+        this.entities = [];
+        this.state = new GameState();
+        if (key === 'START') {
+          this.gameStarted = true;
+        }
+        this.initEntities();
+        breakCircuit = true;
+        this.app.stage.removeChild(pixiText);
+      }
     });
   }
 
