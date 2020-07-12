@@ -19,31 +19,44 @@ export class RescuerComponent extends Component {
 
   update() {
 
-    let catsDueForPickup = 0;
-
     // Figure out:
     //  - How many cats are due to be picked up
     //  - Which cats are eligible to be picked up
+    const catsDueForPickup: Entity[] = [];
     const catsEligibleForPickup: Entity[] = [];
     this.entity.context.getEntities().forEach(e => {
       const catMeta = <CatMetaComponent> e.getComponent(CatMetaComponent.KEY);
-      if (catMeta) {
-        if (this._isInJail(e)) {
-          catsEligibleForPickup.push(e);
-        }
-        if (catMeta.howCloseToPickup >= 1) {
-          catsDueForPickup++;
-        }
+
+      if (!catMeta) {
+        // Entity is not a cat
+        return;
+      }
+
+      if (this._isInJail(e)) {
+        catsEligibleForPickup.push(e);
+      }
+
+      if (catMeta.howCloseToPickup >= 1) {
+        catsDueForPickup.push(e);
       }
     });
 
-    // Try to pick up that many cats (any cats will do!)
-    for (let i = 0; i < catsDueForPickup; i++) {
-      const cat = catsEligibleForPickup.pop();
-      if (cat) {
-        this.pickUp(cat);
+    // Try to pick up all the cats that are due for pickup
+    catsDueForPickup.forEach(catDueForPickup => {
+      const catDueForPickupMeta = <CatMetaComponent>
+      catDueForPickup.getComponent(CatMetaComponent.KEY);
+
+      // Just pick up any matching cat!
+      const suitableCat = catsEligibleForPickup.find(catEligibleForPickup => {
+        const catEligibleForPickupMeta = <CatMetaComponent>
+            catEligibleForPickup.getComponent(CatMetaComponent.KEY);
+        return catDueForPickupMeta.variety === catEligibleForPickupMeta.variety;
+      });
+
+      if (suitableCat) {
+        this.pickUp(suitableCat);
       }
-    }
+    });
   }
 
   private pickUp(cat: Entity) {
