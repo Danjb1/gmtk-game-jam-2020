@@ -66,5 +66,8 @@ export class EscapeComponent extends Component {
 
     hitBox.x = (Math.random() >= .5 ? (Game.WORLD_WIDTH / 2) - 100 : (Game.WORLD_WIDTH / 2) + 100);
     hitBox.y = (Game.WORLD_HEIGHT) - 50;
+
+    // Notify components
+    this.entity.broadcast('escaped');
   }
 }
