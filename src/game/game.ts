@@ -52,7 +52,7 @@ export class Game implements EntityContext {
   private restartText: PIXI.Text;
   private catFactory: CatFactory;
 
-  state: GameState = new GameState();
+  state: GameState = new GameState(cfg.player.lives);
 
   constructor(private app: PIXI.Application) {
     this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
