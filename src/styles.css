@@ -40,8 +40,8 @@ body {
 }
 
 #pickup-canvas{
-  border:1px solid #d3d3d3; 
-  display: block; 
+  border:1px solid #d3d3d3;
+  display: block;
   margin: auto;
 }
 
@@ -66,7 +66,7 @@ body {
 .lives{
   letter-spacing: 2.5px;
   font-size: 26px;
-}  
+}
 
 canvas{
   display: block;
@@ -127,6 +127,11 @@ p{
   user-select: none;
   background-color: var(--primary-light);
   box-shadow: 0 8px 6px -6px rgba(0,0,0,.6), 0 8px 6px -8px rgba(0, 0, 0, .4) inset;
+}
+
+.key--medium {
+  min-width: 60px;
+  width: 60px;
 }
 
 .key--wide {

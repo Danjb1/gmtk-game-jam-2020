@@ -28,13 +28,14 @@ export class Input {
   static readonly WHISTLE = 'Whistle';
 
   // Key bindings
+  // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
   static readonly BINDINGS: KeyBinding[] = [
     { name: Input.UP,      values: ['W', 'w', 'ArrowUp'] },
     { name: Input.DOWN,    values: ['S', 's', 'ArrowDown'] },
     { name: Input.LEFT,    values: ['A', 'a', 'ArrowLeft'] },
     { name: Input.RIGHT,   values: ['D', 'd', 'ArrowRight'] },
     { name: Input.SPACE,   values: [' '] },
-    { name: Input.WHISTLE, values: ['Q', 'q', 'Control'] }
+    { name: Input.WHISTLE, values: ['Q', 'q', 'Shift'] }
   ];
 
   // The singleton instance
