@@ -72,7 +72,9 @@ body {
   font-size: 26px;
 }  
 
-
+canvas{
+  display: block;
+}
 
 h1{
   font-size: 54px;

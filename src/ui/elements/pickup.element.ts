@@ -11,7 +11,7 @@ export class PickupElement extends UiElement {
 
   private static readonly HEIGHT = 50;
   private static readonly WIDTH = 800;
-  private static readonly IMAGE_WIDTH = 16;
+  private static readonly IMAGE_WIDTH = 24;
   private static readonly NUM_IMAGES = 2;
 
   public catMetaDataComponents = new Array<CatMetaComponent>();
@@ -26,6 +26,7 @@ export class PickupElement extends UiElement {
     super(parent);
 
     // TODO: We shouldn't load these again as Pixi has already loaded them!
+    this.loadImage('bg', `${Assets.SPRITES_BASEPATH}/ui/progress-bar.png`);
     this.loadImage('grey', `${Assets.SPRITES_BASEPATH}/ui/grey_face.png`);
     this.loadImage('white', `${Assets.SPRITES_BASEPATH}/ui/white_face.png`);
     this.loadImage('black', `${Assets.SPRITES_BASEPATH}/ui/black_face.png`);
@@ -67,7 +68,7 @@ export class PickupElement extends UiElement {
   }
 
   private progress() {
-    this.context.clearRect(0, 0, PickupElement.WIDTH, PickupElement.HEIGHT);
+    this.clearCanvas();
     this.context.beginPath();
 
     [...this.catMetaDataComponents].forEach(cat => {
@@ -90,7 +91,7 @@ export class PickupElement extends UiElement {
   private moveCatAlongProgressBar(cat: CatMetaComponent, context: CanvasRenderingContext2D, y: number) {
     let x = (PickupElement.WIDTH * cat.howCloseToPickup) - PickupElement.IMAGE_WIDTH;
     const image: CanvasImageSource = this.getImageForCat(cat);
-    context.drawImage(image, x, y, 24, 24);
+    context.drawImage(image, x, y, PickupElement.IMAGE_WIDTH, PickupElement.IMAGE_WIDTH);
   }
 
   private getImageForCat(catMeta: CatMetaComponent): CanvasImageSource {
@@ -101,7 +102,12 @@ export class PickupElement extends UiElement {
     return Math.random() * (35 - 0);
   }
 
+  clearCanvas() {
+    const image = this.images['bg'];
+    this.context.drawImage(image, 0, 0, PickupElement.WIDTH, PickupElement.HEIGHT);
+  }
+
   stop() {
-    this.context.clearRect(0, 0, PickupElement.WIDTH, PickupElement.HEIGHT);
+    this.clearCanvas();
   }
 }
