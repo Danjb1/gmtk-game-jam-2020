@@ -7,7 +7,12 @@ import { ScarerComponent } from './scarer.component';
 import { HitboxComponent } from './hitbox.component';
 
 // Utils
-import { getHitboxFrom, getRangeBetweenEntities, Vector } from '../utils';
+import {
+  getHitboxFrom,
+  getRangeBetweenEntities,
+  Vector,
+  isJailed
+} from '../utils';
 
 /**
  * Will cause the holding Entity to flee from other Entities which have a
@@ -30,6 +35,12 @@ export class ScaredComponent extends Component {
   }
 
   update(delta: number): void {
+
+    // Do not be scared, if we are in jail
+    if (isJailed(this.entity)) {
+      return;
+    }
+
     const scarers = this.getScarers();
 
     if (scarers.length > 0) {

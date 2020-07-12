@@ -2,6 +2,7 @@ import { Component } from '../component';
 import { Entity } from '../entity';
 import { HitboxComponent } from './hitbox.component';
 import { JailerComponent } from './jailer.component';
+import { isJailed } from '../utils/entity-utils';
 
 // Utils
 import {
@@ -112,35 +113,38 @@ export class WanderComponent extends Component {
   }
 
   /**
-   * Starts a random wander, avoiding nearby Jailers.
+   * Starts a random wander, avoiding nearby Jailers. Note that we only avoid
+   * Jailers if we are not already in jail.
    */
   private startWandering(): void {
 
-    // Check for nearby Jailers
-    const jailers = this.entity.context
-      .getEntities()
-      .filter(entity => entity.getComponent<JailerComponent>(JailerComponent.KEY))
-      .filter(entity => this.isWithinAvoidDistance(entity))
-      .sort((a, b) => this.sortNearest(a, b));
+    // Set random wander time
+    this.wanderTimeRemaining = intBetween(this.minWanderTime, this.maxWanderTime);
 
-    if (jailers.length > 0) {
+    if (!isJailed(this.entity)) {
 
-      // Figure out where nearest jailer is
-      const jailerPosition = getHitboxFrom(jailers[0]).centrePosition;
-      const xSign = jailerPosition.x < this.hitbox.centerX ? 1 : -1;
-      const ySign = jailerPosition.y < this.hitbox.centerY ? 1 : -1;
+      // Check for nearby Jailers
+      const jailers = this.entity.context
+        .getEntities()
+        .filter(entity => entity.getComponent<JailerComponent>(JailerComponent.KEY))
+        .filter(entity => this.isWithinAvoidDistance(entity))
+        .sort((a, b) => this.sortNearest(a, b));
 
-      // Wander away from jailer, at random speed
-      this.hitbox.setSpeed(this.getWanderVector(xSign, ySign));
+      if (jailers.length > 0) {
 
-    } else {
+        // Figure out where nearest jailer is
+        const jailerPosition = getHitboxFrom(jailers[0]).centrePosition;
+        const xSign = jailerPosition.x < this.hitbox.centerX ? 1 : -1;
+        const ySign = jailerPosition.y < this.hitbox.centerY ? 1 : -1;
 
-      // Wander randomly
-      this.hitbox.setSpeed(this.getRandomWanderVector());
+        // Wander away from jailer, at random speed
+        this.hitbox.setSpeed(this.getWanderVector(xSign, ySign));
+        return;
+      }
     }
 
-    // Random time
-    this.wanderTimeRemaining = intBetween(this.minWanderTime, this.maxWanderTime);
+    // If we are in jail or far away from it, set random wander vector
+    this.hitbox.setSpeed(this.getRandomWanderVector());
   }
 
   private isWithinAvoidDistance(entity: Entity): boolean {
