@@ -21,7 +21,7 @@ export class CatWarningComponent extends Component {
 
   private static textStyles: Partial<PIXI.TextStyle> = {
     fontFamily: 'Do Hyeon',
-    fontSize: 18,
+    fontSize: 20,
     fill: 0xc62602,
     align: 'center',
     stroke: 'black',
@@ -63,8 +63,8 @@ export class CatWarningComponent extends Component {
 
   private snapToEntity(): void {
     // Update the position of the Sprite based on the Entity position
-    this.text.x = this.hitbox.x + 9;
-    this.text.y = this.hitbox.y - 4;
+    this.text.x = this.hitbox.x + 10;
+    this.text.y = this.hitbox.y - 6;
   }
 
   destroy() {

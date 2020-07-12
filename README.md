@@ -24,8 +24,8 @@ The Jam is a 48 hour game making marathon, focused on design, mechanics, and cle
 1. Run `npm run build`
 1. Copy `index.html` to `dist`
 1. Copy `styles.css` to `dist`
-1. Copy `images/ui` to `dist`
-1. Copy `images/cat-bg.png` to `dist`
-1. Copy `images/sprites.json` to `dist`
-1. Copy `images/sprites.png` to `dist`
+1. Copy `images/ui` to `dist/images`
+1. Copy `images/cat-bg.png` to `dist/images`
+1. Copy `images/sprites.json` to `dist/images`
+1. Copy `images/sprites.png` to `dist/images`
 1. Copy `sounds` to `dist`
