@@ -1,12 +1,20 @@
 import { Entity } from '../entity';
-import { HitboxComponent } from '../components/hitbox.component';
 import { getRangeBetween } from './geometry';
+import { HitboxComponent } from '../components/hitbox.component';
+import { JailedComponent } from '../components/jailed.component';
 
 /**
  * Extracts the HitboxComponent from an Entity, if it has one.
  */
 export const getHitboxFrom = (entity: Entity): HitboxComponent => {
   return entity.getComponent<HitboxComponent>(HitboxComponent.KEY);
+};
+
+/**
+ * Checks whether an Entity is in jail.
+ */
+export const isJailed = (entity: Entity): boolean => {
+  return entity.getComponent<JailedComponent>(JailedComponent.KEY) !== undefined;
 };
 
 /**
