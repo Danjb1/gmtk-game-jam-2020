@@ -283,6 +283,7 @@ export class Game implements EntityContext {
     this._state = new GameState(cfg.player.lives);
     this._state.onScoreInc = () => { Assets.playSound("kerching.ogg") };
     this._state.onLifeGained = () => { Assets.playSound("tada-fanfare-f.ogg") };
+    this._state.onLifeLost = () => { Assets.playSound("life-lost-game-over.ogg") };
     this.initEntities();
   }
 
