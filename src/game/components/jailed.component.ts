@@ -27,6 +27,9 @@ export class JailedComponent extends Component {
     this.hitbox.x = this.jailerHitbox.centerX - this.hitbox.halfWidth;
     this.hitbox.y = this.jailerHitbox.centerY - this.hitbox.halfHeight;
     this.hitbox.setSpeed(Vector.zero());
+
+    // Notify components
+    e.broadcast('jailed');
   }
 
   public update(delta: number): void {

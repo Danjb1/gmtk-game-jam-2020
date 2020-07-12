@@ -93,4 +93,13 @@ export class Entity {
     return this.components.find(c => c.key === key);
   }
 
+  /**
+   * Notifies all Components of some event.
+   */
+  public broadcast(event: any): void {
+    this.components
+      .filter(c => !c.deleted)
+      .forEach(c => c.notify(event));
+  }
+
 }

@@ -20,9 +20,17 @@ export class MeowComponent extends Component {
   }
 
   public update(delta: number) {
+    /*
     if (this.isSoundReady(delta)) {
       this.attemptSound();
       this.resetSoundTimer();
+    }
+    */
+  }
+
+  public notify(event: any) {
+    if (event === 'jailed' || event === 'escaped') {
+      this.playSound();
     }
   }
 
@@ -41,7 +49,7 @@ export class MeowComponent extends Component {
     return Math.random() < this.meowChance;
   }
 
-  private playSound(): void {
+  public playSound(): void {
     let soundId = intBetween(1, MeowComponent.NUM_SOUNDS).toString();
     if (soundId.length < 2) {
       soundId = '0' + soundId;

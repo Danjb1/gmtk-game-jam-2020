@@ -52,6 +52,13 @@ export abstract class Component {
     // Do nothing by default
   }
 
+  /**
+   * Notifies this Component of an event.
+   */
+  public notify(event: any): void {
+    // Do nothing by default
+  }
+
   get key() {
     return this._key;
   }
