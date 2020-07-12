@@ -44,11 +44,11 @@ export class HitboxComponent extends Component {
   private listeners: HitboxListener[] = [];
 
   constructor(
-      public x: number,
-      public y: number,
-      public width: number,
-      public height: number,
-      public props?: HitboxProperties) {
+    public x: number,
+    public y: number,
+    public width: number,
+    public height: number,
+    public props?: HitboxProperties) {
     super(HitboxComponent.KEY);
 
     this.prevX = x;
@@ -168,9 +168,9 @@ export class HitboxComponent extends Component {
       this.x = Game.WORLD_WIDTH - this.width;
     }
 
-    if (this.y <= 0) {
+    if (this.y <= 20) {
       this.speedY = 0;
-      this.y = 0;
+      this.y = 20;
     } else if (this.bottom >= Game.WORLD_HEIGHT) {
       this.speedY = 0;
       this.y = Game.WORLD_HEIGHT - this.height;

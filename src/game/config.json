@@ -72,6 +72,20 @@
       "chance": 0.25
     }
   },
+  "door": {
+    "positionX": 20,
+    "positionY": 0,
+    "width": 55,
+    "height": 40,
+    "sprite": "door.png"
+  },
+  "mat": {
+    "positionX": 20,
+    "positionY": 40,
+    "width": 55,
+    "height": 20,
+    "sprite": "mat.png"
+  },
   "pen": {
     "positionX": 270,
     "positionY": 380,
