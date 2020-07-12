@@ -170,7 +170,7 @@ export class Game implements EntityContext {
         { blocks: ['player', 'dog'] }
       ))
       .attach(new SpriteComponent(cfg.pen.sprite))
-      .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime)));
+      .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime, cfg.pen.escapeAttemptFrequency)));
 
     // Left Table
     if (cfg.leftTable.enabled) {
