@@ -2,30 +2,30 @@ import { HitboxComponent, Edge } from '../components/hitbox.component';
 import { Vector } from './vector';
 
 /**
-* Gives the straight-line distance between the centres of two HitboxComponents.
-*/
-export const getDistanceBetween = (a: HitboxComponent, b: HitboxComponent): number => {
+ * Gives the straight-line distance between the centres of two HitboxComponents.
+ */
+export const getRangeBetween = (a: HitboxComponent, b: HitboxComponent): number => {
   return a.centrePosition.hypotenuse(b.centrePosition);
 };
 
 /**
-* Determines if 2 lines intersect.
-*
-* <p>This is a simplification of {@link #getLineIntersection}.
-*
-* @param x1
-* @param y1
-* @param x2
-* @param y2
-* @param x3
-* @param y3
-* @param x4
-* @param y4
-* @param extendToInfinity Whether to extend the lines beyond the given
-* segments.
-*
-* @return Point, or null if the lines do no intersect.
-*/
+ * Determines if 2 lines intersect.
+ *
+ * <p>This is a simplification of {@link #getLineIntersection}.
+ *
+ * @param x1
+ * @param y1
+ * @param x2
+ * @param y2
+ * @param x3
+ * @param y3
+ * @param x4
+ * @param y4
+ * @param extendToInfinity Whether to extend the lines beyond the given
+ * segments.
+ *
+ * @return Point, or null if the lines do no intersect.
+ */
 export const doLinesIntersect = (
   x1: number, y1: number,
   x2: number, y2: number,
