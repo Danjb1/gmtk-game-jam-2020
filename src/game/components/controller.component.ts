@@ -23,10 +23,12 @@ export class ControllerComponent extends Component {
   }
 
   public update(delta: number): void {
-    this.hitbox.setSpeed(new Vector(
-      this.getAxisSpeed(Input.LEFT, Input.RIGHT),
-      this.getAxisSpeed(Input.UP, Input.DOWN)
-    ));
+    this.hitbox.setSpeed(
+      new Vector(
+        this.getAxisSpeed(Input.LEFT, Input.RIGHT),
+        this.getAxisSpeed(Input.UP, Input.DOWN)
+      ).capMagnitude(this.speed)
+    );
   }
 
   private getAxisSpeed(positiveName: String, negativeName: String): number {

@@ -1,6 +1,6 @@
 {
   "player": {
-    "speed": 350,
+    "speed": 400,
     "sprite": "player/player",
     "lives": 3
   },
