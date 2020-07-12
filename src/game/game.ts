@@ -27,7 +27,7 @@ import {
 } from './components';
 
 // Factories
-import { createCat } from './factory/cat.factory';
+import { CatFactory } from './factory/cat.factory';
 import { getHitboxFrom } from './utils';
 
 import { GameState } from './store';
@@ -50,6 +50,7 @@ export class Game implements EntityContext {
   private input: Input = new Input();
   private count: number = 1;
   private restartText: PIXI.Text;
+  private catFactory: CatFactory;
 
   state: GameState = new GameState();
 
@@ -91,6 +92,7 @@ export class Game implements EntityContext {
    * Called when our Textures have finished loading.
    */
   private setup(): void {
+    this.catFactory = new CatFactory(cfg.catFactory);
     CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
     this.initEntities();
@@ -141,7 +143,7 @@ export class Game implements EntityContext {
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, 100, 100))
       .attach(new SpawnerComponent(
-        createCat,
+        this.catFactory.create.bind(this.catFactory),
         {
           attemptsPerInterval: cfg.catSpawnerConfig.attemptsPerInterval.min,
           chanceToSpawn: cfg.catSpawnerConfig.chanceToSpawn.min,
