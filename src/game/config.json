@@ -87,10 +87,10 @@
     "sprite": "mat.png"
   },
   "sign": {
-    "positionX": 220,
-    "positionY": 420,
-    "width": 55,
-    "height": 80,
+    "positionX": 235,
+    "positionY": 430,
+    "width": 42,
+    "height": 60,
     "sprite": "cat_pen_sign.png"
   },
   "pen": {
