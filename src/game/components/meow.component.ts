@@ -12,10 +12,11 @@ export class MeowComponent extends Component {
   private timeUntilSound: number;
   private meowChance: number = 0.1;
 
-  constructor() {
+  constructor(interval: number, chance: number) {
     super(MeowComponent.KEY);
 
-    this.timeUntilSound = this.interval;
+    this.timeUntilSound = this.interval = interval;
+    this.meowChance = chance;
   }
 
   public update(delta: number) {

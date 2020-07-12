@@ -1,6 +1,7 @@
 // Libs
 import * as createjs from 'createjs-module';
 import { Viewport } from 'pixi-viewport';
+import * as PIXI from 'pixi.js';
 
 // Global Stuff
 import { Input } from './input';
@@ -26,7 +27,7 @@ import {
 } from './components';
 
 // Factories
-import { createCat } from './factory/cat.factory';
+import { CatFactory } from './factory/cat.factory';
 import { getHitboxFrom } from './utils';
 
 import { GameState } from './store';
@@ -48,10 +49,14 @@ export class Game implements EntityContext {
   private entities: Entity[] = [];
   private input: Input = new Input();
   private count: number = 1;
+  private restartText: PIXI.Text;
+  private catFactory: CatFactory;
 
-  state: GameState = new GameState();
+  state: GameState = new GameState(cfg.player.lives);
 
-  constructor(private app: PIXI.Application) { }
+  constructor(private app: PIXI.Application) {
+    this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
+   }
 
   /**
    * Initialises the game.
@@ -59,6 +64,8 @@ export class Game implements EntityContext {
    * @param callbackFn Function to call when the game is loaded.
    */
   public load(callbackFn: any): void {
+
+    this.app.stage.sortableChildren = true;
 
     // Load textures
     const p1 = new Promise<void>((resolve, reject) => {
@@ -85,6 +92,7 @@ export class Game implements EntityContext {
    * Called when our Textures have finished loading.
    */
   private setup(): void {
+    this.catFactory = new CatFactory(cfg.catBehavior);
     CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
     this.initEntities();
@@ -128,14 +136,14 @@ export class Game implements EntityContext {
           { tags: ['dog'] }))
         .attach(new SpriteComponent(cfg.dog.sprite))
         .attach(new ScarerComponent())
-        .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
+        .attach(new WanderComponent(cfg.dog.wandering)));
     }
 
     // Cat Spawner
     this.addEntity(new Entity()
       .attach(new HitboxComponent(0, 0, 100, 100))
       .attach(new SpawnerComponent(
-        createCat,
+        this.catFactory.create.bind(this.catFactory),
         {
           attemptsPerInterval: cfg.catSpawnerConfig.attemptsPerInterval.min,
           chanceToSpawn: cfg.catSpawnerConfig.chanceToSpawn.min,
@@ -154,7 +162,7 @@ export class Game implements EntityContext {
         { blocks: ['player', 'dog'] }
       ))
       .attach(new SpriteComponent(cfg.pen.sprite))
-      .attach(new JailerComponent()));
+      .attach(new JailerComponent(cfg.pen.chanceOfEscape, cfg.pen.minCaptureTime)));
 
     // Left Table
     if (cfg.leftTable.enabled) {
@@ -166,7 +174,7 @@ export class Game implements EntityContext {
           cfg.leftTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.leftTable.sprite)));
+        .attach(new SpriteComponent(cfg.leftTable.sprite, { zIndex: 1 })));
     }
 
     // Right Table
@@ -179,7 +187,7 @@ export class Game implements EntityContext {
           cfg.rightTable.height,
           { blocks: ['player'] }
         ))
-        .attach(new SpriteComponent(cfg.rightTable.sprite)));
+        .attach(new SpriteComponent(cfg.rightTable.sprite, { zIndex: 1 })));
     }
   }
 
@@ -212,25 +220,13 @@ export class Game implements EntityContext {
       return;
     }
 
+    // If the game has ended, check if the player has restarted
     if (this.isGameOver()) {
-      let breakCircuit = false;
-
+      this.app.stage.addChild(this.restartText);
       this.state.stopGame();
-
-      document.addEventListener('keyup', event => {
-        if (event.code === 'Space' && !breakCircuit) {
-          this.entities.forEach(entity => {
-            entity.destroy()
-          });
-          this.entities = [];
-          this.state = new GameState();
-          this.initEntities();
-          this.state.startGame();
-          
-          breakCircuit = true;
-        }
-      });
-
+      if (this.input.isPressed(Input.SPACE)) {
+        this.resetGame();
+      }
       return;
     }
 
@@ -258,6 +254,14 @@ export class Game implements EntityContext {
 
   public isGameOver(): boolean {
     return this.state.lives <= 0;
+  }
+
+  private resetGame(): void {
+    this.entities.forEach(entity => entity.destroy());
+    this.entities = [];
+    this.state = new GameState(cfg.player.lives);
+    this.initEntities();
+    this.app.stage.removeChild(this.restartText);
   }
 
   private detectCollisions(): void {
