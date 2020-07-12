@@ -23,8 +23,7 @@ export class CatWarningComponent extends Component {
     fontFamily: 'Do Hyeon',
     fontSize: 18,
     fill: 0xc62602,
-    align: 'center',
-    fontWeight: 'bold'
+    align: 'center'
   }
 
   constructor() {

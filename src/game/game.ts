@@ -62,7 +62,7 @@ export class Game implements EntityContext {
   public get state() { return this._state };
 
   constructor(private app: PIXI.Application) {
-    this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, { fontFamily: 'Do Hyeon', fontSize: 24, fill: 0x8B4513, align: 'center' });
+    this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, { fontFamily: 'Do Hyeon', fontSize: 24, fill: 0xffffff, opacity: .75, align: 'center' });
     this.restartPixiText.position.set((Game.CANVAS_WIDTH - this.restartPixiText.width) / 2, (Game.CANVAS_HEIGHT - this.restartPixiText.height) / 2);
   }
 
