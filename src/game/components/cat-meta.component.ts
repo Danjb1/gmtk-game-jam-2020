@@ -20,6 +20,8 @@ export class CatMetaComponent extends Component {
   // private static readonly VARIETIES: CatVariety[] = ['ash', 'black', 'brown', 'ginger', 'grey', 'greywhite', 'tan', 'white'];
   private static readonly VARIETIES: CatVariety[] = ['grey', 'white', 'black', 'tabby'];
 
+  private static warnPlayerThreshold: number;
+
   // min max for duration
   private static minDuration = 15000;
   private static maxDuration = 70000;
@@ -32,6 +34,7 @@ export class CatMetaComponent extends Component {
     this.minDuration = cfg.minDuration;
     this.maxDuration = cfg.maxDuration;
     this.canBePickedUpThreshold = cfg.canBePickedUpThreshold;
+    this.warnPlayerThreshold = cfg.warnPlayerThreshold;
   }
 
   constructor() {
@@ -131,6 +134,13 @@ export class CatMetaComponent extends Component {
   get canBePickedUp(): boolean {
     const howCloseToPickupNow = this.howCloseToPickup;
     return howCloseToPickupNow > CatMetaComponent.canBePickedUpThreshold;
+  }
+
+  /**
+   * Returns true if the cat can be picked up
+   */
+  get warnPlayer(): boolean {
+    return this.howCloseToPickup > CatMetaComponent.warnPlayerThreshold;
   }
 
   // Duration in ms

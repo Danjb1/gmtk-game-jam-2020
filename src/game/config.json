@@ -7,9 +7,10 @@
   "catMetadata": {
     "minValue": 30,
     "maxValue": 200,
-    "minDuration": 15000,
-    "maxDuration": 70000,
-    "canBePickedUpThreshold": 0.9
+    "minDuration": 20000,
+    "maxDuration": 75000,
+    "warnPlayerThreshold": 0.6,
+    "canBePickedUpThreshold": 0.8
   },
   "catBehavior": {
     "scared": {
