@@ -26,8 +26,9 @@ export class PickupElement extends UiElement {
   }
 
   private loadImage() {
+    // TODO: We shouldn't be loading this again as Pixi has already loaded it!
     this.image = new Image();
-    this.image.src = '../assets/images/player.png';
+    this.image.src = '../images/original/player.png';
     this.image.onload = () => {
       this.loaded = true;
     };

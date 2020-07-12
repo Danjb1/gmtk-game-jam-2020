@@ -26,7 +26,7 @@ export class AnimatedSpriteComponent extends Component {
   }
 
   public onSpawn(): void {
-    this.sprite.animationSpeed = 0.1;
+    this.sprite.animationSpeed = 0.01;
     this.sprite.play();
 
     // Register this Sprite with Pixi
