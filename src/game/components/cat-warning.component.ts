@@ -52,7 +52,7 @@ export class CatWarningComponent extends Component {
 
   update() {
     this.text.visible = (!this.entity.getComponent(JailedComponent.KEY)) && this._catMeta.warnPlayer;
-    this.text.style.fill = this._catMeta.canBePickedUp ? CatWarningComponent.COLOURS.WARN : CatWarningComponent.COLOURS.PICKUP;
+    this.text.style.fill = this._catMeta.canBePickedUp ? CatWarningComponent.COLOURS.PICKUP : CatWarningComponent.COLOURS.WARN;
     this.snapToEntity();
   }
 
