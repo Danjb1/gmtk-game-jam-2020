@@ -15,18 +15,25 @@ export class SpriteComponent extends Component {
   private hitbox: HitboxComponent;
 
   constructor(
-    filename: string
+    filename: string,
+    spriteSettings?: any
   ) {
     super(SpriteComponent.KEY);
 
     const texture = Assets.texture(filename);
     this.sprite = new PIXI.Sprite(texture);
+
+    if (spriteSettings) {
+      this.sprite = Object.assign(this.sprite, spriteSettings);
+    }
   }
 
   public onSpawn(): void {
 
     // Register this Sprite with Pixi
-    this.entity.context.getViewport().addChild(this.sprite);
+    const viewport = this.entity.context.getViewport();
+    viewport.addChild(this.sprite);
+    viewport.sortChildren();
 
     // Retrieve the Hitbox from the Entity
     this.hitbox = getHitboxFrom(this.entity);
