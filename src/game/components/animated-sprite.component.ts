@@ -8,7 +8,7 @@ import { HitboxComponent } from './hitbox.component';
 // Utils
 import { getHitboxFrom } from '../utils';
 
-type Direction = 'up' | 'down' | 'left' | 'right' | 'right_down' | 'right_up' | 'left_down' | 'left_up';
+type Direction = 'up' | 'down' | 'left' | 'right' | 'right_down' | 'right_up' | 'left_down' | 'left_up' | 'left_sit' | 'right_sit' | 'left_sleep' | 'right_sleep';
 
 export class AnimatedSpriteComponent extends Component {
   public static readonly KEY = Symbol();
@@ -62,11 +62,7 @@ export class AnimatedSpriteComponent extends Component {
 
   public update(delta: number): void {
     this.updateDirection();
-    if (this.hitbox.speedX === 0 && this.hitbox.speedY === 0) {
-      this.sprite.stop();
-    } else if (!this.sprite.playing) {
-      this.sprite.play();
-    }
+    this.sprite.play();
   }
 
   public lateUpdate(delta: number): void {
@@ -83,7 +79,13 @@ export class AnimatedSpriteComponent extends Component {
 
   private updateDirection() {
     let newDirection: Direction;
-    if (this.sprite.x > this.hitbox.x) {
+    if (this.sprite.x == this.hitbox.x && this.sprite.y == this.hitbox.y) {
+      if (this.direction.indexOf('left') > -1) {
+        newDirection = 'left_sit'
+      } else {
+        newDirection = 'right_sit'
+      }
+    } else if (this.sprite.x > this.hitbox.x) {
       if (this.sprite.y < this.hitbox.y) {
         newDirection = 'left_down'
       } else if (this.sprite.y > this.hitbox.y) {
