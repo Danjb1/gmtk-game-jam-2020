@@ -199,6 +199,11 @@ export class Game implements EntityContext {
         ))
         .attach(new SpriteComponent(cfg.rightTable.sprite, { zIndex: 1 })));
     }
+
+    // Background
+    this.addEntity(new Entity()
+      .attach(new HitboxComponent(0, 0, Game.WORLD_WIDTH, Game.WORLD_HEIGHT))
+      .attach(new SpriteComponent(cfg.background.sprite, { zIndex: -1 }, true)));
   }
 
   /**
@@ -235,7 +240,7 @@ export class Game implements EntityContext {
 
     if (this.isGameOver()) {
       this.app.stage.addChild(this.restartPixiText);
-      if (this.input.isPressed(Input.SPACE)) { 
+      if (this.input.isPressed(Input.SPACE)) {
         this.resetGame();
         this.app.stage.removeChild(this.restartPixiText);
       }
