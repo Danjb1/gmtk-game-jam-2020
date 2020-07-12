@@ -22,6 +22,7 @@ import {
   SpawnerComponent,
   JailerComponent,
   WanderComponent,
+  RescuerComponent,
   DifficultyCurveComponent,
   CatMetaComponent
 } from './components';
@@ -152,6 +153,11 @@ export class Game implements EntityContext {
         }
       ))
       .attach(new DifficultyCurveComponent()));
+
+    // Cat Rescuer
+    this.addEntity(new Entity()
+      .attach(new RescuerComponent())
+    );
 
     // Pen
     this.addEntity(new Entity()
@@ -285,7 +291,7 @@ export class Game implements EntityContext {
         const e1Hitbox = getHitboxFrom(e1);
         const e2Hitbox = getHitboxFrom(e2);
 
-        if (e1Hitbox.intersects(e2Hitbox)) {
+        if (e1Hitbox && e2Hitbox && e1Hitbox.intersects(e2Hitbox)) {
           e1Hitbox.collidedWith(e2Hitbox);
           e2Hitbox.collidedWith(e1Hitbox);
         }
