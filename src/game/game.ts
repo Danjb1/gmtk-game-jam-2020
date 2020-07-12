@@ -22,6 +22,7 @@ import {
   SpawnerComponent,
   JailerComponent,
   WanderComponent,
+  RescuerComponent,
   DifficultyCurveComponent,
   CatMetaComponent
 } from './components';
@@ -47,15 +48,21 @@ export class Game implements EntityContext {
 
   private viewport: Viewport;
   private entities: Entity[] = [];
-  private input: Input = new Input();
+  private input: Input = Input.instance;
   private count: number = 1;
-  private restartText: PIXI.Text;
   private catFactory: CatFactory;
+  private gameStarted: boolean = false;
+  private startPixiText: PIXI.Text;
+  private restartPixiText: PIXI.Text;
 
   state: GameState = new GameState(cfg.player.lives);
 
   constructor(private app: PIXI.Application) {
-    this.restartText = new PIXI.Text('Press SPACE to restart', { fontFamily: 'Do Hyeon', fontSize: 24, fill: 0x8B4513, align: 'center' });
+    this.startPixiText = new PIXI.Text(`Press SPACE to START`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
+    this.startPixiText.anchor.set(-1.2 , -10);
+    this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
+    this.restartPixiText.anchor.set(-1.2 , -10);
+    this.app.stage.addChild(this.startPixiText);
   }
 
   /**
@@ -151,7 +158,12 @@ export class Game implements EntityContext {
           maxChildren: cfg.catSpawnerConfig.maxChildren.min
         }
       ))
-      .attach(new DifficultyCurveComponent()));
+      .attach(new DifficultyCurveComponent(cfg)));
+
+    // Cat Rescuer
+    this.addEntity(new Entity()
+      .attach(new RescuerComponent())
+    );
 
     // Pen
     this.addEntity(new Entity()
@@ -216,16 +228,19 @@ export class Game implements EntityContext {
    */
   public update(): void {
 
-    if (!this.state.gameRunning) {
+    if(!this.gameStarted) {
+      if (this.input.isPressed(Input.SPACE)) {
+        this.gameStarted = true;
+        this.app.stage.removeChild(this.startPixiText);
+      }
       return;
     }
 
-    // If the game has ended, check if the player has restarted
     if (this.isGameOver()) {
-      this.app.stage.addChild(this.restartText);
-      this.state.stopGame();
-      if (this.input.isPressed(Input.SPACE)) {
+      this.app.stage.addChild(this.restartPixiText);
+      if (this.input.isPressed(Input.SPACE)) { 
         this.resetGame();
+        this.app.stage.removeChild(this.restartPixiText);
       }
       return;
     }
@@ -261,8 +276,6 @@ export class Game implements EntityContext {
     this.entities = [];
     this.state = new GameState(cfg.player.lives);
     this.initEntities();
-    this.app.stage.removeChild(this.restartText);
-    this.state.startGame();
   }
 
   private detectCollisions(): void {
@@ -289,7 +302,7 @@ export class Game implements EntityContext {
         const e1Hitbox = getHitboxFrom(e1);
         const e2Hitbox = getHitboxFrom(e2);
 
-        if (e1Hitbox.intersects(e2Hitbox)) {
+        if (e1Hitbox && e2Hitbox && e1Hitbox.intersects(e2Hitbox)) {
           e1Hitbox.collidedWith(e2Hitbox);
           e2Hitbox.collidedWith(e1Hitbox);
         }
