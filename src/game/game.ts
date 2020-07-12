@@ -48,7 +48,7 @@ export class Game implements EntityContext {
 
   private viewport: Viewport;
   private entities: Entity[] = [];
-  private input: Input = new Input();
+  private input: Input = Input.instance;
   private count: number = 1;
   private restartText: PIXI.Text;
   private catFactory: CatFactory;
