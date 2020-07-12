@@ -52,7 +52,7 @@ export class Game implements EntityContext {
   private restartText: PIXI.Text;
   private catFactory: CatFactory;
 
-  state: GameState = new GameState();
+  state: GameState = new GameState(cfg.player.lives);
 
   constructor(private app: PIXI.Application) {
     this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
@@ -92,7 +92,7 @@ export class Game implements EntityContext {
    * Called when our Textures have finished loading.
    */
   private setup(): void {
-    this.catFactory = new CatFactory(cfg.catFactory);
+    this.catFactory = new CatFactory(cfg.catBehavior);
     CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
     this.initEntities();
@@ -136,7 +136,7 @@ export class Game implements EntityContext {
           { tags: ['dog'] }))
         .attach(new SpriteComponent(cfg.dog.sprite))
         .attach(new ScarerComponent())
-        .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
+        .attach(new WanderComponent(cfg.dog.wandering)));
     }
 
     // Cat Spawner

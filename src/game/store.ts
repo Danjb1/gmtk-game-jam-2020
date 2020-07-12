@@ -1,4 +1,7 @@
 export class GameState {
+  constructor(lives: number) {
+    this._lives = lives;
+  }
 
   _lives = 3;
   _score = 0;
