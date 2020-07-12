@@ -151,7 +151,7 @@ export class Game implements EntityContext {
           maxChildren: cfg.catSpawnerConfig.maxChildren.min
         }
       ))
-      .attach(new DifficultyCurveComponent()));
+      .attach(new DifficultyCurveComponent(cfg)));
 
     // Pen
     this.addEntity(new Entity()

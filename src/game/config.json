@@ -28,6 +28,10 @@
             "maxTime": 500
         }
     },
+    "difficulty": {
+        "adjustInterval": 120000,
+        "modifier": 0
+    },
     "catSpawner": {
         "positionX": 0,
         "positionY": 0
