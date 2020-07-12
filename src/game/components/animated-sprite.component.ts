@@ -100,7 +100,9 @@ export class AnimatedSpriteComponent extends Component {
 
   private updateDirection() {
     let newDirection: Direction;
-    if (this.sprite.x === this.hitbox.x && this.sprite.y === this.hitbox.y) {
+
+    if (this.hitbox.x === this.hitbox.prevX && this.hitbox.y === this.hitbox.prevY) {
+      // Hitbox has not moved
       if (this.direction.indexOf('left') > -1) {
         newDirection = 'left_stop';
       } else if (this.direction.indexOf('right') > -1) {
@@ -110,7 +112,9 @@ export class AnimatedSpriteComponent extends Component {
       } else if (this.direction.indexOf('up') > -1) {
         newDirection = 'up_stop';
       }
-    } else if (this.sprite.x > this.hitbox.x) {
+
+    } else if (this.hitbox.x < this.hitbox.prevX) {
+      // Hitbox has moved left
       if (this.sprite.y < this.hitbox.y) {
         newDirection = 'left_down';
       } else if (this.sprite.y > this.hitbox.y) {
@@ -118,7 +122,9 @@ export class AnimatedSpriteComponent extends Component {
       } else {
         newDirection = 'left';
       }
-    } else if (this.sprite.x < this.hitbox.x) {
+
+    } else if (this.hitbox.x > this.hitbox.prevX) {
+      // Hitbox has moved right
       if (this.sprite.y < this.hitbox.y) {
         newDirection = 'right_down';
       } else if (this.sprite.y > this.hitbox.y) {
@@ -126,12 +132,14 @@ export class AnimatedSpriteComponent extends Component {
       } else {
         newDirection = 'right';
       }
-    } else if (this.sprite.y > this.hitbox.y) {
+
+    } else if (this.hitbox.y < this.hitbox.prevY) {
+      // Hitbox has moved up
       newDirection = 'up';
-    } else if (this.sprite.y < this.hitbox.y) {
-      newDirection = 'down';
+
     } else {
-      return;
+      // Hitbox has moved down
+      newDirection = 'down';
     }
 
     if (newDirection !== this.direction) {
