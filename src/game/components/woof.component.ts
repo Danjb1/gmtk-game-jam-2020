@@ -8,9 +8,9 @@ export class WoofComponent extends Component {
 
   private static readonly NUM_SOUNDS = 1;
 
-  private interval = 2500;
+  private interval: number;
   private timeUntilSound: number;
-  private woofChance: number = 0.1;
+  private woofChance: number;
 
   constructor(interval: number, chance: number) {
     super(WoofComponent.KEY);

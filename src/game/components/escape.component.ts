@@ -6,7 +6,7 @@ import { Component } from '../component';
 import { CatMetaComponent, JailableComponent, JailedComponent } from '.';
 
 // Utils
-import { getHitboxFrom, Vector } from '../utils';
+import { getHitboxFrom, Vector, randomSign } from '../utils';
 
 
 export class EscapeComponent extends Component {
@@ -65,13 +65,9 @@ export class EscapeComponent extends Component {
     this.entity.getComponent(JailedComponent.KEY).deleted = true;
     this.entity.getComponent(EscapeComponent.KEY).deleted = true;
 
-    // Move this entity outside the jailer entityhitBox
+    // Run away from the jail
     const hitBox = getHitboxFrom(this.entity);
-
-    hitBox.setSpeed(new Vector(
-      (Math.random() >= .5 ? 300 : -300),
-      0
-    ));
+    hitBox.setSpeed(new Vector(randomSign() * 300, 0));
 
     // Notify components
     this.entity.broadcast('escaped');
