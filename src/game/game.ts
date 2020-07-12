@@ -51,10 +51,18 @@ export class Game implements EntityContext {
   private count: number = 1;
   private catFactory: CatFactory;
   private gameStarted: boolean = false;
+  private startPixiText: PIXI.Text;
+  private restartPixiText: PIXI.Text;
 
-  state: GameState = new GameState();
+  state: GameState = new GameState(cfg.player.lives);
 
-  constructor(private app: PIXI.Application) {}
+  constructor(private app: PIXI.Application) {
+    this.startPixiText = new PIXI.Text(`Press SPACE to START`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
+    this.startPixiText.anchor.set(-1.2 , -10);
+    this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
+    this.restartPixiText.anchor.set(-1.2 , -10);
+    this.app.stage.addChild(this.startPixiText);
+  }
 
   /**
    * Initialises the game.
@@ -90,7 +98,7 @@ export class Game implements EntityContext {
    * Called when our Textures have finished loading.
    */
   private setup(): void {
-    this.catFactory = new CatFactory(cfg.catFactory);
+    this.catFactory = new CatFactory(cfg.catBehavior);
     CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
     this.initEntities();
@@ -134,7 +142,7 @@ export class Game implements EntityContext {
           { tags: ['dog'] }))
         .attach(new SpriteComponent(cfg.dog.sprite))
         .attach(new ScarerComponent())
-        .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
+        .attach(new WanderComponent(cfg.dog.wandering)));
     }
 
     // Cat Spawner
@@ -215,13 +223,20 @@ export class Game implements EntityContext {
   public update(): void {
 
     if(!this.gameStarted) {
-      this.gameStarter('START');
+      if (this.input.isPressed(Input.SPACE)) {
+        this.gameStarted = true;
+        this.app.stage.removeChild(this.startPixiText);
+      }
       return;
     }
 
     if (this.isGameOver()) {
-      this.gameStarter('RESTART');
-      return;      
+      this.app.stage.addChild(this.restartPixiText);
+      if (this.input.isPressed(Input.SPACE)) { 
+        this.resetGame();
+        this.app.stage.removeChild(this.restartPixiText);
+      }
+      return;
     }
 
     // Update our Entities.
@@ -246,31 +261,15 @@ export class Game implements EntityContext {
     });
   }
 
-  private gameStarter(key: string) {
-    let breakCircuit = false;
-    let pixiText = new PIXI.Text(`Press SPACE to ${key}`, {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
-    pixiText.anchor.set(-1.2 , -10);
-    this.app.stage.addChild(pixiText);
-
-    document.addEventListener('keyup', event => {
-      if (event.code === 'Space' && !breakCircuit) {
-        this.entities.forEach(entity => {
-          entity.destroy()
-        });
-        this.entities = [];
-        this.state = new GameState();
-        if (key === 'START') {
-          this.gameStarted = true;
-        }
-        this.initEntities();
-        breakCircuit = true;
-        this.app.stage.removeChild(pixiText);
-      }
-    });
-  }
-
   public isGameOver(): boolean {
     return this.state.lives <= 0;
+  }
+
+  private resetGame(): void {
+    this.entities.forEach(entity => entity.destroy());
+    this.entities = [];
+    this.state = new GameState(cfg.player.lives);
+    this.initEntities();
   }
 
   private detectCollisions(): void {

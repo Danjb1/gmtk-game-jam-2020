@@ -21,13 +21,15 @@ export class Input {
   public static readonly DOWN = 'Down';
   public static readonly LEFT = 'Left';
   public static readonly RIGHT = 'Right';
+  public static readonly SPACE = 'Space';
 
   // Key bindings
   public static readonly BINDINGS: KeyBinding[] = [
     { name: Input.UP,    values: ['W', 'w', 'ArrowUp'] },
     { name: Input.DOWN,  values: ['S', 's', 'ArrowDown'] },
     { name: Input.LEFT,  values: ['A', 'a', 'ArrowLeft'] },
-    { name: Input.RIGHT, values: ['D', 'd', 'ArrowRight'] }
+    { name: Input.RIGHT, values: ['D', 'd', 'ArrowRight'] },
+    { name: Input.SPACE, values: [' '] }
   ];
 
   // State of currently-pressed keys
