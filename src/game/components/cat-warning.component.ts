@@ -6,7 +6,7 @@ import { getHitboxFrom } from "../utils";
 import { Entity } from '../entity';
 import { JailedComponent } from './jailed.component';
 
-export class CatWarning extends Component {
+export class CatWarningComponent extends Component {
   static readonly KEY = Symbol();
 
   private _catMeta: CatMetaComponent;
@@ -14,11 +14,18 @@ export class CatWarning extends Component {
   private text: PIXI.Text;
   private hitbox: HitboxComponent;
 
+  private static textStyles: Partial<PIXI.TextStyle> = { 
+    fontFamily: 'Do Hyeon', 
+    fontSize: 18, 
+    fill: 0xc62602, 
+    align: 'center', 
+    fontWeight: 'bold'
+  }
 
   constructor() {
-    super(CatWarning.KEY);
+    super(CatWarningComponent.KEY);
 
-    this.text = new PIXI.Text(`!`, { fontFamily: 'Do Hyeon', fontSize: 18, fill: 0xc62602, align: 'center', 'font-weight': 'bold' })
+    this.text = new PIXI.Text(`!`, CatWarningComponent.textStyles)
     this.text.visible = false;
   }
 
@@ -39,7 +46,8 @@ export class CatWarning extends Component {
   }
 
   update() {
-    this.text.visible = (!this.entity.getComponent(JailedComponent.KEY)) && this._catMeta.canBePickedUp;
+    this.text.visible = (!this.entity.getComponent(JailedComponent.KEY)) && this._catMeta.warnPlayer;
+    this.text.style.fill = this._catMeta.canBePickedUp ? 0xc62602 : 0xd46a09;
     this.snapToEntity();
   }
 

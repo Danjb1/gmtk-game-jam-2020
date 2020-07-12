@@ -10,7 +10,7 @@ import {
   JailableComponent,
   MeowComponent,
   LateComponent,
-  CatWarning,
+  CatWarningComponent,
   RescueComponent
 } from '../components';
 
@@ -44,7 +44,7 @@ export class CatFactory {
       .attach(new MeowComponent())
       .attach(new LateComponent())
       .attach(new RescueComponent())
-      .attach(new CatWarning())
+      .attach(new CatWarningComponent())
       .attach(new MeowComponent())
       .attach(new LateComponent());
 
