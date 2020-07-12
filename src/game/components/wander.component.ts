@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { Entity } from '../entity';
 import { HitboxComponent } from './hitbox.component';
 import { JailerComponent } from './jailer.component';
-import { isJailed } from '../utils/entity-utils';
+import { isJailed, hasDestination } from '../utils/entity-utils';
 
 // Utils
 import {
@@ -71,8 +71,10 @@ export class WanderComponent extends Component {
   }
 
   public update(delta: number): void {
-
-    if (this.isWandering()) {
+    if (hasDestination(this.entity)) {
+      // Do no wandering if we have a destination
+      return;
+    } else if (this.isWandering()) {
       this.wanderFor(delta);
     } else if (this.shouldWander()) {
       this.startWandering();
