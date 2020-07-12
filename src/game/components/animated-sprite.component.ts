@@ -19,26 +19,41 @@ export class AnimatedSpriteComponent extends Component {
   private direction: Direction = 'down';
 
   constructor(
-    private filename: string
+    private filename: string,
+    private spriteSettings?: any
   ) {
     super(AnimatedSpriteComponent.KEY);
     this.spritesheet = Assets.spritesheet();
-    this.sprite = new PIXI.AnimatedSprite(this.spritesheet.animations[`${filename}_down`]);
   }
 
   public onSpawn(): void {
-    this.sprite.animationSpeed = 2;
-    this.sprite.play();
 
-    // Register this Sprite with Pixi
-    this.entity.context
-      .getViewport()
-      .addChild(this.sprite);
+    this.createSprite();
 
     // Retrieve the Hitbox from the Entity
     this.hitbox = getHitboxFrom(this.entity);
 
     this.snapToEntity();
+  }
+
+  private createSprite(): void {
+
+    this.sprite = new PIXI.AnimatedSprite(
+      this.spritesheet.animations[`${this.filename}_${this.direction}`]
+    );
+
+    this.sprite.animationSpeed = 2;
+
+    if (this.spriteSettings) {
+      this.sprite = Object.assign(this.sprite, this.spriteSettings);
+    }
+
+    this.sprite.play();
+
+    // Register this Sprite with Pixi
+    const viewport = this.entity.context.getViewport();
+    viewport.addChild(this.sprite);
+    viewport.sortChildren();
   }
 
   public destroy(): void {
@@ -94,15 +109,9 @@ export class AnimatedSpriteComponent extends Component {
 
     if (newDirection !== this.direction) {
       this.direction = newDirection;
-
       // Update the texture
       this.sprite.destroy();
-      this.sprite = new PIXI.AnimatedSprite(
-        this.spritesheet.animations[`${this.filename}_${newDirection}`]
-      );
-      this.entity.context
-        .getViewport()
-        .addChild(this.sprite);
+      this.createSprite();
     }
   }
 
