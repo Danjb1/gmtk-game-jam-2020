@@ -23,7 +23,7 @@ export class DifficultyCurveComponent extends Component {
 
   onAttach(entity: Entity) {
     super.onAttach(entity);
-    this._spawner = entity.getComponent(SpawnerComponent.KEY) as SpawnerComponent;
+    this._spawner = entity.getComponent<SpawnerComponent>(SpawnerComponent.KEY);
 
     this._attachedAt = Date.now();
   }

@@ -31,7 +31,7 @@ export class RescuerComponent extends Component {
         catsEligibleForPickup.push(e);
       }
 
-      const catMeta = <CatMetaComponent> e.getComponent(CatMetaComponent.KEY);
+      const catMeta = e.getComponent<CatMetaComponent>(CatMetaComponent.KEY);
       if (catMeta.canBePickedUp) {
         catsDueForPickup.push(e);
       }
@@ -39,13 +39,13 @@ export class RescuerComponent extends Component {
 
     // Try to pick up all the cats that are due for pickup
     catsDueForPickup.forEach(catDueForPickup => {
-      const catDueForPickupMeta = <CatMetaComponent>
-      catDueForPickup.getComponent(CatMetaComponent.KEY);
+      const catDueForPickupMeta =
+        catDueForPickup.getComponent<CatMetaComponent>(CatMetaComponent.KEY);
 
       // Just pick up any matching cat!
       const suitableCat = catsEligibleForPickup.find(catEligibleForPickup => {
-        const catEligibleForPickupMeta = <CatMetaComponent>
-            catEligibleForPickup.getComponent(CatMetaComponent.KEY);
+        const catEligibleForPickupMeta =
+          catEligibleForPickup.getComponent<CatMetaComponent>(CatMetaComponent.KEY);
         return catDueForPickupMeta.variety === catEligibleForPickupMeta.variety;
       });
 
@@ -72,8 +72,8 @@ export class RescuerComponent extends Component {
       this.swapHitboxes(h1, h2);
     }
 
-    const catPickedUpMeta = <CatMetaComponent>
-        catDueForPickup.getComponent(CatMetaComponent.KEY);
+    const catPickedUpMeta =
+      catDueForPickup.getComponent<CatMetaComponent>(CatMetaComponent.KEY);
 
     if (!catPickedUpMeta.late) {
       // Add the cat's score to the game state

@@ -1,7 +1,6 @@
-import * as createjs from 'createjs-module';
-
 export class Assets {
 
+  public static readonly SPRITES_BASEPATH = '../images';
   public static readonly SPRITES_SRC = '../images/sprites.json';
   public static readonly SOUNDS_BASEPATH = '../sounds';
 

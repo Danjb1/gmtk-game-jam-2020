@@ -3,11 +3,10 @@ import { Game } from '../game';
 import { Component } from '../component';
 
 // Components
-import { CatMetaComponent } from './cat-meta.component';
-import { JailedComponent } from './jailed.component';
-import { HitboxComponent } from './hitbox.component';
-import { Vector } from '../utils';
-import { JailableComponent } from '.';
+import { CatMetaComponent, JailableComponent, JailedComponent } from '.';
+
+// Utils
+import { getHitboxFrom, Vector } from '../utils';
 
 
 export class EscapeComponent extends Component {
@@ -30,8 +29,7 @@ export class EscapeComponent extends Component {
     super.onAttach(entity);
 
     this._jailedAt = Date.now();
-    this._catMeta = <CatMetaComponent>
-      entity.getComponent(CatMetaComponent.KEY);
+    this._catMeta = entity.getComponent<CatMetaComponent>(CatMetaComponent.KEY);
   }
 
   public update(delta: number) {
@@ -68,7 +66,7 @@ export class EscapeComponent extends Component {
     this.entity.getComponent(EscapeComponent.KEY).deleted = true;
 
     // Move this entity outside the jailer entityhitBox
-    const hitBox = (this.entity.getComponent(HitboxComponent.KEY) as HitboxComponent);
+    const hitBox = getHitboxFrom(this.entity);
 
     hitBox.setSpeed(new Vector(
       (Math.random() >= .5 ? 300 : -300),

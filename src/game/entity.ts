@@ -89,8 +89,8 @@ export class Entity {
   /**
    * Retrieves the first Component with the given key.
    */
-  public getComponent(key: Symbol) {
-    return this.components.find(c => c.key === key);
+  public getComponent<T extends Component>(key: Symbol): T {
+    return this.components.find(c => c.key === key) as T;
   }
 
   /**
@@ -99,7 +99,7 @@ export class Entity {
   public broadcast(event: any): void {
     this.components
       .filter(c => !c.deleted)
-      .forEach(c => c.notify(event));
+      .forEach(c => (c as any).notify(event));
   }
 
 }

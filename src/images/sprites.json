@@ -656,7 +656,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
 	"sourceSize": {"w":64,"h":64}
 },
-"grass_texture.png":
+"grass_texture1.png":
 {
 	"frame": {"x":4,"y":480,"w":512,"h":512},
 	"rotated": false,

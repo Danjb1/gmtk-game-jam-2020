@@ -13,7 +13,7 @@ export class LateComponent extends Component {
 
   onAttach(e: Entity): void {
     super.onAttach(e);
-    this._catMeta = this.entity.getComponent(CatMetaComponent.KEY) as CatMetaComponent;
+    this._catMeta = this.entity.getComponent<CatMetaComponent>(CatMetaComponent.KEY);
   }
 
   update() {

@@ -46,8 +46,8 @@ export class JailerComponent extends Component implements HitboxListener {
   }
 
   public hitboxCollided(other: HitboxComponent): void {
-    const jailable = <JailableComponent>
-      other.entity.getComponent(JailableComponent.KEY);
+    const jailable =
+      other.entity.getComponent<JailableComponent>(JailableComponent.KEY);
 
     if (jailable && !jailable.disabled && !this.prisoners.includes(other.entity)) {
       this.jailEntity(other.entity);
