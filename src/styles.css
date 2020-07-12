@@ -92,6 +92,11 @@ p{
   margin: 0 0 4px;
 }
 
+
+.overlay--splash{
+  background-image: url(images/cat-bg.png);
+}
+
 .overlay{
   position: absolute;
   left: 0;
