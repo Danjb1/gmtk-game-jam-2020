@@ -1,98 +1,101 @@
 {
-    "player": {
-        "speed": 350,
-        "sprite": "player.png",
-        "lives": 3
+  "player": {
+    "speed": 350,
+    "sprite": "player.png",
+    "lives": 3
+  },
+  "catMetadata": {
+    "minValue": 30,
+    "maxValue": 200,
+    "minDuration": 15000,
+    "maxDuration": 70000,
+    "canBePickedUpThreshold": 0.9
+  },
+  "catBehavior": {
+    "meowing": {
+      "interval": 2500,
+      "chance": 0.1
     },
-    "catMetadata": {
-        "minValue": 30,
-        "maxValue": 200,
-        "minDuration": 15000,
-        "maxDuration": 70000,
-        "canBePickedUpThreshold": 0.9
+    "scared": {
+      "flightDistance": 100,
+      "flightSpeed": 330
     },
-    "catBehavior": {
-        "meowing": {
-            "interval": 2500,
-            "chance": 0.1
-        },
-        "scared": {
-            "flightDistance": 100,
-            "flightSpeed": 330
-        },
-        "wandering": {
-            "chance": 0.05,
-            "minSpeed": 100,
-            "maxSpeed": 200,
-            "minTime": 200,
-            "maxTime": 500
-        }
-    },
-    "difficulty": {
-        "adjustInterval": 120000,
-        "modifier": 0
-    },
-    "catSpawner": {
-        "positionX": 0,
-        "positionY": 0
-    },
-    "catSpawnerConfig": {
-        "attemptsPerInterval": {
-            "min": 1,
-            "max": 2
-        },
-        "chanceToSpawn": {
-            "min": 0.3,
-            "max": 0.4
-        },
-        "interval": {
-            "min": 1000,
-            "max": 1000
-        },
-        "maxChildren": {
-            "max": 20,
-            "min": 60
-        }
-    },
-    "dog": {
-        "enabled": true,
-        "startX": 300,
-        "startY": 100,
-        "minSpeed": 50,
-        "maxSpeed": 100,
-        "sprite": "player.png",
-        "wandering": {
-            "chance": 0.05,
-            "minSpeed": 50,
-            "maxSpeed": 100,
-            "minTime": 200,
-            "maxTime": 500
-        }
-    },
-    "pen": {
-        "positionX": 270,
-        "positionY": 380,
-        "width": 100,
-        "height": 100,
-        "sprite": "pen.png",
-        "chanceOfEscape": 0.01,
-        "minCaptureTime": 1000,
-        "escapeAttemptFrequency": 200
-    },
-    "leftTable": {
-        "enabled": true,
-        "positionX": 140,
-        "positionY": 150,
-        "width": 40,
-        "height": 180,
-        "sprite": "table.png"
-    },
-    "rightTable": {
-        "enabled": true,
-        "positionX": 460,
-        "positionY": 150,
-        "width": 40,
-        "height": 180,
-        "sprite": "table.png"
+    "wandering": {
+      "chance": 0.05,
+      "minSpeed": 100,
+      "maxSpeed": 200,
+      "minTime": 200,
+      "maxTime": 500
     }
+  },
+  "difficulty": {
+    "adjustInterval": 120000,
+    "modifier": 0
+  },
+  "catSpawner": {
+    "positionX": 0,
+    "positionY": 0
+  },
+  "catSpawnerConfig": {
+    "attemptsPerInterval": {
+      "min": 1,
+      "max": 2
+    },
+    "chanceToSpawn": {
+      "min": 0.3,
+      "max": 0.4
+    },
+    "interval": {
+      "min": 1000,
+      "max": 1000
+    },
+    "maxChildren": {
+      "max": 20,
+      "min": 60
+    }
+  },
+  "dog": {
+    "enabled": true,
+    "startX": 300,
+    "startY": 100,
+    "minSpeed": 50,
+    "maxSpeed": 100,
+    "sprite": "player.png",
+    "wandering": {
+      "chance": 0.05,
+      "minSpeed": 50,
+      "maxSpeed": 100,
+      "minTime": 200,
+      "maxTime": 500
+    }
+  },
+  "pen": {
+    "positionX": 270,
+    "positionY": 380,
+    "width": 100,
+    "height": 100,
+    "sprite": "pen.png",
+    "chanceOfEscape": 0.01,
+    "minCaptureTime": 1000,
+    "escapeAttemptFrequency": 200
+  },
+  "leftTable": {
+    "enabled": true,
+    "positionX": 140,
+    "positionY": 150,
+    "width": 40,
+    "height": 180,
+    "sprite": "table.png"
+  },
+  "rightTable": {
+    "enabled": true,
+    "positionX": 460,
+    "positionY": 150,
+    "width": 40,
+    "height": 180,
+    "sprite": "table.png"
+  },
+  "background": {
+    "sprite": "grass_texture.png"
+  }
 }
