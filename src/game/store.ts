@@ -1,5 +1,6 @@
 export class GameState {
 
+  _gameRunning: boolean;
   _lives = 3;
   _score = 0;
 
@@ -25,6 +26,18 @@ export class GameState {
 
   get score() {
     return this._score;
+  }
+
+  get gameRunning() {
+    return this._gameRunning;
+  }
+
+  startGame() {
+    this._gameRunning = true;
+  }
+
+  stopGame() {
+    this._gameRunning = false;
   }
 
   loseLife() {

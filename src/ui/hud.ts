@@ -1,5 +1,5 @@
 import { Game } from '../game/game';
-import { ScoreElement, LivesElement, PickupElement } from './elements/';
+import { ScoreElement, LivesElement, PickupElement, SplashScreenElement } from './elements/';
 
 export class Hud {
 
@@ -7,6 +7,7 @@ export class Hud {
 
   private scoreElement: ScoreElement;
   private livesElement: LivesElement;
+  private splashScreen: SplashScreenElement;
 
   private overlayElement: HTMLElement = document.getElementById('ui-overlay');
 
@@ -20,11 +21,14 @@ export class Hud {
     // Score
     this.scoreElement = new ScoreElement(this.overlayElement);
     this.livesElement = new LivesElement(this.overlayElement);
+    
+    this.splashScreen = new SplashScreenElement(document.getElementById('container'));
   }
 
   update() {
 
     if (this.game.isGameOver()) {
+      this.pickup.stop();
       return;
     }
 
@@ -35,5 +39,6 @@ export class Hud {
     this.scoreElement.update({ score });
     this.livesElement.update({ lives });
   }
+  
 
 }

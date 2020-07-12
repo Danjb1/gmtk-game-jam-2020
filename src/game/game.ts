@@ -208,9 +208,14 @@ export class Game implements EntityContext {
    */
   public update(): void {
 
+    if (!this.state.gameRunning) {
+      return;
+    }
+
     if (this.isGameOver()) {
-      
       let breakCircuit = false;
+
+      this.state.stopGame();
 
       document.addEventListener('keyup', event => {
         if (event.code === 'Space' && !breakCircuit) {
@@ -220,6 +225,8 @@ export class Game implements EntityContext {
           this.entities = [];
           this.state = new GameState();
           this.initEntities();
+          this.state.startGame();
+          
           breakCircuit = true;
         }
       });
