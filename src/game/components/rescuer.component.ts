@@ -83,7 +83,7 @@ export class RescuerComponent extends Component {
     }
 
     // Delete the cat
-    catPickedUpMeta.deleted = true;
+    catDueForPickup.deleted = true;
   }
 
   private swapHitboxes(h1: HitboxComponent, h2: HitboxComponent): void {

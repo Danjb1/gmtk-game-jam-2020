@@ -42,12 +42,6 @@ export class EscapeComponent extends Component {
       return;
     }
 
-    if (!this._catMeta) {
-      // TODO: Why is this happening??
-      console.log('this._catMeta is ' + this._catMeta);
-      return;
-    }
-
     // If they are close to pickup, don't screw the player
     if (this._catMeta.howCloseToPickup > .89) {
       return;
