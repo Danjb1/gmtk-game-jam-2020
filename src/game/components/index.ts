@@ -10,7 +10,6 @@ export * from './scared.component';
 export * from './spawner.component';
 export * from './sprite.component';
 export * from './wander.component';
-export * from './rescuer.component';
 export * from './escape.component';
 export * from './late.component';
 export * from './meow.component';
