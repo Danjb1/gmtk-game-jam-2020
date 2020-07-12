@@ -42,10 +42,13 @@ export class WanderComponent extends Component {
    */
   private wanderTimeRemaining = 0;
 
-  constructor(minWanderSpeed: number, maxWanderSpeed: number) {
+  constructor(wanderingBehavior: any) {
     super(WanderComponent.KEY);
-    this.minWanderSpeed = minWanderSpeed;
-    this.maxWanderSpeed = maxWanderSpeed;
+    this.chanceToWander = wanderingBehavior.chance;
+    this.minWanderSpeed = wanderingBehavior.minSpeed;
+    this.maxWanderSpeed = wanderingBehavior.maxSpeed;
+    this.minWanderTime = wanderingBehavior.minTime;
+    this.maxWanderTime = wanderingBehavior.maxTime;
   }
 
   public onSpawn(): void {

@@ -18,10 +18,10 @@ export class ScaredComponent extends Component {
   public static readonly KEY = Symbol();
 
   private hitbox: HitboxComponent;
-  private frightDistance = 100;
-  private speed = 330;
+  private flightDistance = 100;
+  private flightSpeed = 330;
 
-  constructor() {
+  constructor(flightDistance: number, flightSpeed: number) {
     super(ScaredComponent.KEY);
   }
 
@@ -45,14 +45,14 @@ export class ScaredComponent extends Component {
       });
 
       // Scale flee vector to speed and point away from scarers on average
-      fleeVector = fleeVector.scaleToMagnitude(-1 * this.speed);
+      fleeVector = fleeVector.scaleToMagnitude(-1 * this.flightSpeed);
 
       // Correct flee vector towards centre of screen
       // (this is to prevent us getting stuck on a wall or in a corner)
       this.hitbox.setSpeed(
         fleeVector
           .plus(this.getCentreScreenVector())
-          .scaleToMagnitude(this.speed)
+          .scaleToMagnitude(this.flightSpeed)
       );
     }
   }
@@ -64,7 +64,7 @@ export class ScaredComponent extends Component {
     return this.entity.context
       .getEntities()
       .filter(entity => entity.getComponent(ScarerComponent.KEY) !== undefined)
-      .filter(scarer => this.getRangeTo(scarer) < this.frightDistance);
+      .filter(scarer => this.getRangeTo(scarer) < this.flightDistance);
   }
 
   /**

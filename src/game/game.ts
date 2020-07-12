@@ -53,7 +53,7 @@ export class Game implements EntityContext {
   private restartText: PIXI.Text;
   private catFactory: CatFactory;
 
-  state: GameState = new GameState();
+  state: GameState = new GameState(cfg.player.lives);
 
   constructor(private app: PIXI.Application) {
     this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
@@ -93,7 +93,7 @@ export class Game implements EntityContext {
    * Called when our Textures have finished loading.
    */
   private setup(): void {
-    this.catFactory = new CatFactory(cfg.catFactory);
+    this.catFactory = new CatFactory(cfg.catBehavior);
     CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
     this.initEntities();
@@ -137,7 +137,7 @@ export class Game implements EntityContext {
           { tags: ['dog'] }))
         .attach(new SpriteComponent(cfg.dog.sprite))
         .attach(new ScarerComponent())
-        .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
+        .attach(new WanderComponent(cfg.dog.wandering)));
     }
 
     // Cat Spawner
@@ -222,25 +222,15 @@ export class Game implements EntityContext {
    */
   public update(): void {
 
+    // If the game has ended, check if the player has restarted
     if (this.isGameOver()) {
-      let breakCircuit = false;
-
       this.app.stage.addChild(this.restartText);
 
-      document.addEventListener('keyup', event => {
-        if (event.code === 'Space' && !breakCircuit) {
-          this.entities.forEach(entity => {
-            entity.destroy()
-          });
-          this.entities = [];
-          this.state = new GameState();
-          this.initEntities();
-          breakCircuit = true;
-          this.app.stage.removeChild(this.restartText);
-        }
-      });
+      if (this.input.isPressed(Input.SPACE)) {
+        this.resetGame();
+      }
 
-      return;      
+      return;
     }
 
     // Update our Entities.
@@ -267,6 +257,14 @@ export class Game implements EntityContext {
 
   public isGameOver(): boolean {
     return this.state.lives <= 0;
+  }
+
+  private resetGame(): void {
+    this.entities.forEach(entity => entity.destroy());
+    this.entities = [];
+    this.state = new GameState(cfg.player.lives);
+    this.initEntities();
+    this.app.stage.removeChild(this.restartText);
   }
 
   private detectCollisions(): void {

@@ -16,10 +16,10 @@ import {
  * Generates a cat entity
  */
 export class CatFactory {
-  private cfg: any;
+  private catBehavior: any;
 
-  constructor(config: any) {
-    this.cfg = config;
+  constructor(catBehavior: any) {
+    this.catBehavior = catBehavior;
   }
 
   public create(x: number, y: number): Entity {
@@ -31,10 +31,12 @@ export class CatFactory {
       .attach(catMeta)
       .attach(new HitboxComponent(x, y, 30, 30))
       .attach(animatedSprite)
-      .attach(new WanderComponent(this.cfg.wanderComp.minSpeed, this.cfg.wanderComp.maxSpeed))
+      .attach(new WanderComponent(this.catBehavior.wandering))
       .attach(new JailableComponent())
-      .attach(new ScaredComponent())
-      .attach(new MeowComponent(this.cfg.meowComp.interval, this.cfg.meowComp.chance))
+      .attach(new ScaredComponent(this.catBehavior.scared.flightDistance,
+                                  this.catBehavior.scared.flightSpeed))
+      .attach(new MeowComponent(this.catBehavior.meowing.interval,
+                                this.catBehavior.meowing.chance))
       .attach(new LateComponent());
 
     return catEntity;
