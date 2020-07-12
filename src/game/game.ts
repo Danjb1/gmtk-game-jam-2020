@@ -54,8 +54,9 @@ export class Game implements EntityContext {
   state: GameState = new GameState();
 
   constructor(private app: PIXI.Application) {
-    this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center' });
-   }
+    this.restartText = new PIXI.Text('Press SPACE to restart', {fontFamily : 'Do Hyeon', fontSize: 24, fill : 0x8B4513, align : 'center'  });
+    this.restartText.anchor.set(-1.2 , -10);
+  }
 
   /**
    * Initialises the game.
@@ -214,7 +215,7 @@ export class Game implements EntityContext {
    */
   public update(): void {
 
-    if (this.isGameOver()) {
+    if (true) {
       let breakCircuit = false;
 
       this.app.stage.addChild(this.restartText);
