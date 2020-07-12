@@ -49,6 +49,10 @@ export class Game implements EntityContext {
    */
   public static readonly WORLD_WIDTH = 640;
   public static readonly WORLD_HEIGHT = 480;
+
+  // Top border (the wall)
+  public static readonly WORLD_TOP = 20;
+
   public static readonly CANVAS_WIDTH = 800;
   public static readonly CANVAS_HEIGHT = 600;
 
@@ -165,7 +169,7 @@ export class Game implements EntityContext {
 
     // Cat Spawner
     this.addEntity(new Entity()
-      .attach(new HitboxComponent(0, 0, 100, 100))
+      .attach(new HitboxComponent(10, Game.WORLD_TOP, 40, 30))
       .attach(new SpawnerComponent(
         this.catFactory.create.bind(this.catFactory),
         {
