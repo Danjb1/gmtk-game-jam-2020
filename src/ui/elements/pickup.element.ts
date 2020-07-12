@@ -28,6 +28,7 @@ export class PickupElement extends UiElement {
     // TODO: We shouldn't load these again as Pixi has already loaded them!
     this.loadImage('grey', `${Assets.SPRITES_BASEPATH}/ui/grey_face.png`);
     this.loadImage('white', `${Assets.SPRITES_BASEPATH}/ui/white_face.png`);
+    this.loadImage('black', `${Assets.SPRITES_BASEPATH}/ui/black_face.png`);
   }
 
   private loadImage(id: string, src: string) {
