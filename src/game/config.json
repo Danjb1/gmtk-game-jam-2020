@@ -1,7 +1,5 @@
 {
     "player": {
-        "startX": 128,
-        "startY": 128,
         "speed": 350,
         "sprite": "player.png",
         "lives": 3
@@ -48,7 +46,9 @@
         "positionY": 380,
         "width": 100,
         "height": 100,
-        "sprite": "pen.png"
+        "sprite": "pen.png",
+        "chanceOfEscape": 0.005,
+        "minCaptureTime": 500
     },
     "leftTable": {
         "enabled": true,
@@ -56,7 +56,7 @@
         "positionY": 150,
         "width": 40,
         "height": 180,
-        "sprite": "player.png"
+        "sprite": "table.png"
     },
     "rightTable": {
         "enabled": true,
@@ -64,6 +64,6 @@
         "positionY": 150,
         "width": 40,
         "height": 180,
-        "sprite": "player.png"
+        "sprite": "table.png"
     }
 }
