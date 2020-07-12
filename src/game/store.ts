@@ -4,6 +4,7 @@ export class GameState {
   }
 
   _gameRunning = false;
+  _maxLives = 5;
   _lives = 3;
   _score = 0;
 
@@ -50,7 +51,9 @@ export class GameState {
   }
 
   gainLife() {
-    this._lives++;
+    if (this._lives < this._maxLives) {
+      this._lives++;
+    }
   }
 
   increaseScore(amount: number) {
