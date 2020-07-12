@@ -136,7 +136,7 @@ export class Game implements EntityContext {
           { tags: ['dog'] }))
         .attach(new SpriteComponent(cfg.dog.sprite))
         .attach(new ScarerComponent())
-        .attach(new WanderComponent(cfg.dog.minSpeed, cfg.dog.maxSpeed)));
+        .attach(new WanderComponent(cfg.dog.wandering)));
     }
 
     // Cat Spawner

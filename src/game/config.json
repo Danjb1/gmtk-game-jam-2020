@@ -21,8 +21,11 @@
             "flightSpeed": 330
         },
         "wandering": {
+            "chance": 0.05,
             "minSpeed": 100,
-            "maxSpeed": 200
+            "maxSpeed": 200,
+            "minTime": 200,
+            "maxTime": 500
         }
     },
     "catSpawner": {
@@ -53,7 +56,14 @@
         "startY": 100,
         "minSpeed": 50,
         "maxSpeed": 100,
-        "sprite": "player.png"
+        "sprite": "player.png",
+        "wandering": {
+            "chance": 0.05,
+            "minSpeed": 50,
+            "maxSpeed": 100,
+            "minTime": 200,
+            "maxTime": 500
+        }
     },
     "pen": {
         "positionX": 270,
