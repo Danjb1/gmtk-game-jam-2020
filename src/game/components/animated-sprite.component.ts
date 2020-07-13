@@ -150,7 +150,7 @@ export class AnimatedSpriteComponent extends Component {
     }
   }
 
-  notify(event:any) {
+  notify(event: any) {
     if (event === 'stop') {
       // Stops the animation on it's current frame
       this.sprite.stop();

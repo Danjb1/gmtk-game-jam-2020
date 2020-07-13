@@ -1,8 +1,8 @@
 import * as PIXI from 'pixi.js';
-import { Component } from "../component";
-import { CatMetaComponent } from "./cat-meta.component";
-import { HitboxComponent } from ".";
-import { getHitboxFrom } from "../utils";
+import { Component } from '../component';
+import { CatMetaComponent } from './cat-meta.component';
+import { HitboxComponent } from '.';
+import { getHitboxFrom } from '../utils';
 import { Entity } from '../entity';
 import { JailedComponent } from './jailed.component';
 
@@ -17,7 +17,7 @@ export class CatWarningComponent extends Component {
   private static COLOURS = {
     WARN: 0xFF9800,
     PICKUP: 0xF44336
-  }
+  };
 
   private static textStyles: Partial<PIXI.TextStyle> = {
     fontFamily: 'Do Hyeon',
@@ -26,12 +26,12 @@ export class CatWarningComponent extends Component {
     align: 'center',
     stroke: 'black',
     strokeThickness: 1
-  }
+  };
 
   constructor() {
     super(CatWarningComponent.KEY);
 
-    this.text = new PIXI.Text(`!`, CatWarningComponent.textStyles)
+    this.text = new PIXI.Text(`!`, CatWarningComponent.textStyles);
     this.text.visible = false;
   }
 

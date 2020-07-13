@@ -19,6 +19,6 @@ export class FlashComponent extends Component {
     viewport.addChild(this.catCollectedPixiText);
     setTimeout(() => {
       viewport.removeChild(this.catCollectedPixiText);
-    }, 500)
+    }, 500);
   }
 }

@@ -1,18 +1,18 @@
-# Herding Cats | GMTK Game Jam 2020
+# Herding Cats
 
-This is the Cat Herders' entry to the GMTK Game Jam 2020.
+> Team entry to [GMTK Game Jam 2020](https://itch.io/jam/gmtk-2020)
 
-The Jam is a 48 hour game making marathon, focused on design, mechanics, and clever ideas. It runs from July 10th, at 8PM UK time, to July 12th, at 8PM UK time.
+[![Screenshot](screenshots/game.png)](https://danjb1.itch.io/herding-cats)
 
-[Read more](https://itch.io/jam/gmtk-2020)
+*Herding Cats* is game about the day-to-day challenge of running a cattery.
 
-## Discord
+Cats will be periodically dropped off, and must be herded into the pen before their owners come to pick them up.
 
-**[Official](https://discord.gg/ewRbsQS)**
+Keep too many owners waiting, and your ratings will plummet!
 
-**[Team](https://discord.gg/uF5QS9R)**
+**[Click here to play online](https://danjb1.itch.io/herding-cats)**
 
-## Getting Started
+## Build & Run
 
 1. Install npm
 1. Run `npm i` to install dependancies
@@ -29,3 +29,13 @@ The Jam is a 48 hour game making marathon, focused on design, mechanics, and cle
 1. Copy `images/sprites.json` to `dist/images`
 1. Copy `images/sprites.png` to `dist/images`
 1. Copy `sounds` to `dist`
+1. Zip up the contents of the `dist` folder
+
+## Credits
+
+ - [Danjb1](https://github.com/Danjb1)
+ - [esummers1](https://github.com/esummers1)
+ - [m-mizen](https://github.com/m-mizen)
+ - [DanStevens](https://github.com/DanStevens)
+ - [matt4321](https://github.com/matt4321)
+ - [aonghas](https://github.com/aonghas)

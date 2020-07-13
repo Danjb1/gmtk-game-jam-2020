@@ -50,6 +50,8 @@ export class Assets {
 
     if (important) {
       // Wait until the audio is playable
+      // TODO: This can create a backlog of sounds. The longer the backlog
+      // becomes, the more out-of-sync the sound is with the game.
       audio.addEventListener('canplaythrough', event => {
         audio.play();
       });

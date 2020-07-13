@@ -45,7 +45,7 @@ export class Game implements EntityContext {
   /*
    * Size of the game world.
    *
-   * Entities positioned should be defined in "world units" instead of pixels.
+   * Entities positioned should be defined in 'world units' instead of pixels.
    * The viewport will adjust the display accordingly.
    */
   public static readonly WORLD_WIDTH = 640;
@@ -66,7 +66,7 @@ export class Game implements EntityContext {
   private gameStarted: boolean = false;
 
   private _state: GameState;
-  public get state() { return this._state };
+  public get state() { return this._state; }
 
   constructor(private app: PIXI.Application) {
     this.restartPixiText = new PIXI.Text(`Press SPACE to RESTART`, { fontFamily: 'Do Hyeon', fontSize: 24, fill: 0xffffff, opacity: .75, align: 'center' });
@@ -110,7 +110,7 @@ export class Game implements EntityContext {
     this.catFactory = new CatFactory(cfg.catBehavior);
     CatMetaComponent.configure(cfg.catMetadata);
     this.initViewport();
-    this.resetGame()
+    this.resetGame();
   }
 
   /**
@@ -329,7 +329,7 @@ export class Game implements EntityContext {
 
   private stopGame(): void {
     if (this._gameStopped) {
-      return
+      return;
     }
     this._gameStopped = true;
     [...this.entities].forEach(entity => entity.broadcast('stop'));
@@ -340,9 +340,9 @@ export class Game implements EntityContext {
     this.entities.forEach(entity => entity.destroy());
     this.entities = [];
     this._state = new GameState(cfg.player.lives);
-    this._state.onScoreInc = () => { Assets.playSound("kerching.ogg", true) };
-    this._state.onLifeGained = () => { Assets.playSound("tada-fanfare-f.ogg", true) };
-    this._state.onLifeLost = () => { Assets.playSound("life-lost-game-over.ogg", true) };
+    this._state.onScoreInc = () => { Assets.playSound('kerching.ogg', true); };
+    this._state.onLifeGained = () => { Assets.playSound('tada-fanfare-f.ogg', true); };
+    this._state.onLifeLost = () => { Assets.playSound('life-lost-game-over.ogg', true); };
     this.initEntities();
     this.app.stage.removeChild(this.restartPixiText);
     this._gameStopped = false;
