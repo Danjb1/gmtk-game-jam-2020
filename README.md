@@ -39,3 +39,13 @@ Keep too many owners waiting, and your ratings will plummet!
  - [DanStevens](https://github.com/DanStevens)
  - [matt4321](https://github.com/matt4321)
  - [aonghas](https://github.com/aonghas)
+
+## Attributions
+
+The following assets were used in *Herding Cats*:
+
+ - [Till With Bell.wav](https://freesound.org/s/91924/) by Benboncan
+ - [Tada Fanfare F.flac](https://freesound.org/s/397354/) by plasterbrain
+ - [Life Lost Game Over.wav](https://freesound.org/s/159408/) by noirenex
+ - [Universal LPC Sprite Sheet](http://gaurav.munjal.us/Universal-LPC-Spritesheet-Character-Generator/#?nose=straight&ears=none&legs=pants_teal&clothes=longsleeve_white&tie=none&hair=plain_raven&gloves=none&hat=none&=shoes_brown&shoes=maroon&belt=none&weapon=none) by [multiple authors](http://gaurav.munjal.us/Universal-LPC-Spritesheet-Character-Generator/Universal-LPC-spritesheet/AUTHORS.txt)
+ - [wolf_whistle.wav](https://freesound.org/s/42197/) by fauxpress
